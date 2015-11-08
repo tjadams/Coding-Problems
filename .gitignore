@@ -1,0 +1,8 @@
+# Mac OS X
+.DS_Store
+
+# IntelliJ IDEA
+*.iml
+
+## Directory-based project format:
+.idea/
