@@ -3,7 +3,7 @@
 * A class that has a simple method that allows the height of a node in a binary tree to be calculated.
 */
 
-public class binaryTreeByLevel {
+public class BinaryTreeByLevel {
     public static void main(String args[]){
         Node root = new Node(1);
         Node a = new Node(2);
