@@ -9,8 +9,10 @@ public class PrintVsPrintln {
         System.out.println("Line 2: I wonder if someone will ever read this repository");
 
         System.out.print("So it's time to evolve");
-        System.out.print("\nI can still have full control over my output \n" +
-                         "without having to memorize another quirky thing about Java.\n" +
+        // Note: don't use \n because that is specifically a newline character which is some specific unicode char.
+        // Instead, use %n with System.out.format whichwill be the correct newline character for your platform.
+        System.out.format("%nI can still have full control over my output %n" +
+                         "without having to memorize another quirky thing about Java.%n" +
                          "That quirky thing is the difference between print and println.");
     }
 }
