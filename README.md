@@ -4,8 +4,8 @@ A repository used for development of coding ability. Currently, this is mainly b
 ## Folder Structure
 Each folder listed below contains source files.
 
-* `data-structures`
-* `java`
+* `ds-algo` - Contains coding problems involving data structures and algorithms
+* `java` - Contains common usages of Java
 
 ## Usage
 ### IntelliJ Idea IDE
