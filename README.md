@@ -9,8 +9,15 @@ Each folder listed below contains source files.
 * `python` - Contains sample code and notes made from learning Python
 
 ## Usage
-### IntelliJ Idea IDE
-1. In IntelliJ, click `Import Project` and select the downloaded `Coding-Problems` folder
+### Python
+1. Open up a terminal such as iTerm 2
+2. Change directory to `...\Coding-Problems\python\...`
+3. Run a module that has a main function by typing `python <module_filename>`
+
+`It's so easy, right? This is one of the reasons why I love Python.`
+
+### Java
+1. In IntelliJ IDEA, click `Import Project` and select the downloaded `Coding-Problems` folder
 2. Select `Create project from existing sources`
 3. Keep pressing next until you get to the `Please select project SDK` screen at which you will select 1.8 and then press next again
 4. Click `Edit Configurations` using the drop-down box
