@@ -33,7 +33,7 @@ In the Python interpreter (type python in terminal), typing `help(method)` where
 * **A "raw" string literal is a string prefixed with r before the quotes. What this does is uses the string without any special treatment of backslashes (escaped characters)**
 
 ### String Methods
-* == works fine with strings. I.e., don't use a .equals()
+* **== works fine with strings. I.e., don't use a .equals()**
 * s.lower(), s.upper() - lowercase/uppercase
 * s.strip() - removes trailing and leading whitespace
 * s.startswith('hi'), s.endswith('bye') - boolean is returned
@@ -45,6 +45,8 @@ In the Python interpreter (type python in terminal), typing `help(method)` where
 
 ### String slice syntax (substrings)
 **This section is important**
+
+**Note that you can't do something like s[0] = 'a' because a string is immutable**
 
 * s = 'hello'
 * s[start:end] is the elements beginning at index start and extending up to but not including index end. ex: s[1:4] is 'ell' 
@@ -84,6 +86,78 @@ In the Python interpreter (type python in terminal), typing `help(method)` where
 
 ## Methods vs Functions
 A method is a function that runs "on" an object. I.e., `s.split('delimiters')`. A function would be like `def main():` in that it doesn't run "on" an object. I.e., you can just call `main()`.
+
+## Lists
+* Built-in `list` type
+* Works similarly to strings. Ex: 
+
+```python
+colors = ['green', 'red']
+print colors[0] # prints 'green'
+print len(colors) # prints 2
+```
+* Like in Java, saying list1 = list does not copy list into list1 but instead makes list1 point to the same data that list does. So if the values in list change, so will the values in list1
+* An empty list is `[]`
+* You can use `+` to append two lists. Ex: `[1, 2] + [3, 4] = [1, 2, 3, 4]`
+
+### List methods
+**Only including ones I find useful that can't be used any other way**
+
+* list.append(elem) - adds a single element to the end of `list`
+* list.insert(index, elem) - inserts the element into list at the given index and shifts elements with i > index to the right of the list
+* list.index(elem) - returns first index of elem in list. Throws an error if elem not in list. For checking existance of element in a list, see the below section on `If and In`
+* list.remove(elem) - removes the first instance of elem in the list
+* list.sort() - sorts list in-place
+* list.reverse() - reverses list in-place
+* list.pop(index) - removes and returns the element at index in list. If no index specified, does this with right-most element
+
+### List slice syntax
+* Works like string slice syntax
+* Note that since lists are mutable, you can edit a list's element using slice syntax. Ex:
+
+```python
+list = ['a', 'b', 'c', 'd']
+list[0:2] = 'z'
+print(list) # ['z', 'c', 'd']
+```
+* If you use slice syntax like list[positive:negative], it will still iterate forwards. Ex:
+
+```python
+list = ['a', 'b', 'c', 'd']
+print list[1:-1] # ['b', 'c']
+```
+
+## For and In (foreach in Python)
+**This section is important**
+
+* In Python, you can only iterate through each item in a list or sub-list of items. If you want to iterate through every 3rd item in the list or something like that, use a while loop as documented in the next section
+* Ex: 
+
+```python 
+for color in colors:
+	print(color)
+```
+* The range(n) function gives the numbers from 0 to n-1. This is useful in for loops. As well, there's the range(a, b) function that iterates from a to b-1. This is useful if you want to start iteration at a and end at b-1
+* As a performance enhancement in Python 2, you can use xrange() which will avoid the cost of building the whole list in the range. Python 3 optimized range so you don't have to use xrange
+
+## While loop
+**This section is important**
+
+* Use a while loop if you want to iterate through every 3rd element in a list or something like that. Otherwise a for loop is just fine for iterating through every element in a list or sub-list
+* While loops work as they do in Java just with different syntax: `while i < len(s): ... i += 3`
+* There's also break and continue statements
+
+## If and In (Collections.exits() in Python)
+**This section is important**
+
+* Ex in a list:
+
+```python
+coolKids = ['bruce wayne', 'james dean', `tyler adams`]
+if 'tyler adams' in coolKids:
+	print 'yay'
+```
+* This works in other data types too such as the string type. You can iterate over every character in a string
 
 ## Examples
 * Setting a variable ex: a = 1 (int object)
