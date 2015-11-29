@@ -127,6 +127,9 @@ list = ['a', 'b', 'c', 'd']
 print list[1:-1] # ['b', 'c']
 ```
 
+## Sorted vs list.sort()
+Calling sorted(iterableCollection) will return a sorted iterableCollection. This can also take in a key function. This works on any iterable collection including a list whereas list.sort() only works on lists.
+
 ## Lambda functions
 **"Unlimited power!"**
 A lambda function is an anonymous function. That is, a function with no name.
@@ -156,6 +159,18 @@ list = [
 ]
 list.sort(key = lambda tuple: tuple[1])
 print(list) # [("tyler's dog", 6), ('tyler', 20)]
+```
+
+Ex with passing in your own function:
+
+```python
+ list = ['Ec', 'dc', 'ab' ,'wa']
+
+  def MyFn(element):
+    return element[-1]
+
+  # Sort by the last letter without resolving collisions where last letter is equivalent across elements
+  print sorted(strs, key=MyFn)  # 'wa', 'ab', 'Ec', `dc`
 ```
 
 ## For and In (foreach in Python)
@@ -189,6 +204,36 @@ if 'tyler adams' in coolKids:
 	print 'yay'
 ```
 * This works in other data types too such as the string type. You can iterate over every character in a string
+
+## Booleans
+True and False as opposed to true and false in other languages.
+
+## Tuples
+A tuple is a fixed-size grouping of elements such as an (x, y) co-ordinate. Tuples are very similar ot lists except that they are immutable. In Python, tuples are used like structs. That is, they are used to pass around fixed-size bundles of values. You can access values within a tuple using slicing syntax.
+
+Ex with a co-ordinate:
+
+```python
+tuple = (0, 0)
+(x, y, z) = (1, 2, 3)
+```
+
+## List Comprehensions
+A list comprehension is a compact way to write an expression that expands to a whole list.
+
+Ex:
+
+```python
+nums = [1, 2, 3, 4]
+squares = [ n * n for n in nums ]   # [1, 4, 9, 16]
+```
+
+Ex with a condition:
+
+```python
+nums = [2, 8, 1, 6]
+small = [ n for n in nums if n <= 2 ]  # [2, 1]
+```
 
 ## Examples
 * Setting a variable ex: a = 1 (int object)
