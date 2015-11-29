@@ -127,6 +127,37 @@ list = ['a', 'b', 'c', 'd']
 print list[1:-1] # ['b', 'c']
 ```
 
+## Lambda functions
+**"Unlimited power!"**
+A lambda function is an anonymous function. That is, a function with no name.
+Ex:
+
+```python
+f = lambda x,y: x + y
+print(f(1,2)) # 3
+```
+
+## Key functions
+**This is super powerful**
+You can perform a sort using a key function. This key function is a function that will be applied to all elements in a list before the sort. These new elements only exist for the duration of the sort. After the sort has completed, you will see the old elements appearing in the positions of the sorted key function elements. This can be done using a paramater in the list.sort method . Ex:
+
+```python
+list = ['Ab', 'a', 'd', 'c']
+list.sort(key = str.lower) # perform the sort with every element in the list being lowercase (only during the sort)
+print(list) # ['a', 'Ab', 'c', 'd']
+```
+
+Ex with a lambda function:
+
+```python
+list = [
+	('tyler', 20),
+	("tyler's dog", 6)
+]
+list.sort(key = lambda tuple: tuple[1])
+print(list) # [("tyler's dog", 6), ('tyler', 20)]
+```
+
 ## For and In (foreach in Python)
 **This section is important**
 
