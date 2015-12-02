@@ -1,4 +1,4 @@
-public class PlayingWithSignExtensionAndShifts {
+public class BitShiftingAndSignExtension {
     public static void main (String args[]) {
         System.out.println(">> vs >>> :\n>> = " + Integer.toBinaryString(Integer.parseInt("1111", 2) >> 5) + "\n" +
                                       ">>> = " + Integer.toBinaryString(Integer.parseInt("1111", 2) >>> 5));
