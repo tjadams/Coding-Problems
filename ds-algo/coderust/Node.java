@@ -1,3 +1,5 @@
+package coderust;
+
 /**
  * Created by Tyler Adams on 20/04/2015.
  */

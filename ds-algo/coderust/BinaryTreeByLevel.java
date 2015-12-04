@@ -1,4 +1,4 @@
-/*
+package coderust;/*
 * Created by Tyler Adams on 20/04/2015.
 * A class that has a simple method that allows the height of a node in a binary tree to be calculated.
 */
