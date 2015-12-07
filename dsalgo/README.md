@@ -100,5 +100,58 @@ public static int updateBitsFromLsbToIthBit(int num, int i, int value) {
 }
 ```
 
+##System Design (OOP)
+Step 1: Clarify the problem
+
+* Who is going to use the system?
+* How will the system be used?
+* 6 Ws: who, what, when, where, why, how
+
+Step 2: Define the objects in the system you're designing
+Step 3: Analyze relationships between objects
+
+* Which objects are members of which other objects?
+* Do any objects inherit from each other?
+* Are relationships many-to-many or one-to-many? 
+Ex of a many-to-many relationships betwen an Author class and a Book class: an Author can write many Books and a Book can be written by many Authors.
+Ex of a one-to-many relationsip between a Mother class and a Children class. one Mother object to many Children objects)
+* Ask how specific or general my design should be?
+
+Step 4: Investigate the system's behaviour using stories to see if I forgot anything.
+ex: For a restaurant system: a party walks in to the restaurant and the guest requests a table etc...
+
+## Design Patterns
+### Singleton class
+A Singleton class is a class that only has one instance. The instance of that class is accessed using the class, not an object because that would be another instance. Using a Singleton class is useful when you have a "global" object that only has one instance.
+Ex: Earth, Krypton, Restaurant
+
+Ex in Java:
+
+```java
+public class Restaurant {
+	private static Restaurant instance = null;
+	Restaurant() { ... }
+	public static Restaurant getInstance() {
+		if (instance == null) {
+			instance = new Restaurant();
+		}
+		return instance;
+	}
+}
+```
+
+### Factory method
+A Factory method is one way to create an instance of a class. One useful way to use a Factory method is to pass in the type of instance you want to instantiate. Typically, the type of instance is a subclass of a class like InstanceType.
+Ex in Java:
+
+```java
+public static CardGame createCardGame (GameType type) {
+	if (type == GameType.BlackJack) {
+		return new BlackJack();
+	}
+}
+```
+
+
 #TODO
 * Rewrite this in Latex
