@@ -152,6 +152,23 @@ public static CardGame createCardGame (GameType type) {
 }
 ```
 
+## Recursion
+Note that all recursive code can be implemented iteratively but it can be very complex.
+
+### Bottom-up
+1. Solve a simple case like n=1
+2. Try to get f(2) from f(1)
+3. Repeat this to get a solution for all cases
+
+### Top-down
+Think of how to divide the problem at case N into subproblems
+
+## Dynamic Programming
+DP problems are recursive problems where you store intermediate results.
+1. Implement recursive solution
+2. Try to cache results
+3. Use cache results in recursive solution if they are available to use
+4. If they are not available to use, calculate and cache new result
 
 #TODO
 * Rewrite this in Latex
