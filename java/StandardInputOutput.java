@@ -3,6 +3,11 @@ import java.util.Scanner;
 
 public class StandardInputOutput {
     public static void main (String args[]) {
+        standardInput();
+        standardOutput();
+    }
+
+    private static void standardInput() {
         // Note: Scanner is very powerful. It has hasNext and next methods for anything I could ever want.
         // For example, hasNextBigInteger(), next() for the whole String, next(String pattern) for regex
         Scanner sc = new Scanner(System.in);
@@ -21,12 +26,10 @@ public class StandardInputOutput {
         while(input != null && !input.equals("stop")) {
             input = sc.next();
         }
+    }
 
-        PrintWriter pw = new PrintWriter(System.out);
-        pw.println("Standard output");
-
-        pw.close();
-        // Note: remember to close Scanner as well as PrintWriter
-        sc.close();
+    private static void standardOutput() {
+        System.out.println("yo");
+        System.out.print("yo");
     }
 }
