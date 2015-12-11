@@ -78,5 +78,108 @@ ArrayList<E> list = new ArrayList<E>(); Where E is any Object
 #Interfaces
 Class Y implements interface X means Y or a subclass of Y must provide an implementation for the methods defined in the interface X. Ift hey do not, the code will not compile.
 
+#Switch statement
+Switch works on the following types: int, Integer, char, Character, short, Short, byte, Byte, String
+
+```java
+		String x = "amigos";
+        switch (x) {
+            case "hola":
+                System.out.println(x);
+                break;
+            case "amigos":
+                System.out.println(x);
+                break;
+            default:
+                System.out.println("default");
+                break;
+        }
+```
+
+# File Input
+```java
+File f = new File("example.txt");
+try {
+	FileReader fr = new FileReader(file);
+	BufferedReader br = new BufferedReader(fr);
+	String line = br.readLine();
+	while (line != null) {
+		line = br.readLine();
+	}
+	br.close();
+	fr.close();
+} catch (Exception e) {
+	e.printStackTrace();
+}
+```
+
+# File Output
+```java
+File f = new File("example.txt");
+try {
+	FileWriter fw = new FileWriter(file);
+	PrintWriter pw = new PrintWriter(fw);
+	pw.print("yeah");
+	pw.println("yeah yeah");
+	pw.close();
+	fw.close();
+} catch (Exception e) {
+	e.printStackTrace();
+}
+```
+
+#Standard Input
+```java
+Scanner sc = new Scanner(System.in);
+String input = sc.next();
+```
+
+#Standard output
+```java
+System.out.println("yo"); 
+System.out.print("yo");
+```
+
+#Print vs Println
+Let's define a printcursor as the area of System.out that you can currently print at.
+Print just prints to the current printcursor index.
+Println prints to the current printcursor index and then puts a newline. A subsequent print will print to the new printcursor index which is right after the newline.
+
+# Printing a newline
+Don't use `\n` because that is a specific newline character to only some hardware. Instead, use `System.out.format` and `%n` which gets the correct newline for your hardware.
+
+# Sorting by customizing the comparson between 2 elements of an array to be sorted
+```java
+static Comparator<Integer[]> firstElementSubarrayComparator = new Comparator<Integer[]>() {
+        @Override
+        public int compare(Integer[] o1, Integer[] o2) {
+            // Return the standard compareTo for integers but compare on the first element of the subarray
+            // return o1[0].compareTo(o2[0]);
+            // Could equivalently do the following:
+            if (o1[0] > o2[0]) {
+                return 1;
+            } else if (o1[0] < o2[0]) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    };
+
+
+Arrays.sort(array, firstElementSubarrayComparator);
+```
+
+#Unit Tests using JUnit
+```java
+public class myTests {
+	@Test
+	public void testName() {
+	    assertEquals(testNameString, resultShouldBe, resultActuallyIs);
+	}
+}
+```
+
 ## TODO
 * Think about switching from Markdown to Latex
+* Implement common data structures and algorithms in Java (ex: Binary Tree, etc)
