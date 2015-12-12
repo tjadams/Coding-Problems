@@ -208,17 +208,67 @@ public class recursiveProblemHelper {
 // The time complexity here is O(2^n) assuming the ... takes O(1) time to run.
 // The space complexity is (space per stack frame)*(# of stack frames) = O(1) * amount of times the function is recursively called = O(2^n)
 // That O(1) multiplier is due to putting the result of each recursive computation on the stack.
-public static int spaceComplexityExOne (...) {
-	... (no variable declarations in function)
+public static int spaceComplexityExOne(...) {
+	// no variable declarations in function
 	return spaceComplexityExOne(..., n -1 ), + spaceComplexityExOne(..., n- 2);
 }
 
 // Space complexity is O(2^n) from variables + O(2^n) from stack traces = 2*O(2^n) = O(2^n)
-public static int spaceComplexityExOne (...) {
-	... (constant amount of O(1) sized variable declarations in function)
+public static int spaceComplexityExTwo(...) {
+	// constant amount of O(1) sized variable declarations in function
 	return spaceComplexityExOne(..., n -1 ), + spaceComplexityExOne(..., n- 2);
 }
 ```
+
+## Analyzing Time Complexity
+I'll do this for some tricky recursive problems.
+
+```java
+// Here I cut the array size in half each time so I do half the work each time
+// If I were to draw out each call to timeComplexityExOne and the size of the array in each call,
+// I would see that there were log base 2 of n calls where n = initial array size
+public static int timeComplexityExOne(int[] array) {
+	// O(1) statements
+	return timeComplexityExOne(array cut in half) 
+}
+```
+
+## Stable sorts
+A stable sort is a function that sorts a collection but maintains the relative order of equal items. Ex: Here's an array before a stable sort in ascending order: [7, first 5, 2, second 5]. After the stable sort: [2, first 5, second 5, 7]. In the beginning, the first 5 was before the second 5. This remains true after the stable sort was performed. An unstable sort could result in [2, second 5, first 5, 7].
+
+## Quicksort
+#### Summary
+1. Select a random pivot value from an input list
+2. Sort input list excluding pivot into a left and right list according to pivot value
+3. Return the concatonation of Quicksort(left), the pivot value, and Quicksort(right)
+
+#### Pseudocode
+```java
+public static ArrayList<Integer> Quicksort(ArrayList<Integer> list) {
+	if (list.length <= 1) {
+		return list;
+	}
+	Select a random value from list to pivot on;
+	Create empty lists called left and right;
+	for (Integer element : list excluding the pivot value index) {
+		if (element <= pivotValue) 	append x to the left list;
+		else append x to the right list;
+	}
+	return join(Quicksort(left), pivotValue, Quicksort(right));
+}
+```
+
+#### Algorithmic analysis
+Average case time complexity is  O(n log n). Worst case time complexity is O(n^2). This occurs when you pick the worst pivot every time. When that happens, you have to compare your pivot with every other element. As you keep going you do n -= 1 comparisons each time. So it comes out to n^2. The space complexity depends on how you implement the problem. If you did it in-place then the worst case space complexity will be O(log n) because you call Quicksort(left) log n times and Quicksort(right) log n times. Recall that 2O(log n) is O(log n).
+
+#### Advantages
+* Can be optimized to use O(log n) memory which is very little. This is done by quicksorting in-place
+
+#### Disadvantages
+* Time complexity relies on having a good pivot point during each recursive call
+* Difficult to parralelize
+* The most optimized verrsion of Quicksort is not a stable sort
+
 
 #TODO
 * Rewrite this in Latex
