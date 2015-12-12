@@ -100,7 +100,7 @@ public static int updateBitsFromLsbToIthBit(int num, int i, int value) {
 }
 ```
 
-##System Design (OOP)
+##Object Oriented Design
 Step 1: Clarify the problem
 
 * Who is going to use the system?
@@ -169,6 +169,56 @@ DP problems are recursive problems where you store intermediate results.
 2. Try to cache results
 3. Use cache results in recursive solution if they are available to use
 4. If they are not available to use, calculate and cache new result
+
+## Analyzing Space Complexity a.k.a Auxillary Memory
+Space Complexity/Auxillary Memory is the "extra space" used as a result of calling a function. This is mainly tricky to analyze in recursive problems. Here's a formula that helps with analyzing.
+**Space Complexity of a recursive problem = (space per stack frame)*(# of stack frames which in most cases is the amount of times the function is recursively called)**
+
+```java
+public class recursiveProblemHelper {
+	int[] fresult;
+	public static void main (String args[]) {
+		int n = 100;
+		fresult = new int[n];
+		optimizedDpProblem(fresult, n);
+	}
+
+	// This is optimized because it keeps track of memory which reduces auxillary memory. 
+	// Just suppose that this algorithm works like the optimized solution to fibonacci.
+	// Space Complexity: It uses O(n) memory in the helper class due to fresult
+	// Time Complexity: Each fresult is only computed once. It takes O(1) to compute one entry in fresult. N entries in fresult therefore the time complexity is O(1)*n = O(n)
+	public static int optimizedDpProblem(int[] input, int n) {
+		if (baseCase) {
+			fresult[...] = input[...].......;
+			return fresult[...];
+		}
+		
+		if (fresult[n] != uninitializedConstant) {
+			return fresult[n];
+		} else {
+			fresult[n] = optimizedDpProblem(input, n -1) + optimizedDpProblem(input, n - 2) + ... ;
+			return fresult[n];
+		}	
+	}
+}
+```
+
+```java
+// Assume there is no memory being created in the algorithm and that there is no results being stored as you go.
+// The time complexity here is O(2^n) assuming the ... takes O(1) time to run.
+// The space complexity is (space per stack frame)*(# of stack frames) = O(1) * amount of times the function is recursively called = O(2^n)
+// That O(1) multiplier is due to putting the result of each recursive computation on the stack.
+public static int spaceComplexityExOne (...) {
+	... (no variable declarations in function)
+	return spaceComplexityExOne(..., n -1 ), + spaceComplexityExOne(..., n- 2);
+}
+
+// Space complexity is O(2^n) from variables + O(2^n) from stack traces = 2*O(2^n) = O(2^n)
+public static int spaceComplexityExOne (...) {
+	... (constant amount of O(1) sized variable declarations in function)
+	return spaceComplexityExOne(..., n -1 ), + spaceComplexityExOne(..., n- 2);
+}
+```
 
 #TODO
 * Rewrite this in Latex
