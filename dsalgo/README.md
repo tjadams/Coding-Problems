@@ -1,5 +1,5 @@
 #ds-algo
-Notes and examples made from learning about data structures, algorithms, and other Computer Science concepts. I have **bolded** what is especially important for me.
+Notes and examples made from learning about data structures, algorithms, and other Computer Science concepts. I have **bolded** what is especially important for me. Keep in mind that this is written from a Java point of view.
 
 # Bit Manipulation
 ## Tricks
@@ -237,11 +237,6 @@ public static int timeComplexityExOne(int[] array) {
 A stable sort is a function that sorts a collection but maintains the relative order of equal items. Ex: Here's an array before a stable sort in ascending order: [7, first 5, 2, second 5]. After the stable sort: [2, first 5, second 5, 7]. In the beginning, the first 5 was before the second 5. This remains true after the stable sort was performed. An unstable sort could result in [2, second 5, first 5, 7].
 
 ## Quicksort
-#### Summary
-1. Select a random pivot value from an input list
-2. Sort input list excluding pivot into a left and right list according to pivot value
-3. Return the concatonation of Quicksort(left), the pivot value, and Quicksort(right)
-
 #### Pseudocode
 ```java
 public static ArrayList<Integer> Quicksort(ArrayList<Integer> list) {
@@ -258,6 +253,11 @@ public static ArrayList<Integer> Quicksort(ArrayList<Integer> list) {
 }
 ```
 
+#### Summary
+1. Select a random pivot value from an input list
+2. Sort input list excluding pivot into a left and right list according to pivot value
+3. Return the concatonation of Quicksort(left), the pivot value, and Quicksort(right)
+
 #### Algorithmic analysis
 Average case time complexity is  O(n log n). Worst case time complexity is O(n^2). This occurs when you pick the worst pivot every time. When that happens, you have to compare your pivot with every other element. As you keep going you do n -= 1 comparisons each time. So it comes out to n^2. The space complexity depends on how you implement the problem. If you did it in-place then the worst case space complexity will be O(log n) because you call Quicksort(left) log n times and Quicksort(right) log n times. Recall that 2O(log n) is O(log n).
 
@@ -267,8 +267,105 @@ Average case time complexity is  O(n log n). Worst case time complexity is O(n^2
 #### Disadvantages
 * Time complexity relies on having a good pivot point during each recursive call
 * Difficult to parralelize
-* The most optimized verrsion of Quicksort is not a stable sort
+* The most optimized version of Quicksort is not a stable sort
 
+# Discrete Mathematics
+Many arrays and strings problems likely use discrete math. Look for counting, permutations etc in a problem to identify this.
+
+## Mergesort
+#### Pseudocode
+```java
+public static int[] mergesort(int [] array) {
+	if (array.length <=1) return array;
+	int[] left = mergesort(left half of array);
+	int[] right = mergesort(right half of array);
+	return merge(left, right); // merge left and right arrays in sorted order
+}
+```
+
+#### Summary
+1. Recursively split up array into halves
+2. Merge each half in sorted order
+
+#### Algorithmic analysis
+Time: T(n) = T(n/2) + T(n/2) + O(n) use master theorem and you get O(n log n) time.
+Memory: You make n, n/2, n/4, n/8, n/16, ... additional memory per iteration. Since it's all the same values, the compiler may optimize this to be O(n) memory. Also, the merge algorithm won't use more than O(n) memory.
+
+#### Advantages
+- Always nlogn time
+- Can be parralelized to run in O(n) time
+- Stable sort
+
+#### Disadvantages
+- Uses lots of memory
+
+## Arrays
+#### How they work
+An array can be implemented as a container that takes up a linear section in memory. You can't change the container itself but you can change the items in it.
+
+#### Advantages
+- Can access, insert within array size, remove elements in O(1) time
+ 
+#### Disadvantages
+- Only can hold one type
+- Size is static
+
+## Linked Lists
+Focusing on singly linked-lists.
+
+#### How they work
+Each node of a linked list is a pointer to memory. Pointers that point to other pointers allow for a list of accessible elements called a Linked List.
+
+#### Advantages
+- Size is dynamic
+- Insert/delete in O(1) time
+
+#### Disadvantages
+- Accessing an element takes O(n) time because you have to loop through the head of the LL
+- Nodes must know about other nodes so they're not independant
+- Hard to traverse backwards in a singly LL
+
+#### Runner technique
+Iterate through LL with 2 pointers. One pointer is ahead of the other. 
+Usually one pointer iterates one element at a time and the other iterates two elements at a time.
+This is useful for many LL problems where you want to weave elements together or determine the size of a list.
+
+#### Example usages that work uniquely well with this data structure
+- Making a better queue/stack
+- Scavenger hunt
+- Conga line
+
+## Stacks
+#### How they work
+Last-in first-out container. So the most recent item put on the stack is the first one to be seen by the outside world.
+Uses a top of stack pointer to an underlying array to expose that element to the outside world. Pushing (inserting) and popping (removing) from stack are done at top of stack only.
+ 
+#### Advantages
+- Push: Insert element at TOS in O(1) time
+- Pop: Delete element at TOS in O(1) time
+ 
+#### Disadvantages
+- Must access top of stack element only. As a result:
+	- If you want to search for an element you have to pop elements off the stack
+	- If you want to remove a specific element, you have to search and pop so O(n) removal time
+	- If you want to insert at a specific point in the stack, O(n) time due to searching and popping
+- If using an underlying array, static size
+
+#### Example usages that work uniquely well with this data structure
+- Converting the base of a number
+- Evaluating math expressions
+- Recursion stuff like backtracking in a maze
+
+## Queues
+#### How they work
+
+#### Advantages
+
+#### Disadvantages
+
+#### Examples usages that work uniquely well with this data structure
 
 #TODO
+* Make this cleaner
+* Split up data structures and algorithms into separate files where appropriate
 * Rewrite this in Latex
