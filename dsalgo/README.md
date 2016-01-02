@@ -415,9 +415,69 @@ Length: number of edges on a path
 Depth of a tree node: is the length of the unique path from the root to that node. "How deep is that node?" Root has a depth of 0. Depth of tree is different from depth of root i.e., "How deep does the tree go?" vs. "How deep is the root from the root? 0"
 Height of a tree node: is the length of the longest unique path from that tree node to a leaf. All leaves have a high of 0."How high is that node?"
 Height of a tree = Depth of a tree = Max Height = Max Depth: is the length of the longest unique path from the root to a leaf node.  "How high is the tree?"
+Traversal: visiting every node once
 
 ## Binary Trees
 **These are different than Binary Search Trees. BSTs extend the functionality of BTs**
+#### How they work
+Binary Trees are trees with each node having a max of 2 children.
+
+## Binary Tree Traversal Algorithms
+### Pre-order Traversal
+#### Pseudocode
+```java
+public static void preorder(Node node) {
+	if (node == null) return;
+	visit(node);
+	if (node.left != null) preorder(node.left);
+	if (node.right != null) preorder(node.right);
+}
+```
+
+#### Summary
+Visit node, preorder(left), preorder(right).
+Generates a prefix expression of nodes in a tree.
+
+#### Example
+Tree that isn't being rendered properly in markdown lol:
+```
+    +
+  +   *
+ a b c d
+```
+
+Calling preorder(+) with + being the root of the tree would generate this prefix expression: ++ab*cd
+
+#### Algorithmic analysis
+Time: Visits each node once so it's O(n)
+Memory: **You could count the stack frames due to recursion but that's probably optimized by the compiler.** As a result, O(1)
+
+#### Advantages over other traversals
+
+#### Disadvantages over other traversals
+
+#### Example usages that work uniquely well with this algorithm
+
+# Contributing
+## Algorithm documentation skeleton
+### Algorithm name
+#### Pseudocode
+```java
+public static ? ?(???) {
+	
+}
+```
+#### Summary
+#### Example
+#### Algorithmic analysis
+Time:
+Memory:
+#### Advantages over other traversals
+#### Disadvantages over other traversals
+#### Example usages that work uniquely well with this algorithm
+
+## Data Structure documentation skeleton
+### Data Structure name
 #### How they work
 #### Advantages
 #### Disadvantages
