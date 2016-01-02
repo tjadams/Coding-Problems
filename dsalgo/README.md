@@ -358,12 +358,70 @@ Uses a top of stack pointer to an underlying array to expose that element to the
 
 ## Queues
 #### How they work
+First-in first-out. So elements are added to the end of the underlying array and removed from the beginning of the underlying array. 
+This is implemented circularly with an underlying array.
+Uses one pointer for the beginning element array index of the queue, and another pointer for the last element array index of the queue. 
 
 #### Advantages
+- Enqueue: Insert element at end of queue in O(1) time if less than total underlying array size
+- Dequeue: Remove element from beginning of queue in O(1) time 
+- Can be made to have a dynamic container size by resizing an underlying array or using an underlying linked list
 
 #### Disadvantages
+- Can only remove elements from the beginning of the queue
 
-#### Examples usages that work uniquely well with this data structure
+#### Example usages that work uniquely well with this data structure
+- Giving things priority
+- Lining up for a store
+
+## Hash Tables
+#### How they work
+A hash table maps keys to values using a hash function on an underlying array. It has a  capacity c and n total items.
+A hash function is a function that accepts a value and maps the index of that value to the hash table.
+A **collision** occurs when a hash function maps a value to an index that already has a value.
+Good hash functions collide infrequently.
+
+###### Resolving collisions with Chaining
+Each index of the hash table holds a linked list of values. When a collision occurs, the value to be added is added to the end of the linked list.
+Advantage: This is quick with Insert = O(1), Delete = O(h(k) + alpha) for singly linked and O(1) for doubly-linked, Search = O(h(k) + alpha) where h(k) = hash function on value k and **alpha = load factor of hash table = n/c**
+Disadvantage: Takes up more memory than other solutions. This is due to the linked lists.
+
+###### Resolving collisions with Open Addressing - Linear Probing 
+Modified hash function h(k, i) = (h(k) + i) mod c where i is a probe index i starts at 1 for every instance of a collision. h(k,i) is then tried again. If unsuccesful, i++ to 2 and now tries again. This process repeats until a successful location was found.
+Advantage: Uses less memory than chaining
+Disadvantage: slower than chaining
+
+###### Resolving collisions with Open Addressing - Double Hashing which uses Linear Probing
+h(k,i) = (h1(k) + i*h2(k)) mod c. Same as linear probing but now we use two hash functions.
+Advantage: Distributes keys more uniformly than linear probing which results in less collisions than linear probing
+Disadvantage: You need to come up with 2 good hash functions.
+
+#### Advantages
+- Search/insert/delete O(1) where search just looks for a value in a table
+
+#### Disadvantages
+- Sometimes uses way more memory than needed
+
+#### Example usages that work uniquely well with this data structure
+- Counting how many times you have seen some values in something. hashtable[h(some value)] = number of times you have seen it
+
+## Tree & Graph definitions
+**This is very important**
+Leaves: nodes with no children
+Siblings: nodes with same parent
+Root: node with no parent. This is the top-most node of the tree. Also the starting point for iteration in the tree data structure
+Path: sequence of nodes n_1, n_2, ..., n_k such that n_i is the parent of n_i+1 for 1 <= i < k
+Length: number of edges on a path
+Depth of a tree node: is the length of the unique path from the root to that node. "How deep is that node?" Root has a depth of 0. Depth of tree is different from depth of root i.e., "How deep does the tree go?" vs. "How deep is the root from the root? 0"
+Height of a tree node: is the length of the longest unique path from that tree node to a leaf. All leaves have a high of 0."How high is that node?"
+Height of a tree = Depth of a tree = Max Height = Max Depth: is the length of the longest unique path from the root to a leaf node.  "How high is the tree?"
+
+## Binary Trees
+**These are different than Binary Search Trees. BSTs extend the functionality of BTs**
+#### How they work
+#### Advantages
+#### Disadvantages
+#### Example usages that work uniquely well with this data structure
 
 #TODO
 * Make this cleaner
