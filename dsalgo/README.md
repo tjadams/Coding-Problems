@@ -407,36 +407,40 @@ Disadvantage: You need to come up with 2 good hash functions.
 
 ## Tree & Graph definitions
 **This is very important**
-Leaves: nodes with no children
-Siblings: nodes with same parent
-Root: node with no parent. This is the top-most node of the tree. Also the starting point for iteration in the tree data structure
-Path: sequence of nodes n_1, n_2, ..., n_k such that n_i is the parent of n_i+1 for 1 <= i < k
-Length: number of edges on a path
-Depth of a tree node: is the length of the unique path from the root to that node. "How deep is that node?" Root has a depth of 0. Depth of tree is different from depth of root i.e., "How deep does the tree go?" vs. "How deep is the root from the root? 0"
-Height of a tree node: is the length of the longest unique path from that tree node to a leaf. All leaves have a high of 0."How high is that node?"
-Height of a tree = Depth of a tree = Max Height = Max Depth: is the length of the longest unique path from the root to a leaf node.  "How high is the tree?"
-Traversal: visiting every node once
+
+- Leaves: nodes with no children
+- Siblings: nodes with same parent
+- Root: node with no parent. This is the top-most node of the tree. Also the starting point for iteration in the tree data structure
+- Path: sequence of nodes n_1, n_2, ..., n_k such that n_i is the parent of n_i+1 for 1 <= i < k
+- Walk: A walk is movement from one node to another in the tree. You can walk back to the same node you started if you wanted to.
+- Length: number of edges on a path
+- Depth of a tree node: is the length of the unique path from the root to that node. "How deep is that node?" Root has a depth of 0. Depth of tree is different from depth of root i.e., "How deep does the tree go?" vs. "How deep is the root from the root? 0"
+- Height of a tree node: is the length of the longest unique path from that tree node to a leaf. All leaves have a high of 0."How high is that node?"
+- **Height of a tree = Depth of a tree = Max Height = Max Depth**: is the length of the longest unique path from the root to a leaf node.  "How high is the tree?"
+- Traversal: visiting every node once
+- **Serialize**: Means to put something into a series. Ex: serialize a tree makes a series representation of a tree
 
 ## Binary Trees
 **These are different than Binary Search Trees. BSTs extend the functionality of BTs**
 #### How they work
-Binary Trees are trees with each node having a max of 2 children.
+Binary Trees are trees with each node having a max of 2 children. Nodes can also contain a value.
 
 ## Binary Tree Traversal Algorithms
-### Pre-order Traversal
+### Pre-order Traversal (Depth-first traversal)
+Pre-order traversal can be easily modified to a depth-first search because pre-order traversal is a depth-first traversal. If instead of going down the left paths first (visit node, preorder(left), preorder(right)), one can go down the right paths first (visit node, preorder(right), preorder(left))
 #### Pseudocode
 ```java
 public static void preorder(Node node) {
 	if (node == null) return;
 	visit(node);
-	if (node.left != null) preorder(node.left);
-	if (node.right != null) preorder(node.right);
+	preorder(node.left);
+	preorder(node.right);
 }
 ```
 
 #### Summary
 Visit node, preorder(left), preorder(right).
-Generates a prefix expression of nodes in a tree.
+Generates a prefix expression of nodes in a tree. This prefix expression is a serial representation of the tree. This is necessary for some language processors.
 
 #### Example
 Tree that isn't being rendered properly in markdown lol:
@@ -447,16 +451,151 @@ Tree that isn't being rendered properly in markdown lol:
 ```
 
 Calling preorder(+) with + being the root of the tree would generate this prefix expression: ++ab*cd
+Going down the right path first (visit node, preorder(right), preorder(left)) generates this prefix expression: +*dc+ba
 
 #### Algorithmic analysis
 Time: Visits each node once so it's O(n)
 Memory: **You could count the stack frames due to recursion but that's probably optimized by the compiler.** As a result, O(1)
 
 #### Advantages over other traversals
+Since this is a depth-first traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
 
 #### Disadvantages over other traversals
+- Since this is a depth-first traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree depth-first will use more memory than breadth-first.
+- If modified to a search, search takes O(n)
+
+### Post-order traversal
+#### Pseudocode
+```java
+public static void postorder(Node node) {
+	if (node == null) return;
+	preorder(node.left);
+	preorder(node.right);
+	visit(node);
+}
+```
+#### Summary
+postorder left, postorder right, visit node
+Generates a postfix expression of nodes in a tree. This postfix expression is a serial representation of the tree. This is necessary for some language processors.
+Post-order traversal is not exactly depth-first but is still more like depth-first than like breadth-first. **Post-order is actually kind of like a compromise between depth-first and breadth-first since it shares properties from traversals.** The postfix expression in the following example goes through ab before going to the parent +. The same is done with cd and *.
+
+#### Example
+Tree that isn't being rendered properly in markdown lol:
+```
+    +
+  +   *
+ a b c d
+```
+
+Calling postorder(+) with + being the root of the tree would generate this postfix expression: ab+cd*+
+
+#### Algorithmic analysis
+Time: Visits each node once so it's O(n)
+Memory: **You could count the stack frames due to recursion but that's probably optimized by the compiler.** As a result, O(1)
+
+#### Advantages over other traversals
+Since this is a depth-first-ish traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
+#### Disadvantages over other traversals
+- Since this is a depth-first-ish traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree depth-first will use more memory than breadth-first. However this effect is not as pronounced because post-order is depth-first-ish.
+- If modified to a search, search takes O(n)
+#### Example usages that work uniquely well with this algorithm
+- Deleting a BT or Binary subtree (because that's also a tree :)). This works with postorder because postorder traverses children before parents which allows you to delete the children when you visit and then delete the parent after. 
+
+### In-order Traversal
+#### Pseudocode
+```java
+public static void inorder(Node node) {
+	if (node == null) return;
+	inorder(node.left);
+	visit(node);
+	inorder(node.right);
+}
+```
+#### Summary
+inorder left, visit node, inorder right
+Generates a infix expression of nodes in a tree. This infix expression is a serial representation of the tree. This is necessary for some language processors. This infix expression is the sorted values of a BST if the tree is a BST. Inorder traversals traverse the tree from left to right (or right to left if you do inorder(right), visit, inorder(left)) in the order that the nodes are arranged in the tree.
+
+#### Example
+Tree that isn't being rendered properly in markdown lol:
+```
+    +
+  +   *
+ a b c d
+```
+
+Calling inorder(+) with + being the root of the tree would generate this infix expression: a+b+c*d
+
+#### Algorithmic analysis
+Time: Visits each node once so it's O(n)
+Memory: **You could count the stack frames due to recursion but that's probably optimized by the compiler.** As a result, O(1)
+#### Advantages over other traversals
+Since this is a depth-first-ish traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
+#### Disadvantages over other traversals
+- Since this is a depth-first-ish traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree depth-first will use more memory than breadth-first. However this effect is not as pronounced because post-order is depth-first-ish.
+- If modified to a search, search takes O(n)
 
 #### Example usages that work uniquely well with this algorithm
+The infix expression shows the sorted values of a Binary Search Tree.
+
+### Breadth-first Traversal
+Can be easily modified to Breadth First Search (BFS) by having the visit(node) part check if the passed in node you're looking for is equivalent to the node passed in to the visit method.
+#### Pseudocode
+```java
+// Passed in node is typically the root
+public static void bft(Node node) {
+	Queue q = new Queue();
+	node.discover();
+	q.enqueue(node);
+	while (!q.isEmpty()) { 
+		Node extract = q.dequeue();
+		visit(extract);
+		for (Node child : extract.children) {
+			if (child != null && !child.isDiscovered()) {
+				child.discover();
+				q.enqueue(child);
+			}
+		}
+    }
+}
+```
+#### Summary
+Whenever a node is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**
+#### Example
+Tree that isn't being rendered properly in markdown lol:
+```
+    +
+  /   *
+ a b c d
+```
+
+- extract: d
+- q: 
+- discovered: `+/*abcd`
+- visited: `+/*abcd`
+#### Algorithmic analysis
+Time: O(n)
+Memory: O(n) due to queue
+#### Advantages over other traversals
+Since this is a breadth-first traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree breadth-first will use less memory than depth-first.
+#### Disadvantages over other traversals
+A balanced binary tree uses less memory storage in depth-first traversals than in breadth-first traversals. A depth-first traversal will only store a max of 3 nodes at a time (node, node.left, node.right, and not counting stack frames). A breadth-first traversal can store all the nodes at one level of a tree which can be very large. 
+#### Example usages that work uniquely well with this algorithm
+- Traversing a tree that has limited depth but lots of breadth (like a filesystem)
+
+### Binary Search Tree (BST)
+#### How they work
+A Binary Search Tree is a tree with each node having the left node's value < middle node's value < right node's value. Either the left node value can be <= or the right node value can be >= than the middle node's value but only one of them can support the `or equal` part for being equal with the middle node's value.
+
+#### Advantages
+- You can perform a binary search that takes O(h) time where h is the height of the BST
+- Easy to find the minimum/maximum valued node, just go left/right in O(h) time
+- You can insert an array into a BST and then print that tree with an inorder traversal
+#### Disadvantages
+#### Example usages that work uniquely well with this data structure
+
+### Balanced Trees (namely BTs and BSTs)
+- There are several ways to define balanced trees. The one I know best is the one for AVL balanced trees. That is, a balanced tree is a tree where every subtree in the tree follows this principle: the height of a node and the height of that node's children differ by at most 1.
+- The overall goal is to keep the height of all nodes to be O(h) where h = log(n)
 
 # Contributing
 ## Algorithm documentation skeleton
@@ -472,8 +611,8 @@ public static ? ?(???) {
 #### Algorithmic analysis
 Time:
 Memory:
-#### Advantages over other traversals
-#### Disadvantages over other traversals
+#### Advantages
+#### Disadvantages
 #### Example usages that work uniquely well with this algorithm
 
 ## Data Structure documentation skeleton
@@ -484,6 +623,7 @@ Memory:
 #### Example usages that work uniquely well with this data structure
 
 #TODO
+* Organize into data structures, algorithms
 * Make this cleaner
 * Split up data structures and algorithms into separate files where appropriate
 * Rewrite this in Latex
