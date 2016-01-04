@@ -426,7 +426,7 @@ Disadvantage: You need to come up with 2 good hash functions.
 Binary Trees are trees with each node having a max of 2 children. Nodes can also contain a value.
 
 ## Binary Tree Traversal Algorithms
-### Pre-order Traversal (Depth-first traversal)
+### Pre-order Traversal (Depth-first traversal for Trees)
 Pre-order traversal can be easily modified to a depth-first search because pre-order traversal is a depth-first traversal. If instead of going down the left paths first (visit node, preorder(left), preorder(right)), one can go down the right paths first (visit node, preorder(right), preorder(left))
 #### Pseudocode
 ```java
@@ -537,7 +537,7 @@ Since this is a depth-first-ish traversal, this algorithm uses little memory on 
 #### Example usages that work uniquely well with this algorithm
 The infix expression shows the sorted values of a Binary Search Tree.
 
-### Breadth-first Traversal
+### Breadth-first Traversal for Trees
 Can be easily modified to Breadth First Search (BFS) by having the visit(node) part check if the passed in node you're looking for is equivalent to the node passed in to the visit method.
 #### Pseudocode
 ```java
@@ -590,12 +590,122 @@ A Binary Search Tree is a tree with each node having the left node's value < mid
 - You can perform a binary search that takes O(h) time where h is the height of the BST
 - Easy to find the minimum/maximum valued node, just go left/right in O(h) time
 - You can insert an array into a BST and then print that tree with an inorder traversal
+- Dynamic data structure, size isn't static
 #### Disadvantages
 #### Example usages that work uniquely well with this data structure
+- Good when you need: Hierarchy, quick search (log n), quick insert/delete O(h), 
 
 ### Balanced Trees (namely BTs and BSTs)
 - There are several ways to define balanced trees. The one I know best is the one for AVL balanced trees. That is, a balanced tree is a tree where every subtree in the tree follows this principle: the height of a node and the height of that node's children differ by at most 1.
 - The overall goal is to keep the height of all nodes to be O(h) where h = log(n)
+
+### Heaps (Priority Queues)
+#### How they work
+Heaps are structures built with an underlying array. The property of heaps is that every node in the heap is >= (max heap) or <= (min heap) than it's children.
+Heaps look like Binary Trees. Each node can have a max of 2 children and each node also has a value. To find the left/right child, or parent of a node in a heap you pass in the array index of the node to a method left()/right()/parent() which all take O(1) time and space. To extract the min/max element from a heap, Heap.extract() which takes O(log n) due to heapify taking O(log n) time. Similarly, inserting an element takes O(log n) time due to heapify taking O(log n) time. Building a heap from an input array takes O(n) time.
+#### Example
+This is a max heap:
+```
+   10
+ 8    9
+2 3  4 5
+```
+#### Advantages
+Nodes can be weighted and prioritized according to that weight. Weights don't necessarily have to be integers.
+#### Disadvantages
+- Insertion & deletion aren't performed in constant time because you need to re-heapify
+- You don't really traverse a heap. But you could just "extract" (remove the root) and then re-heapify in a loop to continually get the k-th min or max
+#### Example usages that work uniquely well with this data structure
+- Accessing the k-th min/max in an array
+- Prioritizing things
+
+### Graphs
+#### Definitions
+- Vertex: a node in a graph. A.k.a., a single vertice
+- Vertices: plural of vertex
+- Adjacent vertices: Vertices that have an edge between them
+- Degree of vertex: is # of adjacent vertices at a node in the graph
+- Path: sequence of vertices v1, v2, ... vk such that v_i+1 is adjacent to vi for i=1 ... k-1
+- Cycle: Path with no repeated vertices except that the last vertex equals the first
+- Connected graph: all vertices are connected by some path
+- Walk: a sequence of alternating vertices and edges beginning and ending with vertices.
+#### How they work
+Note that the magnitude symbol on a V means number of vertices in the graph and on a E means the number of edges in the graph.
+##### Adjacency list
+A graph can be represented by the adjacency lists of all its vertices. An adjacency list of a vertex v is a list of vertices adjacent to v. This uses O(|V| + Sigma(degree(v))) = O(|V| + |E|).
+###### Advantages
+- Pretty simple
+- O(k) time to find the successor of a vertex  by keeping track of a list of successors of v. K is the number of possible successors for v
+- Uses less memory than the Adjacency Matrix depending on data types used in the list and how many bytes per data type
+###### Disadvantages
+- Looking for an edge between two vertices takes O(|V|) time because you have to look at one of those vertices adj list and loop through it to find the other vertex
+##### Adjacency Matrix
+M[vertex i, vertex j] = 1 if there's an edge between vertices i, j.
+###### Example
+```
+  a b c
+a 0 1 1
+b 1 0 0
+c 1 0 0
+```
+###### Advantages
+- O(1) access time to see if there's an edge between two vertices
+- O(1) time to add/remove an edge (just editing an array)
+###### Disadvantages
+- O(|V|^2) memory can get nasty with large |V|
+#### Advantages
+#### Disadvantages
+#### Example usages that work uniquely well with this data structure
+- Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
+
+### Breadth First Traversal and Depth First Traversal for graphs
+Can be easily modified to Breadth First Search (BFS) by having the visit(vertex) part check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method.
+#### Pseudocode
+```java
+public static void bft(Graph g) {
+	g.setAllVertexDistancesTo(Math.INFINITY);
+	g.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
+	
+	Vertex v = g.startingVertex;
+	v.setDistance(0); // Start of the graph is set to distance 0 because it's 0 distance from the start of the graph lol
+	
+	Queue q = new Queue();
+	q.enqueue(v);
+
+	while (!q.isEmpty()) {
+		Vertex vertex = q.dequeue();
+		visit(vertex);
+		for (Vertex adjVertex : vertex.adjacencyList) {
+			if (!adjVertex.isDiscovered()) {
+				adjVertex.setDiscovered();
+				adjVertex.setDistance(vertex.getDistance() + 1); // Since adjVertex is right beside vertex
+				q.enqueue(adjVertex);
+			}
+		}
+	}
+}
+```
+#### Summary
+Whenever a vertex is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**. Basically in BFT, whenever you find a vertex, you**....**
+#### Example
+It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙).
+```
+(B = INF) → → → (F = INF) → (C = INF) → (H = INF)
+↑ ↖   ↗
+↑  ↖  (D = INF)
+↑   ↖ ↑
+↑     (A = INF)  
+↑    ↗
+(E= INF) → (G = INF)
+```
+Let's say B is the starting point of the graph.
+#### Algorithmic analysis
+Time: O(|V| * visit + |E|)
+Memory: O(|V|) from queue/stack
+#### Advantages
+#### Disadvantages
+#### Example usages that work uniquely well with this algorithm
+- Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
 
 # Contributing
 ## Algorithm documentation skeleton
