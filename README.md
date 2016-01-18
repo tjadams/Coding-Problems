@@ -1,8 +1,8 @@
 # Coding-Problems
-A repository used for development of coding ability. Currently, this is mainly being used to improve my knowledge of data structures, algorithms, Java, and Python.
+A repository used for development of coding ability. Currently, this is mainly being used to improve my knowledge of data structures, algorithms, Java, and Python. The bulk of this repository is contained in the README files in each folder.
 
 ## Folder Structure
-Each folder listed below contains source files.
+Each folder listed below contains source files and a README with many notes on the respective topic.
 
 * `ds-algo` - Contains coding problems involving data structures and algorithms
 * `java` - Contains common usages of Java
