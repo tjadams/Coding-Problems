@@ -170,6 +170,14 @@ DP problems are recursive problems where you store intermediate results.
 3. Use cache results in recursive solution if they are available to use
 4. If they are not available to use, calculate and cache new result
 
+### Detailed steps
+1. Show optimal substructure. Show that an optimal solution to the problem holds optimal solutions to subproblems. First, characterize what the solution may look like. Ex: Lowest common substring has the following properties...
+2. Write a recurrence for the value of an optimal solution. That may look something like the following: M_optimal = minimum over all choices depending on the indece k from the following formula: something like M_optimal resulting from choice of k + cost associated with making choice indece k.
+3. Compute the value of an optimal solution in a bottom-up way. This way, all subproblems are pre-computed.
+4. Construct an optimal solution from the computed information.
+
+### Examples from ECE 250 - Data Structures and Algorithms 
+
 ## Analyzing Space Complexity a.k.a Auxillary Memory
 Space Complexity/Auxillary Memory is the "extra space" used as a result of calling a function. This is mainly tricky to analyze in recursive problems. Here's a formula that helps with analyzing.
 **Space Complexity of a recursive problem = (space per stack frame)*(# of stack frames which in most cases is the amount of times the function is recursively called)**
@@ -629,6 +637,8 @@ Nodes can be weighted and prioritized according to that weight. Weights don't ne
 - Cycle: Path with no repeated vertices except that the last vertex equals the first
 - Connected graph: all vertices are connected by some path
 - Walk: a sequence of alternating vertices and edges beginning and ending with vertices.
+- Dense graph: A graph that has many edges
+- Sparse graph: A graph that has few edges 
 #### How they work
 Note that the magnitude symbol on a V means number of vertices in the graph and on a E means the number of edges in the graph.
 ##### Adjacency list
@@ -659,7 +669,7 @@ c 1 0 0
 - Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
 
 ### Breadth First Traversal and Depth First Traversal for graphs
-Can be easily modified to Breadth First Search (BFS) by having the visit(vertex) part check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method.
+Can be easily modified to Breadth First Search (BFS) by having the visit(vertex) part check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method. Alternatively, if any of the vertices still has a distance of infinity, then that vertex is not accessible from the graph.
 #### Pseudocode
 ```java
 public static void bft(Graph g) {
@@ -667,6 +677,7 @@ public static void bft(Graph g) {
 	g.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
 	
 	Vertex v = g.startingVertex;
+	v.setDiscovered();
 	v.setDistance(0); // Start of the graph is set to distance 0 because it's 0 distance from the start of the graph lol
 	
 	Queue q = new Queue();
@@ -676,7 +687,7 @@ public static void bft(Graph g) {
 		Vertex vertex = q.dequeue();
 		visit(vertex);
 		for (Vertex adjVertex : vertex.adjacencyList) {
-			if (!adjVertex.isDiscovered()) {
+			if (!adjVertex.isDiscovered()) { // if it were discovered and you continued with the logic, the distance would start off correct but then it would become different if there are multiple paths from the root to a particular vertex
 				adjVertex.setDiscovered();
 				adjVertex.setDistance(vertex.getDistance() + 1); // Since adjVertex is right beside vertex
 				q.enqueue(adjVertex);
@@ -686,26 +697,133 @@ public static void bft(Graph g) {
 }
 ```
 #### Summary
-Whenever a vertex is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**. Basically in BFT, whenever you find a vertex, you**....**
-#### Example
-It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙).
-```
-(B = INF) → → → (F = INF) → (C = INF) → (H = INF)
-↑ ↖   ↗
-↑  ↖  (D = INF)
-↑   ↖ ↑
-↑     (A = INF)  
-↑    ↗
-(E= INF) → (G = INF)
-```
-Let's say B is the starting point of the graph.
+BFT/DFT compute the shortest distance to all vertices starting from a particular vertex. Whenever a vertex is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**. **Basically in BFT, whenever you find a vertex, you take a glance at its adjacent nodes but you don't yet fully go down the path of those adjacent nodes. You just calculate the distance and move on** and calculate their distances. Then you do the same with all the adjacent nodes of the starting node. You keep doing this on all nodes until you have done this on all nodes. **Basically in DFT, whenever you find an adjacent vertex, you explore that adjacent vertex's adjacent vertex.**
+
 #### Algorithmic analysis
-Time: O(|V| * visit + |E|)
+Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run on all vertices. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges
 Memory: O(|V|) from queue/stack
 #### Advantages
+Both are good at searching through unordered data. Choosing BFT or DFT depends on the data. If your data is deep, you'll probably want DFT. If your data is varied and wide, you'll probably want BFT.
 #### Disadvantages
 #### Example usages that work uniquely well with this algorithm
 - Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
+#### BFT Example
+It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Letters are vertices. Right side of equals is their distance from starting vertex. Bolded letters are discovered.
+```
+(**B** = 1) → → → (**F** = 2) → (**C** = 3) → (**H** = 4)
+↑ ↖   ↑
+↑  ↖  (**D** = 1)
+↑   ↖ ↑
+↑     (**A** = 0)  
+↑    ↗
+(**E** = 1) → (**G** = 2)
+```
+Let's say A is the starting point of the graph.
+- q: 
+- vertex: C
+- adjVertex: 
+- adj list: (order of adj list doesn't matter as long as order of discovery doesn't matter)
+- visited: A, D, B, E, G, F, C, H
+- discovered: A, D, B, E, F, G, C, H
+
+#### DFT Unfinished Example (unfinished because I got what I needed to make the summary)
+**Notice how I stopped the example as soon as I saw that I went down the path of A, E, G**
+```
+(**B** = 1) → → → (F = INF) → (C = INF) → (H = INF)
+↑ ↖   ↑
+↑  ↖  (**D** = 1)
+↑   ↖ ↑
+↑     (**A** = 0)  
+↑    ↗
+(**E** = 1) → (**G** = 2)
+```
+Let's say A is the starting point of the graph.
+- s (stack):    G
+-               B
+-               D
+ 
+- vertex: E
+- adjVertex: G 
+- adj list: (order of adj list doesn't matter as long as order of discovery doesn't matter)
+
+### Directed Acyclic Graph (DAG)
+#### How they work
+A directed graph (unidirectional graph: this means that when you traverse an edge, you can't traverse the same edge backwards to get back to where you were) that has no cycles. 
+#### Example usages that work uniquely well with this data structure
+Used in Topological Sort
+
+### Topological Sort
+#### Pseudocode (mostly correct lol)
+```java
+public static LinkedList<Vertex> TopologicalSort(Vertex root) {
+	LinkedList<Vertex> topsorted = new LinkedList<Vertex>();
+
+	root.setAllVertexDistancesTo(Math.INFINITY);
+	root.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
+	
+	int time = 0;
+
+	Vertex v = g.startingVertex;
+	v.setDiscovered();
+	v.setDistance(0); // Start of the graph is set to distance 0 because it's 0 distance from the start of the graph lol
+	
+	Stack s = new Stack();
+	s.push(v);
+
+	while (!s.isEmpty()) {
+		Vertex vertex = s.pop();
+		
+		time += 1;
+		// vertex.setDiscoveryTime(time); // Don't need this right here but it's interesting.
+
+		for (Vertex adjVertex : vertex.adjacencyList) {
+			if (!adjVertex.isDiscovered()) { // if it were discovered and you continued with the logic, the distance would start off correct but then it would become different if there are multiple paths from the root to a particular vertex
+				adjVertex.setDiscovered();
+				adjVertex.setDistance(vertex.getDistance() + 1); // Since adjVertex is right beside vertex
+				s.push(adjVertex);
+			}
+		}
+
+		time += 1;
+		// vertex.setFinishedTime(time);
+		topsorted.prepend(new Map<Vertex, Integer>(vertex, time));
+	}
+	return topsorted;
+}
+```
+#### Summary
+Depth First Search that returns the finishing times of vertexes in order of last finished to first finished. **(Shouldn't it be first to last? NO. Last finished to first finished is correct. The reasoning for this is that you set something to finished after you have explored all of it's adjacencies to maximum depth. This means that finished time is likely one of the very first vertexes discovered. Which makes sense because you have to visit that before the next nodes in the Topologically Sorted list)**
+#### Example
+#### Algorithmic analysis
+Time: O(DFS runtime) + O(1) = O(DFS runtime) = O(|V| + |E|)
+Memory: O(V) because of stack. Linkedlist is basically O(1) if I think of it as V pointers.
+#### Example usages that work uniquely well with this algorithm
+Figuring out what is the correct order to do things. I.e., I need to do X before I do Y before I do Z etc.
+
+### DAG Detection (i.e., Check if a graph has cycles)
+#### Summary
+When running DFS, add a detection algorithm when you visit a node. That detection algorithm will basically check if you have visited that node before. If you have, return true. Otherwise if you have finished traversing the graph without returning, just return false.
+#### Algorithmic analysis
+Time: same as DFS
+Memory: same as DFS
+#### Example usages that work uniquely well with this algorithm
+When do you not want cycles?
+
+### NP-Complete problems
+#### Decision problems
+Question with a yes or no answer.
+#### P problems
+P is the set of all decision problems that can be solved and verified in polynomial time O(n^k) on a deterministic turing machine.
+#### Deterministic Turing Machine
+A machine that defines a maximum of one solution to a problem. Ex: if you see a red light, turn left.
+#### NP problems
+NP is the set of all decision problems for which problems with a "yes" answer can be verified to be correct in polynomial time O(n^k)
+#### NP-Hard characteristic
+NP-Hard problems are problems that are at least as hard/difficult (higher difficulty means takes longer to solve) to solve as the hardest/most difficult NP problems.
+#### NP-Complete problems
+An NP-Complete problem is a problem that has the NP-Hard characteristic and is the problem that every other problem in NP can be transformed to in polynomial time. This means that if any one NP complete problem can be solved "quickly" (polynomial time) then any NP problem can be solved "quickly" (in polynomial time)
+#### Does P = NP?
+#### How to classify a problem as NP-Complete
 
 # Contributing
 ## Algorithm documentation skeleton
