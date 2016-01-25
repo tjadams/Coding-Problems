@@ -19,14 +19,6 @@ ex:
 = 1000
 
 ## Fundamental Facts
-* Big Endian: MSB (most significant bit - the bit that represents the largest value) is the leftmost digit. Big Endian is the most common representation of bits. **Everything that I cover about Bit Manipulation in this readme will have Big Endianness.**
-
-ex:
-1000 in binary is 1 * 2^3 + 0 * 2^2 + 0 * 2^1 + 0 * 2^0 = 8 in decimal
-
-* Little Endian: MSB is the rightmost digit
-ex:
-0001 in binary is 0 * 2^0 + 0 * 2^1 + 0 * 2^2 + 1 * 2^3 = 8 in decimal
 
 * A sequence of ones or zeros is commonly denoted with an s postfix as such: 1s and 0s
 * x ^ 0 = x  ,  x & 0 = 0 , x + 0 = x
@@ -39,6 +31,37 @@ ex:
 * **-1 = 1s. In Java, if you do `-1 >>> 31` then it will give you `1`. This is because an int has 32 bits so -1 is actually a binary string of length 32 with all ones**
 * **Turns out that ~1s = 0s in Java after all. Ex: ~111 = 000 but if you actually print out the 0s it's 0 instead of 000.**
 * **num = num |  Integer.parseInt(value); // Only sets if value is 1 because x | 0 = x**
+
+### Endianness
+#### Big Endian
+MSB (most significant bit - the bit that represents the largest value) is the leftmost digit. Big Endian is the most common representation of bits. **Everything that I cover about Bit Manipulation in this readme will have Big Endianness.**
+
+ex:
+1000 in binary is 1 * 2^3 + 0 * 2^2 + 0 * 2^1 + 0 * 2^0 = 8 in decimal
+
+ex:
+Memory diagram for a 4 byte binary number MSB 0A0B0C0D LSB
+0D at location alpha + 3  (highest address - LSB)
+0C at location alpha + 2
+0B at location alpha + 1
+0A at location alpha      (lowest address - MSB)
+
+#### Little Endian
+MSB is the rightmost digit
+ex: 
+0001 in binary is 0 * 2^0 + 0 * 2^1 + 0 * 2^2 + 1 * 2^3 = 8 in decimal
+
+ex:
+Memory diagram for a 4 byte binary number MSB 0A0B0C0D LSB
+0A at location alpha + 3  (highest address - MSB)
+0B at location alpha + 2
+0C at location alpha + 1
+0D at location alpha      (lowest address - LSB)
+
+
+
+### Two's Complement in Binary
+If MSB is 0, everything is normal. MSB is the sign bit. Sign bit = 0 means the 2's comp number is positive. Sign bit = 1 means the 2's comp number is negative. To get the value of a negative 2's complement number, value = -(flip all the bits and add one).
 
 ### Get Bit
 ```java
@@ -333,10 +356,10 @@ Each node of a linked list is a pointer to memory. Pointers that point to other 
 - Nodes must know about other nodes so they're not independant
 - Hard to traverse backwards in a singly LL
 
-#### Runner technique
+#### Runner technique a.k.a Tortoise & Hare
 Iterate through LL with 2 pointers. One pointer is ahead of the other. 
 Usually one pointer iterates one element at a time and the other iterates two elements at a time.
-This is useful for many LL problems where you want to weave elements together or determine the size of a list.
+This is useful for many LL problems where you want to weave elements together, determine the size of a list, detect a cycle
 
 #### Example usages that work uniquely well with this data structure
 - Making a better queue/stack
@@ -823,7 +846,53 @@ NP-Hard problems are problems that are at least as hard/difficult (higher diffic
 #### NP-Complete problems
 An NP-Complete problem is a problem that has the NP-Hard characteristic and is the problem that every other problem in NP can be transformed to in polynomial time. This means that if any one NP complete problem can be solved "quickly" (polynomial time) then any NP problem can be solved "quickly" (in polynomial time)
 #### Does P = NP?
+If P = NP then that means all NP-Complete problems can be solved in polynomial time and we can use solutions to NP-Complete problems to solve all NP problems using a polynomial time transformation 
 #### How to classify a problem as NP-Complete
+TODO in the future
+
+## Object Oriented Programming (OOP)
+Objects: data structures that contain data (fields) and procedures (methods)
+Classes: definitions of objects. They define how objects work.
+
+### Principles of OOP
+#### Encapsulation
+Encapsulation is when you hide information by setting who can see that information. Ex: making a variable or method private
+#### Inheritance
+Inheritance is the concept of extending or implementing functionality from another class. Ex: in Java, "implements" or "extends
+#### Polymorphism
+**Polymorphism is when Class A that extends Class B calls a method that exists in both Class A and Class B.** Basically, the class can be used as different classes.
+ex: 
+```java
+public class PolymorphicClass extends OtherClass
+PolymorphicClass instance = new PolymorphicClass();
+OtherClass other = instance;
+```
+#### Open recursion
+Open recursion is when other methods can make use of the object they're in by using the keywords "this" or "self". Ex: using the current instance object using "this" or equivalently, just calling that object's instance variables or methods
+#### Method overloading
+Is when you have two methods that have the same name but different method parameters.
+	methodName()
+	methodName(int parameter)
+#### Method overriding
+Is when you edit a parent class' method to suit the child class' needs. Ex: @Override in Java. Can also make use of stuff from parent's class using "super".
+#### Delegation/forwarding
+Delegation refers to one object sending or "forwarding" a message to a second object. This is typically done when the first object's class does not know how to handle the message.
+#### Composition:
+A "owns" B and B has no meaning without A. Ex: TextFile class "owns" a Buffer class and the Buffer has no meaning without the TextFile.
+#### Aggregation:
+A "uses" B and B can exist independently from A. Ex: Company uses people to ...
+#### Is-a versus has-a relationship
+Is-a is when Class A extends B. A is-a B.
+Has-a is when Class A has B as a field. A has-a B.
+
+## Common algorithm performances
+Constant: O(1)
+Logorithmic: O(log base 2 n) = O(lgn)
+Linear: O(n)
+Polynomial: O(n^y) y>1 (n=2 means input doubles every time etc)
+Exponential: O(e^n)
+Factorial: O(n!)
+ 
 
 # Contributing
 ## Algorithm documentation skeleton
