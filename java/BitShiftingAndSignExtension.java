@@ -1,5 +1,24 @@
 public class BitShiftingAndSignExtension {
     public static void main (String args[]) {
+        System.out.println("Normal examples: ");
+        System.out.println("0001 << 3 = " + (Integer.toBinaryString(Integer.parseInt("0001", 2) << 3))+". Expected 1000");
+//        System.out.println("0001 <<< 3 = " + (Integer.toBinaryString(Integer.parseInt("0001", 2) <<< 3) +". Expected 1000"); // Note: <<< doesn't exist in Java because it's the same as <<.
+
+        System.out.println("1100 >> 1 = " + (Integer.toBinaryString(Integer.parseInt("1100", 2) >> 1)) + ". Expected 0110 because 1100 represents a positive integer. At first I expected 1010. However, this is wrong because if this were a 2's complement number, the sign extension of the rest of the bits in this 32 bit int would be 1, not 0.");
+        System.out.println("1100 >>> 1 = " + (Integer.toBinaryString(Integer.parseInt("1100", 2) >>> 1)) + ". Expected 0110");
+
+        System.out.println("Arithmetic shifting a negative number example:");
+        System.out.println("-4 >> 1 = " + (Integer.toBinaryString(-4) + " >> 1 = "+ Integer.toBinaryString(-4 >> 1)));
+
+        System.out.println("Shifting past MSB examples: ");
+        System.out.println("0001 << 4 = " + (Integer.toBinaryString(Integer.parseInt("0001", 2) << 4)) +". Expected 0000 but got 10000. Remember to mask to a 4 bit representation by anding your result afterwards. This would get you 0000.");
+//        System.out.println("0001 <<< 4 = " + (Integer.toBinaryString(Integer.parseInt("0001", 2) <<< 4)) +". Expected 0000"); // Note: <<< doesn't exist in Java because it's the same as <<.
+
+        System.out.println("Shifting past LSB examples: ");
+        System.out.println("1100 >> 4 = " + (Integer.toBinaryString(Integer.parseInt("1100", 2) >> 4)) +". Expected 0000");
+        System.out.println("1100 >>> 4 = " + (Integer.toBinaryString(Integer.parseInt("1100", 2) >>> 4)) +". Expected 0000");
+
+        System.out.println("Old examples: ");
         // Looks like >> and >>> are equivalent if the input string is positive
         System.out.println(">> vs >>> :\n>> = " + Integer.toBinaryString(Integer.parseInt("1111", 2) >> 5) + "\n" +
                            ">>> = " + Integer.toBinaryString(Integer.parseInt("1111", 2) >>> 5));
