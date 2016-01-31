@@ -335,6 +335,26 @@ public static boolean isLetter (char a) {
 }
 ```
 
+## Enums
+```java
+public enum Company {
+	GOOGLE(15), MICROSOFT(20), AMAZON(70), FACEBOOK(13);
+	private int value;
+	public Company(int value) { this.value = value; }
+	public int getValue() { return value; }
+	public static Company getCompanyFromValue (int value) { ... }
+}
+
+public class UseCompany {
+	public static void main (String args[]) {
+		for (Company company : Company.values()) {
+			System.out.println("Company " + company + " has value " + company.value);
+		}
+	}
+}
+
+```
+
 ## TODO
 * Think about switching from Markdown to Latex
 * Implement common data structures and algorithms in Java (ex: Binary Tree, etc)
