@@ -32,6 +32,26 @@ ex:
 * **Turns out that ~1s = 0s in Java after all. Ex: ~111 = 000 but if you actually print out the 0s it's 0 instead of 000.**
 * **num = num |  Integer.parseInt(value); // Only sets if value is 1 because x | 0 = x**
 
+### Arithmetic Shift vs Logical Shift vs Circular Shift
+Arithmetic Shift is `binaryNum << x` and `binaryNum >> x`. Arithmetic Shift shifts all the bits in a binary number left or right by x bit positions. When arithmetic shifting to the right, instead of being filled with all 0s as in the logical shift, the original leftmost bit (sometimes called the signbit if you're using signed integers) is maintained. When arithmetic shifting to the left, the MSB dissapears, all other bits are shifted left, and the LSB becomes 0.
+
+**Logical shift is often used when its operand (binary number) is being treated as a sequence of bits rather than as a number.** **<<< doesn't exist in Java because it's the same as <<.**Logical Shift is `binaryNum <<< x` and `binaryNum >>> x`. Logical Shift also shifts all the bits in a binary number left or right by x bit positions. When logical shifting to the right, 0s are filled in to the MSB and other bit positions following the MSB towards the right. When logical shifting to the left, 0s are filled in to the LSB and other bit positions following the LSB towards the left.
+
+Circular shift a.k.a. bitwise rotation is exactly what it sounds like. If you shift past the left boundary, the bits that were shifted past the boundary reappear on the right boundary. Same with shifting past right but with the reappearance occurring at the left boundary. **Neither Arithmetic of Logical shifts are circular shifts.**
+
+#### Normal examples
+* `0001 << 3 = 1000`
+* `1100 >> 1 = 0110`
+* `1100 >>> 1 = 0110`
+
+#### Shifting past MSB examples
+* `0001 << 4 = 10000`
+* `(0001 << 4) & 1111 = 0000`
+
+#### Shifting past LSB examples
+* `1100 >> 4 = 0000`
+* `1100 >>> 4 = 0000`
+
 ### Endianness
 #### Big Endian
 MSB (most significant bit - the bit that represents the largest value) is the leftmost digit. Big Endian is the most common representation of bits. **Everything that I cover about Bit Manipulation in this readme will have Big Endianness.**
@@ -296,9 +316,9 @@ Average case time complexity is  O(n log n). Worst case time complexity is O(n^2
 * Can be optimized to use O(log n) memory which is very little. This is done by quicksorting in-place
 
 #### Disadvantages
-* Time complexity relies on having a good pivot point during each recursive call
 * Difficult to parralelize
-* The most optimized version of Quicksort is not a stable sort
+* Not a stable sort
+* Time complexity relies on having a good pivot point during each recursive call
 
 # Discrete Mathematics
 Many arrays and strings problems likely use discrete math. Look for counting, permutations etc in a problem to identify this.
@@ -732,6 +752,10 @@ Both are good at searching through unordered data. Choosing BFT or DFT depends o
 - Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
 #### BFT Example
 It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Letters are vertices. Right side of equals is their distance from starting vertex. Bolded letters are discovered.
+#### Misc. notes
+* In a directed graph, you can only look at adjacent nodes that you can actually travel to from the current node that you're on
+* In an undirected graph, you can look at all adjacent nodes to the current node you're on
+
 ```
 (**B** = 1) → → → (**F** = 2) → (**C** = 3) → (**H** = 4)
 ↑ ↖   ↑
@@ -892,7 +916,22 @@ Linear: O(n)
 Polynomial: O(n^y) y>1 (n=2 means input doubles every time etc)
 Exponential: O(e^n)
 Factorial: O(n!)
- 
+
+### Tries a.k.a prefix tree
+#### How they work
+A Trie is a variant of an n-ary tree in which characters are stored at each node. Each path down the tree typically represents a word. You know the path you're on has completed into a word when the end of that path (depth-first) leads to a `*`. If we're only storing letters from the alphabet and that `*`, then the number of children nodes can be anywhere from 0 to ALPHABET_SIZE + 1. If you don't have a child, you have an unfinished word or some other thing.
+#### Advantages
+- Used very commonly when looking for something that has to do with a String
+- A trie can check if a String is a prefix of another String in O(n) time where n is the length of the string
+#### Disadvantages
+- A trie can check if a String is inside it in O(n) time where n is the length of the string. Hash Tables are probably better in this situation.
+#### Example usages that work uniquely well with this data structure
+ - Quick prefix lookups by storing entire english language
+ - A Trie can see if a word is a prefix of any other valid words really quickly. A Hash Table can only check if a String is in fact a word (i.e. a dictionary).
+
+### Directed graph vs Undirected graphs (a.k.a. bidirectional graphs)
+* Directed graphs may have a route from nodes a to b but not nodes b to a (because node b can't go back to a). ex: a->b.
+* Undirected graphs have a route from nodes a to b and from nodes b to a. Ex: a-b.
 
 # Contributing
 ## Algorithm documentation skeleton
