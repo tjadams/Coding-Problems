@@ -196,7 +196,7 @@ public static CardGame createCardGame (GameType type) {
 ```
 
 ## Recursion
-Note that all recursive code can be implemented iteratively but it can be very complex.
+Note that all recursive code can be implemented iteratively but it can be very complex. Generally, it's good to draw a recursion tree with the root being an example of the recursive problem on a specified value of n. Identify if work is being done multiple times (like other subproblems). You can also see that your base cases are leaf nodes that are all on the same nth value. Also note that drawing a recursion tree is a great way to determine the runtime of a recursive algorithm.
 
 ### Bottom-up
 1. Solve a simple case like n=1
@@ -206,14 +206,16 @@ Note that all recursive code can be implemented iteratively but it can be very c
 ### Top-down
 Think of how to divide the problem at case N into subproblems
 
-## Dynamic Programming
-DP problems are recursive problems where you store intermediate results.
-1. Implement recursive solution
-2. Try to cache results
-3. Use cache results in recursive solution if they are available to use
-4. If they are not available to use, calculate and cache new result
+## Dynamic Programming and Memoization
+DP problems are recursive problems where you store intermediate results. Some people call top-down dynamic programming "memoization" and bottom-up dynamic programming "dynamic programming". To me, these are both called dynamic programming.
+### Basic steps to solving
+1. Draw a recursion tree with the root being an example of the recursive problem on a specified value of n. Identify if work is being done multiple times (like other subproblems). You can also see that your base cases are leaf nodes that are all on the same nth value. Also note that drawing a recursion tree is a great way to determine the runtime of a recursive algorithm.
+2. Implement recursive solution
+3. Try to cache results
+4. Use cache results in recursive solution if they are available to use
+5. If they are not available to use, calculate and cache new result
 
-### Detailed steps
+### Detailed steps to solving
 1. Show optimal substructure. Show that an optimal solution to the problem holds optimal solutions to subproblems. First, characterize what the solution may look like. Ex: Lowest common substring has the following properties...
 2. Write a recurrence for the value of an optimal solution. That may look something like the following: M_optimal = minimum over all choices depending on the indece k from the following formula: something like M_optimal resulting from choice of k + cost associated with making choice indece k.
 3. Compute the value of an optimal solution in a bottom-up way. This way, all subproblems are pre-computed.
@@ -932,6 +934,12 @@ A Trie is a variant of an n-ary tree in which characters are stored at each node
 ### Directed graph vs Undirected graphs (a.k.a. bidirectional graphs)
 * Directed graphs may have a route from nodes a to b but not nodes b to a (because node b can't go back to a). ex: a->b.
 * Undirected graphs have a route from nodes a to b and from nodes b to a. Ex: a-b.
+
+### Set
+A set is a collection of distinct objects. Order does not matter. So the set {1, 2, 3, 4} is the same as the set {3, 1, 2, 4}.
+
+### List
+A list is a collection of objects (may or may not be distinct) in which order does matter. So the list {1, 2, 3, 4} is different from the list {3, 1, 2, 4}.
 
 # Contributing
 ## Algorithm documentation skeleton
