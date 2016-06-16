@@ -33,7 +33,7 @@ public class BinarySearchTree {
     Returns true if it exists in the tree, returns false otherwise.
      */
     // TODO code this in a non-static way as well. That way, insteadof doing the static BianrySearchTree.search(root, value), I can do root.search(value) which looks better lol. Look into pros/cons of having a method about a data structure be static vs non-static
-    // TODO I was thinking of this method as if I was searching in an in-order traversal type of way which is why I have the successor/predecessor parts. I should investigate the difference between doing it this way and doing it with using node.right and node.left
+    // TODO I was thinking of this method as if I was searching in an in-order traversal type of way which is why I have the successor/predecessor parts. I should investigate the difference between doing it this way and doing it with using node.right and node.left. Also I should probably code it the standard way with node.left and node.right as in http://www.algolist.net/Data_structures/Binary_search_tree/Lookup
     public static boolean search(BinarySearchTree root, int value) {
         if (root == null) {
             return false;
