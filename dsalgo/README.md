@@ -936,7 +936,7 @@ A Trie is a variant of an n-ary tree in which characters are stored at each node
 * Undirected graphs have a route from nodes a to b and from nodes b to a. Ex: a-b.
 
 ### Set
-A set is a collection of distinct objects. Order does not matter. So the set {1, 2, 3, 4} is the same as the set {3, 1, 2, 4}.
+A set is a collection of distinct objects. Order does not matter. So the set {1, 2, 3, 4} is the same as the set {3, 1, 2, 4}. **Set.add(x) is an optional operation because it won't add x to the set if x is already in the set. This is very useful for CS problems that can't have duplicates.**
 
 ### List
 A list is a collection of objects (may or may not be distinct) in which order does matter. So the list {1, 2, 3, 4} is different from the list {3, 1, 2, 4}.
@@ -967,6 +967,7 @@ Memory:
 #### Example usages that work uniquely well with this data structure
 
 #TODO
+* In Topological Sort, further understand the time parts of the algorithm
 * Organize into data structures, algorithms
 * Make this cleaner
 * Split up data structures and algorithms into separate files where appropriate
