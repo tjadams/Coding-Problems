@@ -58,7 +58,7 @@ A class is a subclass of another class if the first class extends the second
 ## Primitive data types
 Don't need the "new" keyword.
 * byte (8 bit)
-* boolean 
+* boolean (Oracle's documents say that the size of this isn't precisely defined even though boolean **represents** 1 bit)
 * short (16 bit int)
 * int (32 bit)
 * long (64 bit int)
@@ -354,6 +354,22 @@ public class UseCompany {
 }
 
 ```
+
+## Null
+In Java, a variable is a reference to an Object. A null value indicates a reference that isn't set. Moreover, a null value is a reference to nothing. Only Objects can be null. Primitive data types can't be null.
+
+## Default values
+A default value is the value of a variable before it is initialized. The following is a list of type List<Map<DataType, DefaultValue>> (lol) that maps data types to their respective default value:
+
+* byte - 0
+* short - 0
+* int - 0
+* long - 0L
+* float - 0.0f
+* double - 0.0d
+* char - '\u0000'
+* String (or any object) - null
+* boolean - false
 
 ## TODO
 * Think about switching from Markdown to Latex
