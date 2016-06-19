@@ -15,6 +15,12 @@ public class BinarySearchTree {
     private BinarySearchTree right;
     private int value;
 
+    public BinarySearchTree(int value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+
     public int min() {
         // TODO
         return 0;
