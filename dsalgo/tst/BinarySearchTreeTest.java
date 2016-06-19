@@ -4,7 +4,6 @@ import org.junit.Before;
 import src.BinarySearchTree;
 
 import static org.junit.Assert.*;
-import static src.BinarySearchTree.search;
 
 public class BinarySearchTreeTest {
 
@@ -31,38 +30,42 @@ public class BinarySearchTreeTest {
 
     @org.junit.Test
     public void minTest() throws Exception {
-
+        assertEquals(1, tree.min().getValue());
     }
 
     @org.junit.Test
     public void maxTest() throws Exception {
-
+        assertEquals(11, tree.max().getValue());
     }
 
     @org.junit.Test
     public void successorTest() throws Exception {
-
+        // TODO
     }
 
     @org.junit.Test
     public void searchTest() throws Exception {
         boolean result;
         for (int i = 1; i <= 11; i++) {
-            result = search(tree, i);
+            result = tree.search(i);
             assertEquals(true, result);
         }
 
-        result = search(tree, 12);
+        result = tree.search(12);
         assertEquals(false, result);
     }
 
     @org.junit.Test
     public void insertTest() throws Exception {
+        tree.insert(new BinarySearchTree(12));
+        assertEquals(12, tree.max().getValue());
 
+        tree.insert(new BinarySearchTree(5));
+        assertEquals(5, tree.getRight().min().getValue());
     }
 
     @org.junit.Test
     public void predecessorTest() throws Exception {
-
+        // TODO
     }
 }
