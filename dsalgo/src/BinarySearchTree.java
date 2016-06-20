@@ -65,6 +65,64 @@ public class BinarySearchTree {
         return null;
     }
 
+    public void inorderTraversal() {
+        if (this.getLeft() != null) {
+            this.getLeft().inorderTraversal();
+        }
+
+        System.out.println(this.getValue());
+
+        if (this.getRight() != null) {
+            this.getRight().inorderTraversal();
+        }
+    }
+
+    public static void staticInorderTraversal(BinarySearchTree tree) {
+        if (tree == null) return;
+        staticInorderTraversal(tree.getLeft());
+        System.out.println(tree.getValue());
+        staticInorderTraversal(tree.getRight());
+    }
+
+
+    public void preorderTraversal() {
+        System.out.println(this.getValue());
+
+        if (this.getLeft() != null) {
+            this.getLeft().preorderTraversal();
+        }
+
+        if (this.getRight() != null) {
+            this.getRight().preorderTraversal();
+        }
+    }
+
+    public static void staticPreorderTraversal(BinarySearchTree tree) {
+        if (tree == null) return;
+        System.out.println(tree.getValue());
+        staticPreorderTraversal(tree.getLeft());
+        staticPreorderTraversal(tree.getRight());
+    }
+
+    public void postorderTraversal() {
+        if (this.getLeft() != null) {
+            this.getLeft().postorderTraversal();
+        }
+
+        if (this.getRight() != null) {
+            this.getRight().postorderTraversal();
+        }
+
+        System.out.println(this.getValue());
+    }
+
+    public static void staticPostorderTraversal(BinarySearchTree tree) {
+        if (tree == null) return;
+        staticPostorderTraversal(tree.getLeft());
+        staticPostorderTraversal(tree.getRight());
+        System.out.println(tree.getValue());
+    }
+
     /*
     Searches for a src.BinarySearchTree node with an integer value of "value".
     Returns true if it exists in the tree, returns false otherwise.
