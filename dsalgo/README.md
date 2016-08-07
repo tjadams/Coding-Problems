@@ -143,6 +143,11 @@ public static int updateBitsFromLsbToIthBit(int num, int i, int value) {
 }
 ```
 
+### Summary
+* & is typically used with a mask in order to get info about a binary number or a subset of a binary number.
+* | is typically used to set, do nothing, or edit a binary number or a subset of a binary number
+* Arithmetic vs logical shift: >> is signed, >>> is unsigned. If the integer is positive: >>> and >> shift a zero into the MSB due to sign extension. If the integer is negative: >>> shifts a zero into the MSB. >> shifts a one into the MSB due to sign extension. <<< and << are the same in Java.
+
 ##Object Oriented Design
 Step 1: Clarify the problem
 
@@ -352,6 +357,9 @@ Memory: You make n, n/2, n/4, n/8, n/16, ... additional memory per iteration. Si
 #### Disadvantages
 - Uses lots of memory
 
+## Quicksort vs Mergesort high-level overview
+In Quicksort, all the real work happens in the "dividing step" where things are sorted into left and right arrays according to a pivot value. The "merge step" in Quicksort is not nearly as important because it simply concatenates. Mergesort is the opposite. The "dividing step" is simple and the "merge step" holds most of the logic.
+
 ## Arrays
 #### How they work
 An array can be implemented as a container that takes up a linear section in memory. You can't change the container itself but you can change the items in it.
@@ -372,6 +380,7 @@ Each node of a linked list is a pointer to memory. Pointers that point to other 
 #### Advantages
 - Size is dynamic
 - Insert/delete in O(1) time
+- The type of data held in each node can be different because we can use Objects (we're not constrained to using primitive data types like we are in arrays. At least in Java that's how it is).
 
 #### Disadvantages
 - Accessing an element takes O(n) time because you have to loop through the head of the LL
@@ -387,11 +396,12 @@ This is useful for many LL problems where you want to weave elements together, d
 - Making a better queue/stack
 - Scavenger hunt
 - Conga line
+- Storing text while writing in a text editor (doubly linked list)
 
 ## Stacks
 #### How they work
 Last-in first-out container. So the most recent item put on the stack is the first one to be seen by the outside world.
-Uses a top of stack pointer to an underlying array to expose that element to the outside world. Pushing (inserting) and popping (removing) from stack are done at top of stack only.
+Uses a top of stack pointer to an underlying array to expose that element to the outside world. Pushing (inserting) and popping (removing) from stack are done at top of stack only. This is not implemented circularly.
  
 #### Advantages
 - Push: Insert element at TOS in O(1) time
@@ -406,7 +416,7 @@ Uses a top of stack pointer to an underlying array to expose that element to the
 
 #### Example usages that work uniquely well with this data structure
 - Converting the base of a number
-- Evaluating math expressions
+- Evaluating math expressions (usually combined with polish notation)
 - Recursion stuff like backtracking in a maze
 
 ## Queues
@@ -426,13 +436,15 @@ Uses one pointer for the beginning element array index of the queue, and another
 #### Example usages that work uniquely well with this data structure
 - Giving things priority
 - Lining up for a store
+- Waiting to enter an online video game server
 
-## Hash Tables
+## Hash Tables/Maps
 #### How they work
-A hash table maps keys to values using a hash function on an underlying array. It has a  capacity c and n total items.
-A hash function is a function that accepts a value and maps the index of that value to the hash table.
-A **collision** occurs when a hash function maps a value to an index that already has a value.
-Good hash functions collide infrequently.
+A hash table or hash map will map keys to values using a hash function on those keys and using that hashed value as an index to store a value in an array. It has a  capacity c in the underlying array and n total items in the hash table. Collisions are certain to occur if n > c.
+A hash function is a function that accepts a key and returns an index to the hash table. This is called hashing a key to an index. Example usage looks like this: 
+```hashmap[hashFunction("key")] = value;```
+A **collision** occurs when a hash function hashes a key to an index that already has a value.
+Good hash functions have few collisions.
 
 ###### Resolving collisions with Chaining
 Each index of the hash table holds a linked list of values. When a collision occurs, the value to be added is added to the end of the linked list.
@@ -456,22 +468,22 @@ Disadvantage: You need to come up with 2 good hash functions.
 - Sometimes uses way more memory than needed
 
 #### Example usages that work uniquely well with this data structure
-- Counting how many times you have seen some values in something. hashtable[h(some value)] = number of times you have seen it
+- Counting how many times you have seen some values in something. hashtable[h(some key)] = number of times you have seen it
 
 ## Tree & Graph definitions
 **This is very important**
 
-- Leaves: nodes with no children
+- Leaf nodes (leaves): nodes with no children
 - Siblings: nodes with same parent
 - Root: node with no parent. This is the top-most node of the tree. Also the starting point for iteration in the tree data structure
 - Path: sequence of nodes n_1, n_2, ..., n_k such that n_i is the parent of n_i+1 for 1 <= i < k
 - Walk: A walk is movement from one node to another in the tree. You can walk back to the same node you started if you wanted to.
 - Length: number of edges on a path
 - Depth of a tree node: is the length of the unique path from the root to that node. "How deep is that node?" Root has a depth of 0. Depth of tree is different from depth of root i.e., "How deep does the tree go?" vs. "How deep is the root from the root? 0"
-- Height of a tree node: is the length of the longest unique path from that tree node to a leaf. All leaves have a high of 0."How high is that node?"
+- Height of a tree node: is the length of the longest unique path from that tree node to a leaf. All leaves have a height of 0. Example usages: "How high is that node?" or "What is the height of this node?"
 - **Height of a tree = Depth of a tree = Max Height = Max Depth**: is the length of the longest unique path from the root to a leaf node.  "How high is the tree?"
 - Traversal: visiting every node once
-- **Serialize**: Means to put something into a series. Ex: serialize a tree makes a series representation of a tree
+- **Serialize**: Means to put something into a series. Ex: serialize a tree makes a series representation of a tree. Ex: serialize a tree into an infix string.
 
 ## Binary Trees
 **These are different than Binary Search Trees. BSTs extend the functionality of BTs**
@@ -972,3 +984,4 @@ Memory:
 * Make this cleaner
 * Split up data structures and algorithms into separate files where appropriate
 * Rewrite this in Latex
+
