@@ -378,7 +378,7 @@ Focusing on singly linked-lists.
 Each node of a linked list is a pointer to memory. Pointers that point to other pointers allow for a list of accessible elements called a Linked List.
 
 #### Advantages
-- Size is dynamic
+- This is a data structure with dynamic size. Size isn't static like it is in arrays or anything built with an underlying array (Queue, Stack, Heap). **This is neat**
 - Insert/delete in O(1) time
 - The type of data held in each node can be different because we can use Objects (we're not constrained to using primitive data types like we are in arrays. At least in Java that's how it is).
 
@@ -406,6 +406,7 @@ Uses a top of stack pointer to an underlying array to expose that element to the
 #### Advantages
 - Push: Insert element at TOS in O(1) time
 - Pop: Delete element at TOS in O(1) time
+- Can be made to have a dynamic container size by resizing an underlying array or using an underlying linked list. **This is neat**
  
 #### Disadvantages
 - Must access top of stack element only. As a result:
@@ -428,7 +429,7 @@ Uses one pointer for the beginning element array index of the queue, and another
 #### Advantages
 - Enqueue: Insert element at end of queue in O(1) time if less than total underlying array size
 - Dequeue: Remove element from beginning of queue in O(1) time 
-- Can be made to have a dynamic container size by resizing an underlying array or using an underlying linked list
+- Can be made to have a dynamic container size by resizing an underlying array or using an underlying linked list. **This is neat**
 
 #### Disadvantages
 - Can only remove elements from the beginning of the queue
@@ -476,7 +477,7 @@ Disadvantage: You need to come up with 2 good hash functions.
 - Leaf nodes (leaves): nodes with no children
 - Siblings: nodes with same parent
 - Root: node with no parent. This is the top-most node of the tree. Also the starting point for iteration in the tree data structure
-- Path: sequence of nodes n_1, n_2, ..., n_k such that n_i is the parent of n_i+1 for 1 <= i < k
+- Path: sequence of nodes n_1, n_2, ..., n_k such that n_i is the parent of n_i+1 for 1 <= i < k. **Note that in a tree, a path from node A to B is the shortest path from node A to B because there only exists one path from node A to B.**
 - Walk: A walk is movement from one node to another in the tree. You can walk back to the same node you started if you wanted to.
 - Length: number of edges on a path
 - Depth of a tree node: is the length of the unique path from the root to that node. "How deep is that node?" Root has a depth of 0. Depth of tree is different from depth of root i.e., "How deep does the tree go?" vs. "How deep is the root from the root? 0"
@@ -523,11 +524,13 @@ Time: Visits each node once so it's O(n)
 Memory: **You could count the stack frames due to recursion but that's probably optimized by the compiler.** As a result, O(1)
 
 #### Advantages over other traversals
-Since this is a depth-first traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
+* Since this is a depth-first traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces). **The low amount of memory that DFS uses likely makes DFS better than BFS in scenarios where BFS uses more memory unless BFS happens to be more time-optimal in that situation. For example, if you know the data you're searching for isn't far from the root and the tree isn't very wide, then BFS is very optimal even though it uses some memory.**
+* This algorithm is simple to implement
 
 #### Disadvantages over other traversals
-- Since this is a depth-first traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree depth-first will use more memory than breadth-first.
-- If modified to a search, search takes O(n)
+- Doesn't have the advantages of BFS
+- If modified to a search, search takes O(n) whereas  binary search in binary search trees takes O(logn)
+- Preorder is a specific ordering that may not be preferable in some situations
 
 ### Post-order traversal
 #### Pseudocode
@@ -559,12 +562,15 @@ Time: Visits each node once so it's O(n)
 Memory: **You could count the stack frames due to recursion but that's probably optimized by the compiler.** As a result, O(1)
 
 #### Advantages over other traversals
-Since this is a depth-first-ish traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
+* Since this is a depth-first-ish traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
+* This algorithm is simple to implement
+
 #### Disadvantages over other traversals
-- Since this is a depth-first-ish traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree depth-first will use more memory than breadth-first. However this effect is not as pronounced because post-order is depth-first-ish.
-- If modified to a search, search takes O(n)
+- Doesn't have properties of other traversals like BFS
+- May not be the best order of traversal for a particular situation
+
 #### Example usages that work uniquely well with this algorithm
-- Deleting a BT or Binary subtree (because that's also a tree :)). This works with postorder because postorder traverses children before parents which allows you to delete the children when you visit and then delete the parent after. 
+- Deleting a BT or Binary subtree (because that's also a tree :)). This works with postorder because postorder traverses children before parents which allows you to delete the children when you visit and then delete the parent after. **This is neat**
 
 ### In-order Traversal
 #### Pseudocode
@@ -578,7 +584,7 @@ public static void inorder(Node node) {
 ```
 #### Summary
 inorder left, visit node, inorder right
-Generates a infix expression of nodes in a tree. This infix expression is a serial representation of the tree. This is necessary for some language processors. This infix expression is the sorted values of a BST if the tree is a BST. Inorder traversals traverse the tree from left to right (or right to left if you do inorder(right), visit, inorder(left)) in the order that the nodes are arranged in the tree.
+Generates a infix expression of nodes in a tree. This infix expression is a serial representation of the tree. This is necessary for some language processors. **This infix expression is the sorted values of a BST if the tree is a BST**. Inorder traversals traverse the tree from left to right (or right to left if you do inorder(right), visit, inorder(left)) in the order that the nodes are arranged in the tree.
 
 #### Example
 Tree that isn't being rendered properly in markdown lol:
@@ -593,14 +599,18 @@ Calling inorder(+) with + being the root of the tree would generate this infix e
 #### Algorithmic analysis
 Time: Visits each node once so it's O(n)
 Memory: **You could count the stack frames due to recursion but that's probably optimized by the compiler.** As a result, O(1)
+
 #### Advantages over other traversals
-Since this is a depth-first-ish traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
+* Since this is a depth-first-ish traversal, this algorithm uses little memory on balanced binary trees. This is due to this algorithm only requiring 3 nodes in memory at a time (node.left, node.right, node, not counting stack traces).
+* This algorithm is simple to implement
+
 #### Disadvantages over other traversals
-- Since this is a depth-first-ish traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree depth-first will use more memory than breadth-first. However this effect is not as pronounced because post-order is depth-first-ish.
+- Lacks properties of other traversals like BFS
 - If modified to a search, search takes O(n)
+- May not be the right order of traversal you want
 
 #### Example usages that work uniquely well with this algorithm
-The infix expression shows the sorted values of a Binary Search Tree.
+The infix expression shows the sorted values of a Binary Search Tree. **This is neat**
 
 ### Breadth-first Traversal for Trees
 Can be easily modified to Breadth First Search (BFS) by having the visit(node) part check if the passed in node you're looking for is equivalent to the node passed in to the visit method.
@@ -637,36 +647,40 @@ Tree that isn't being rendered properly in markdown lol:
 - q: 
 - discovered: `+/*abcd`
 - visited: `+/*abcd`
+
 #### Algorithmic analysis
 Time: O(n)
 Memory: O(n) due to queue
 #### Advantages over other traversals
-Since this is a breadth-first traversal, if the tree is like the worst-case insertion scenario (O(n) where n is number of nodes and n is the height of the tree instead of O(logn) with n being the number of nodes and logn the height of the tree), then traversing the tree breadth-first will use less memory than depth-first.
+A BFS can be turned into a path finding algorithm between two nodes. Since we know that all paths in a tree are shortest paths (see path definition above and note that at least I know this for paths from root to leaves but not sure about all paths), then we know that BFS can be turned into a shortest-path finding algorithm. This is done by setting adjacent node's parents to the node extracted from the queue if the adjacent nodes have their parents set to null. Then to find the shortest path you just go from destination node's.parent recursively to the top until parent is null and return a list of null parent node to the destination node.
 #### Disadvantages over other traversals
 A balanced binary tree uses less memory storage in depth-first traversals than in breadth-first traversals. A depth-first traversal will only store a max of 3 nodes at a time (node, node.left, node.right, and not counting stack frames). A breadth-first traversal can store all the nodes at one level of a tree which can be very large. 
 #### Example usages that work uniquely well with this algorithm
-- Traversing a tree that has limited depth but lots of breadth (like a filesystem)
+- Traversing a tree that has limited depth but lots of breadth (like a filesystem). Ex for filesystem: you would deal with the files in the current directory and forget about them before moving on to one of the child directories. **This is neat**
 
 ### Binary Search Tree (BST)
 #### How they work
-A Binary Search Tree is a tree with each node having the left node's value < middle node's value < right node's value. Either the left node value can be <= or the right node value can be >= than the middle node's value but only one of them can support the `or equal` part for being equal with the middle node's value.
+A Binary Search Tree is a tree with each node having the left node's value < parent node's value < right node's value. Either the left node value can be <= the parent node or the right node value can be >= than the parent node's value but only one of them can support the `or equal` part for being equal with the parent node's value.
 
 #### Advantages
 - You can perform a binary search that takes O(h) time where h is the height of the BST
 - Easy to find the minimum/maximum valued node, just go left/right in O(h) time
 - You can insert an array into a BST and then print that tree with an inorder traversal
-- Dynamic data structure, size isn't static
+- This is a data structure with dynamic size. Size  isn't static like it is in arrays or anything built with an underlying array (Queue, Stack, Heap). **This is neat**
+
 #### Disadvantages
+- In order to get O(h) = O(logn) you have to occasionally balance the BST and that takes time.
+
 #### Example usages that work uniquely well with this data structure
-- Good when you need: Hierarchy, quick search (log n), quick insert/delete O(h), 
+- Good when you need: Hierarchy, quick search if balanced O(h) = O(logn), quick insert/delete if balanced O(h) = O(logn)
 
 ### Balanced Trees (namely BTs and BSTs)
-- There are several ways to define balanced trees. The one I know best is the one for AVL balanced trees. That is, a balanced tree is a tree where every subtree in the tree follows this principle: the height of a node and the height of that node's children differ by at most 1.
-- The overall goal is to keep the height of all nodes to be O(h) where h = log(n)
+- There are several ways to define balanced trees. The one I know best is the one for AVL balanced trees. That is, a balanced tree is a tree where every subtree in the tree (including the tree itself) follows this principle: the height of a node and the height of that node's children differ by at most 1.
+- The overall goal is to keep the height of all nodes to be log(n) resulting in O(h) operations to be O(log(n))
 
 ### Heaps (Priority Queues)
 #### How they work
-Heaps are structures built with an underlying array. The property of heaps is that every node in the heap is >= (max heap) or <= (min heap) than it's children.
+Heaps are structures built with an underlying array. The property of heaps is that every node in the heap is >= (max heap) or <= (min heap) it's children.
 Heaps look like Binary Trees. Each node can have a max of 2 children and each node also has a value. To find the left/right child, or parent of a node in a heap you pass in the array index of the node to a method left()/right()/parent() which all take O(1) time and space. To extract the min/max element from a heap, Heap.extract() which takes O(log n) due to heapify taking O(log n) time. Similarly, inserting an element takes O(log n) time due to heapify taking O(log n) time. Building a heap from an input array takes O(n) time.
 #### Example
 This is a max heap:
@@ -676,10 +690,13 @@ This is a max heap:
 2 3  4 5
 ```
 #### Advantages
-Nodes can be weighted and prioritized according to that weight. Weights don't necessarily have to be integers.
+* Nodes can be weighted and prioritized according to that weight. Weights don't necessarily have to be integers.
+* Insert/Delete always takes O(log n) time. Compare this with BST Insert/Delete which takes O(h) time where the height of the tree may not always be log n and you have to balance too.
+
 #### Disadvantages
 - Insertion & deletion aren't performed in constant time because you need to re-heapify
-- You don't really traverse a heap. But you could just "extract" (remove the root) and then re-heapify in a loop to continually get the k-th min or max
+- You don't really traverse a heap. But you could just "extract" (remove the root) and then re-heapify in a loop to continually get the k-th min or max. This would count as a O(nlogn) traversal
+
 #### Example usages that work uniquely well with this data structure
 - Accessing the k-th min/max in an array
 - Prioritizing things
@@ -693,21 +710,27 @@ Nodes can be weighted and prioritized according to that weight. Weights don't ne
 - Path: sequence of vertices v1, v2, ... vk such that v_i+1 is adjacent to vi for i=1 ... k-1
 - Cycle: Path with no repeated vertices except that the last vertex equals the first
 - Connected graph: all vertices are connected by some path
-- Walk: a sequence of alternating vertices and edges beginning and ending with vertices.
+- Walk: a walk of length L in a graph is a sequence of alternating vertices and edges like `V_0, E_0, V_1, E_1, ..., V_L-1, E_L-1, V_L` such that the edge E_i in the sequence connects the vertices V_i and V_i+1
 - Dense graph: A graph that has many edges
 - Sparse graph: A graph that has few edges 
+
 #### How they work
 Note that the magnitude symbol on a V means number of vertices in the graph and on a E means the number of edges in the graph.
+
 ##### Adjacency list
-A graph can be represented by the adjacency lists of all its vertices. An adjacency list of a vertex v is a list of vertices adjacent to v. This uses O(|V| + Sigma(degree(v))) = O(|V| + |E|).
+A graph can be represented by the adjacency lists of all its vertices. An adjacency list of a vertex v is a list of vertices adjacent to v. This uses O(|V| + Sigma(degree(v))) = O(|V| + |E|). **Sigma(degree(v)) = |E| is interesting**. **Note that for directed graphs, adjacency lists are ideally used**
+
 ###### Advantages
 - Pretty simple
 - O(k) time to find the successor of a vertex  by keeping track of a list of successors of v. K is the number of possible successors for v
 - Uses less memory than the Adjacency Matrix depending on data types used in the list and how many bytes per data type
+
 ###### Disadvantages
 - Looking for an edge between two vertices takes O(|V|) time because you have to look at one of those vertices adj list and loop through it to find the other vertex
+
 ##### Adjacency Matrix
 M[vertex i, vertex j] = 1 if there's an edge between vertices i, j.
+
 ###### Example
 ```
   a b c
@@ -715,18 +738,26 @@ a 0 1 1
 b 1 0 0
 c 1 0 0
 ```
+
 ###### Advantages
 - O(1) access time to see if there's an edge between two vertices
 - O(1) time to add/remove an edge (just editing an array)
+
 ###### Disadvantages
 - O(|V|^2) memory can get nasty with large |V|
-#### Advantages
-#### Disadvantages
+
+#### Advantages of Graphs
+* Many unique usages/applications of this data structure
+
+#### Disadvantages of Graphs
+* search takes a long time O(|V| + |E|) = O (|V| + |V|^2) or something
+
 #### Example usages that work uniquely well with this data structure
 - Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
 
-### Breadth First Traversal and Depth First Traversal for graphs
-Can be easily modified to Breadth First Search (BFS) by having the visit(vertex) part check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method. Alternatively, if any of the vertices still has a distance of infinity, then that vertex is not accessible from the graph.
+### Breadth First Search and Depth First Search for graphs
+Breadth First Traversal and Depth First Traversal can be easily modified to BFS or DFS respectively by having the visit(vertex) method check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method. Alternatively, if any of the vertices still has a distance of infinity, then that vertex is not accessible from the graph. I think a vertex that isn't accessible from the graph would be undiscovered too. **These two properties can be useful in determining if a graph is connected.**
+
 #### Pseudocode
 ```java
 public static void bft(Graph g) {
@@ -754,50 +785,70 @@ public static void bft(Graph g) {
 }
 ```
 #### Summary
-BFT/DFT compute the shortest distance to all vertices starting from a particular vertex. Whenever a vertex is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**. **Basically in BFT, whenever you find a vertex, you take a glance at its adjacent nodes but you don't yet fully go down the path of those adjacent nodes. You just calculate the distance and move on** and calculate their distances. Then you do the same with all the adjacent nodes of the starting node. You keep doing this on all nodes until you have done this on all nodes. **Basically in DFT, whenever you find an adjacent vertex, you explore that adjacent vertex's adjacent vertex.**
+BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**. **Note that the vertex distance parts of this algorithm are not needed**
 
 #### Algorithmic analysis
-Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run on all vertices. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges
+Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
 Memory: O(|V|) from queue/stack
+
 #### Advantages
-Both are good at searching through unordered data. Choosing BFT or DFT depends on the data. If your data is deep, you'll probably want DFT. If your data is varied and wide, you'll probably want BFT.
-#### Disadvantages
-#### Example usages that work uniquely well with this algorithm
-- Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
-#### BFT Example
-It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Letters are vertices. Right side of equals is their distance from starting vertex. Bolded letters are discovered.
+Both BFS and DFS are good at searching through unordered data arranged as a graph. Choosing BFS or DFS depends on the data. In the following subheadings, I'll go through the situations when BFS/DFS is better than one another.
+
+##### DFS > BFS
+* If your data is deep, you'll probably want DFS. 
+* 
+
+##### BFS > DFS
+* If your data is varied and wide, you'll probably want BFT. 
+* A BFS can be turned into a path finding algorithm between two nodes **if the edges are unweighted**. Note that for BFS for Trees, this unweighted edge requirement is implied because the concept of edges or costs to go to a child node does not exist. This is done by setting adjacent node's parents to the node extracted from the queue if the adjacent nodes have their parents set to null. Then to find the shortest path you just go from destination node's.parent recursively to the top until parent is null and return a list of null parent node to the destination node. **Note that even though parent is a "tree word" it just means the node that we were at before we reached the node that is calling node.parent**
+
+#### Disadvantages for BFS/DFS
+* You will likely need a different traversal for graphs with weighted edges
+
 #### Misc. notes
 * In a directed graph, you can only look at adjacent nodes that you can actually travel to from the current node that you're on
 * In an undirected graph, you can look at all adjacent nodes to the current node you're on
 
-```
+#### Example usages that work uniquely well with this algorithm
+##### In general for both BFS, DFS
+- Compilers, graphics, maze-solving (**so potentially backtracking?**), mapping, networks (routing, searching, clustering, ...)
+
+##### DFS
+- DFS is particularly used in game-simulations such as chess where you can choose one of several possible actions.when you are deciding what move to make, you can mentally imagine a move, then your opponent’s possible responses, then your responses, and so on. You can decide what to do by seeing which move leads to the best outcome. Only some paths in a game tree lead to your win, some lead to a win by your opponent. When you reach such an ending, you must back up, or backtrack, to a previous node and try a different path. In this way you explore the tree until you find a path with a successful conclusion. Then you make the first move along this path.
+
+##### BFS
+* Peer to peer networks like BitTorrent, GPS systems to find nearby locations, social networking sites to find people in the specified distance
+
+#### BFS Example
+It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Letters are vertices. Right side of equals is their distance from starting vertex. Bolded letters are discovered.
+
 (**B** = 1) → → → (**F** = 2) → (**C** = 3) → (**H** = 4)
-↑ ↖   ↑
+↑ ↖               ↗
 ↑  ↖  (**D** = 1)
 ↑   ↖ ↑
 ↑     (**A** = 0)  
 ↑    ↗
 (**E** = 1) → (**G** = 2)
-```
-Let's say A is the starting point of the graph.
+
+Let's say A is the starting point of the graph and all edges are undirected.
+
 - q: 
 - vertex: C
 - adjVertex: 
 - adj list: (order of adj list doesn't matter as long as order of discovery doesn't matter)
-- visited: A, D, B, E, G, F, C, H
+- visited: A, D, B, E, F, G, C, H
 - discovered: A, D, B, E, F, G, C, H
 
-#### DFT Unfinished Example (unfinished because I got what I needed to make the summary)
-**Notice how I stopped the example as soon as I saw that I went down the path of A, E, G**
-```
+#### DFS Example
+
 (**B** = 1) → → → (F = INF) → (C = INF) → (H = INF)
-↑ ↖   ↑
+↑ ↖              ↗
 ↑  ↖  (**D** = 1)
 ↑   ↖ ↑
 ↑     (**A** = 0)  
 ↑    ↗
 (**E** = 1) → (**G** = 2)
-```
+
 Let's say A is the starting point of the graph.
 - s (stack):    G
 -               B
