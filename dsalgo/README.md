@@ -755,8 +755,12 @@ c 1 0 0
 #### Example usages that work uniquely well with this data structure
 - Compilers, graphics, maze-solving, mapping, networks (routing, searching, clustering, ...)
 
-### Breadth First Search and Depth First Search for graphs
-Breadth First Traversal and Depth First Traversal can be easily modified to BFS or DFS respectively by having the visit(vertex) method check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method. Alternatively, if any of the vertices still has a distance of infinity, then that vertex is not accessible from the graph. I think a vertex that isn't accessible from the graph would be undiscovered too. **These two properties can be useful in determining if a graph is connected.**
+### Misc. notes about Graph Traversals
+* In a directed graph, you can only look at adjacent nodes that you can actually travel to from the current node that you're on
+* In an undirected graph, you can look at all adjacent nodes to the current node you're on
+
+### Breadth First Search for graphs
+Breadth First Traversal can be easily modified to BFS by having the visit(vertex) method check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method. If any of the vertices still has a distance of infinity at the end of the traversal, then that vertex is not accessible from the graph. I think a vertex that isn't accessible from the graph would be undiscovered too **check this**. **These two properties can be useful in determining if a graph is connected.**
 
 #### Pseudocode
 ```java
@@ -785,42 +789,27 @@ public static void bft(Graph g) {
 }
 ```
 #### Summary
-BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**. **Note that the vertex distance parts of this algorithm are not needed**
+BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **Note that the vertex distance parts of BFT algorithm are not needed**
 
 #### Algorithmic analysis
 Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
-Memory: O(|V|) from queue/stack
+Memory: O(|V|) from queue
 
-#### Advantages
-Both BFS and DFS are good at searching through unordered data arranged as a graph. Choosing BFS or DFS depends on the data. In the following subheadings, I'll go through the situations when BFS/DFS is better than one another.
+#### Advantages (BFS > DFS)
+Both BFS and DFS are good at searching through unordered data arranged as a graph. Choosing BFS or DFS usually depends on the data.
 
-##### DFS > BFS
-* If your data is deep, you'll probably want DFS. 
-* 
-
-##### BFS > DFS
 * If your data is varied and wide, you'll probably want BFT. 
 * A BFS can be turned into a path finding algorithm between two nodes **if the edges are unweighted**. Note that for BFS for Trees, this unweighted edge requirement is implied because the concept of edges or costs to go to a child node does not exist. This is done by setting adjacent node's parents to the node extracted from the queue if the adjacent nodes have their parents set to null. Then to find the shortest path you just go from destination node's.parent recursively to the top until parent is null and return a list of null parent node to the destination node. **Note that even though parent is a "tree word" it just means the node that we were at before we reached the node that is calling node.parent**
 
-#### Disadvantages for BFS/DFS
+#### Disadvantages
 * You will likely need a different traversal for graphs with weighted edges
 
-#### Misc. notes
-* In a directed graph, you can only look at adjacent nodes that you can actually travel to from the current node that you're on
-* In an undirected graph, you can look at all adjacent nodes to the current node you're on
-
 #### Example usages that work uniquely well with this algorithm
-##### In general for both BFS, DFS
-- Compilers, graphics, maze-solving (**so potentially backtracking?**), mapping, networks (routing, searching, clustering, ...)
-
-##### DFS
-- DFS is particularly used in game-simulations such as chess where you can choose one of several possible actions.when you are deciding what move to make, you can mentally imagine a move, then your opponent’s possible responses, then your responses, and so on. You can decide what to do by seeing which move leads to the best outcome. Only some paths in a game tree lead to your win, some lead to a win by your opponent. When you reach such an ending, you must back up, or backtrack, to a previous node and try a different path. In this way you explore the tree until you find a path with a successful conclusion. Then you make the first move along this path.
-
-##### BFS
-* Peer to peer networks like BitTorrent, GPS systems to find nearby locations, social networking sites to find people in the specified distance
+- In general for both BFS, DFS: Compilers, graphics, maze-solving (**so potentially backtracking?**), mapping, networks (routing, searching, clustering, ...)
+- For BFS: Peer to peer networks like BitTorrent, GPS systems to find nearby locations, social networking sites to find people in the specified distance
 
 #### BFS Example
-It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Letters are vertices. Right side of equals is their distance from starting vertex. Bolded letters are discovered.
+It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Note that the graph is still undirected. Letters are vertices. Right side of equals is their distance from starting vertex. Bolded letters are discovered.
 
 (**B** = 1) → → → (**F** = 2) → (**C** = 3) → (**H** = 4)
 ↑ ↖               ↗
@@ -839,24 +828,64 @@ Let's say A is the starting point of the graph and all edges are undirected.
 - visited: A, D, B, E, F, G, C, H
 - discovered: A, D, B, E, F, G, C, H
 
-#### DFS Example
 
-(**B** = 1) → → → (F = INF) → (C = INF) → (H = INF)
-↑ ↖              ↗
-↑  ↖  (**D** = 1)
-↑   ↖ ↑
-↑     (**A** = 0)  
-↑    ↗
-(**E** = 1) → (**G** = 2)
+### Depth First Search for graphs (iterative)
+#### Pseudocode
+```java
+public static void dft(Graph g) {
+	g.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
+	
+	Vertex v = g.startingVertex;
+	v.setDiscovered();
+	
+	Stack s = new Stack();
+	s.push(v);
 
-Let's say A is the starting point of the graph.
-- s (stack):    G
--               B
--               D
+	while (!s.isEmpty()) {
+		Vertex vertex = s.pop();
+		visit(vertex);
+		if (!vertex.isDiscovered()) {
+			vertex.setDiscovered();
+			for (Vertex adjVertex : vertex.adjacencyList) {
+				if (!adjVertex.isDiscovered()) {					s.push(adjVertex);
+				}
+			}
+		}
+	}
+}
+```
+
+#### Summary
+Depth first search can't be used to find distance from a source node to a destination node. The reason for this is because that distance would have to be the shortest distance and we know that DFS can't be used to find the shortest path in unweighted graphs. See the proofs on the internet. Putting it very simply, BFS can do this because BFS has the nice property that at every node, it checks its undiscovered adjacent nodes and sets their distance. This makes it possible to find the shortest path. For DFS, that property just doesn't exist. **This is important**
+
+#### Example
+It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Note that the graph is still undirected. Letters are vertices. 
+
+      A
+    ↙↓↘
+   B  C E
+ ↙↓  ↓ ↑
+D  F  G ↑
+   ↘→→↗
+
+Let's say A is the starting point of the graph. Also, we push content onto the stack from right to left i.e. adjacency lists start with the rightmost element.
  
-- vertex: E
-- adjVertex: G 
-- adj list: (order of adj list doesn't matter as long as order of discovery doesn't matter)
+- order of visitation: A,B,D,F,E,C,G 
+
+#### Algorithmic analysis
+Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
+Memory: O(|V|) from stack
+
+#### Advantages (DFS > BFS)
+* If your data is deep, you'll probably want DFS. 
+
+#### Disadvantages
+* You will likely need a different traversal for graphs with weighted edges
+* Doesn't have the property of BFS that allows BFS to calculate the shortest path for graphs with unweighted edges
+
+#### Example usages that work uniquely well with this algorithm
+- In general for both BFS, DFS: Compilers, graphics, maze-solving (**so potentially backtracking?**), mapping, networks (routing, searching, clustering, ...)
+- DFS is particularly used in game-simulations such as chess where you can choose one of several possible actions. When you are deciding what move to make, you can mentally imagine a move, then your opponent’s possible responses, then your responses, and so on. You can decide what to do by seeing which move leads to the best outcome. Only some paths in a game tree lead to your win, some lead to a win by your opponent. When you reach such an ending, you must back up, or backtrack, to a previous node and try a different path. In this way you explore the tree until you find a path with a successful conclusion. Then you make the first move along this path.
 
 ### Directed Acyclic Graph (DAG)
 #### How they work
