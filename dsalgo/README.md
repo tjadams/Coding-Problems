@@ -612,7 +612,7 @@ Memory: **You could count the stack frames due to recursion but that's probably 
 #### Example usages that work uniquely well with this algorithm
 The infix expression shows the sorted values of a Binary Search Tree. **This is neat**
 
-### Breadth-first Traversal for Trees
+### Breadth-first Traversal and Depth First Traversal for Trees (iterative)
 Can be easily modified to Breadth First Search (BFS) by having the visit(node) part check if the passed in node you're looking for is equivalent to the node passed in to the visit method.
 #### Pseudocode
 ```java
@@ -634,19 +634,29 @@ public static void bft(Node node) {
 }
 ```
 #### Summary
-Whenever a node is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue**
-#### Example
+Whenever a node is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue. Note that we can only do this stack/queue replace trick in Trees and not in Graphs.** This is probably due to the cycles in the graph resulting in the discovery procedure becoming incorrect
+
+#### BFS Example
 Tree that isn't being rendered properly in markdown lol:
-```
+
     +
   /   *
  a b c d
-```
 
 - extract: d
 - q: 
 - discovered: `+/*abcd`
 - visited: `+/*abcd`
+
+#### DFS Example
+
+    +
+  /   *
+ a b c d
+ 
+ Start at + and assume adjacency list starts at right element and goes to left.
+ 
+ Visitation order: +/ab*cd
 
 #### Algorithmic analysis
 Time: O(n)
@@ -829,8 +839,8 @@ Let's say A is the starting point of the graph and all edges are undirected.
 - discovered: A, D, B, E, F, G, C, H
 
 
-### Depth First Search for graphs (iterative)
-#### Pseudocode
+### Depth First Search for graphs
+#### Pseudocode (iterative)
 ```java
 public static void dft(Graph g) {
 	g.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
@@ -855,10 +865,7 @@ public static void dft(Graph g) {
 }
 ```
 
-#### Summary
-Depth first search can't be used to find distance from a source node to a destination node. The reason for this is because that distance would have to be the shortest distance and we know that DFS can't be used to find the shortest path in unweighted graphs. See the proofs on the internet. Putting it very simply, BFS can do this because BFS has the nice property that at every node, it checks its undiscovered adjacent nodes and sets their distance. This makes it possible to find the shortest path. For DFS, that property just doesn't exist. **This is important**
-
-#### Example
+#### Example for the iterative algorithm
 It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Note that the graph is still undirected. Letters are vertices. 
 
       A
@@ -871,6 +878,45 @@ D  F  G ↑
 Let's say A is the starting point of the graph. Also, we push content onto the stack from right to left i.e. adjacency lists start with the rightmost element.
  
 - order of visitation: A,B,D,F,E,C,G 
+
+#### Pseudocode (recursive)
+```java
+public static void dft(Vertex v) {
+	// If we already preformed dft on this node then don't repeat ourselves
+	if (v.isDiscovered()) {
+		return;
+	}
+	
+	visit(v);
+	v.setDiscovered();
+	v.setColor(Vertex.GREY);
+	for (Vertex adjVertex : vertex.adjacencyList) {
+		if (!adjVertex.isDiscovered()) {
+			dft(adjVertex);
+		}
+	}
+	v.setColor(Vertex.BLACK);
+}
+```
+
+#### Example for the recursive algorithm
+It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ ← ↑ ↓ ↖ ↗ ↘ ↙). Note that the graph is still undirected. Letters are vertices. 
+
+      A
+    ↙↓↘
+   B  C E
+ ↙↓  ↓ ↑
+D  F  G ↑
+   ↘→→↗
+
+Let's say A is the starting point of the graph. Also, we push content onto the stack from left to right i.e. adjacency lists start with the leftmost element.
+ 
+- order of visitation: A,B,D,F,E,C,G 
+
+Order of recursive calls maps to the order of visitation too. However there's one more recursive call for dfs(E) at the end. That call is the reason for the if discovered then return statement at the top of the code.
+
+#### Summary
+Depth first search can't be used to find distance from a source node to a destination node. The reason for this is because that distance would have to be the shortest distance and we know that DFS can't be used to find the shortest path in unweighted graphs. See the proofs on the internet. Putting it very simply, BFS can do this because BFS has the nice property that at every node, it checks its undiscovered adjacent nodes and sets their distance. This makes it possible to find the shortest path. For DFS, that property just doesn't exist. **This is important**
 
 #### Algorithmic analysis
 Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
