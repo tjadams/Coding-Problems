@@ -979,6 +979,9 @@ public static LinkedList<Vertex> TopologicalSort(Vertex root) {
 }
 ```
 #### Summary
+
+**The following thing I'm about to say is quite tricky: some of the DAGs I have been looking at look like they have cycles. But in reality, they only have the shape of a cycle; a closed triangle with its vertices being nodes/vertexes. Upon taking a closer look, I can see that those closed triangle shapes are not cycles. This is because the directions that the arrows are pointing in do not allow for the closed triangle shape to be a cycle. Remember that DAGs are DIRECTIONAL graphs without cycles.**
+
 Depth First Search that returns the finishing times of vertexes in order of last finished to first finished. **(Shouldn't it be first to last? NO. Last finished to first finished is correct. The reasoning for this is that you set something to finished after you have explored all of it's adjacencies to maximum depth. This means that finished time is likely one of the very first vertexes discovered. Which makes sense because you have to visit that before the next nodes in the Topologically Sorted list)**
 #### Example
 #### Algorithmic analysis
