@@ -776,7 +776,7 @@ c 1 0 0
 ### Breadth First Search for graphs
 Breadth First Traversal can be easily modified to BFS by having the visit(vertex) method check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method. If any of the vertices still has a distance of infinity at the end of the traversal, then that vertex is not accessible from the graph. I think a vertex that isn't accessible from the graph would be undiscovered too **check this**. **These two properties can be useful in determining if a graph is connected.**
 
-#### Pseudocode
+#### Pseudocode (iterative)
 ```java
 public static void bft(Graph g) {
 	g.setAllVertexDistancesTo(Math.INFINITY);
@@ -1085,6 +1085,36 @@ A set is a collection of distinct objects. Order does not matter. So the set {1,
 
 ### List
 A list is a collection of objects (may or may not be distinct) in which order does matter. So the list {1, 2, 3, 4} is different from the list {3, 1, 2, 4}.
+
+### Trie
+A Trie is a data structure that is used for indexing and searching for strings in a given input string. It often gives fast solutions to problems involving Strings.
+
+#### How they work
+Take a look at the following class:
+public class Trie {
+	String value;
+	List<Trie> children;
+}
+The root node of a Trie is an empty String. 
+
+##### Inserting a String into a Trie
+(O(n) time where n is the length of the input String)
+1. Start off at the root node of the Trie
+2. Cut off the first character of the String and see if the children of the root has this character as a value
+3. If none of the children of the root have that character as a value then make a new Trie with no children and with a value being the first char that we cut, and append that to the root's children list.
+4. We repeat a similar process for the remaining character's in the input String
+
+#### Advantages
+Provides fast solutions to common String problems. These solutions are faster than most "naive" methods i.e. recursion.
+
+#### Disadvantages
+- Space complexity can get large
+- Most of the speediness relies on having a fixed alphabet. If your alphabet is tens of thousands of symbols instead of just 26 letters then the performance will be less impressive
+
+#### Example usages that work uniquely well with this data structure
+- Searching for one String inside another
+- counting the number of Strings with a common prefix given an array of Strings
+- lexicographical sort can be performed by a preorder traversal (i think) if the values are stored in a particular ordering... I'll have to investigate this further
 
 # Contributing
 ## Algorithm documentation skeleton
