@@ -1,6 +1,118 @@
 #ds-algo
 Notes and examples made from learning about data structures, algorithms, and other Computer Science concepts. I have **bolded** what is especially important for me. Keep in mind that this is written from a Java point of view.
 
+### Linear search
+#### Pseudocode
+```java
+public static boolean linearSearch(int[] array, int value) {
+	for (int i = 0; i < array.length; i++) {
+		if (array[i] == value) return true;
+	}
+	return false;
+}
+```
+#### Summary
+Look through every value in a collection for a desired value. If after looking through the collection you still haven't found the value, then the value doesn't exist in the collection. I could instead return the index of the array at which the value is present as an alternative to returning a boolean.
+#### Example
+array = [1 2 3 4 5]
+value = 6
+returns false
+
+value = 5
+returns true
+#### Algorithmic analysis
+Time: O(n)
+Memory: O(1)
+#### Advantages
+Very simple.
+#### Disadvantages
+This is the slowest search you can perform on a collection such as an array.
+#### Example usages that work uniquely well with this algorithm
+Looking for anything. However be aware of other searches and you should likely use them instead.
+
+### Binary Search
+#### Pseudocode (recursive)
+```java
+public static boolean binarySearch(int[] array, int value) {
+	return binarySearch(array, 0, array.length - 1, value);
+}
+
+public static boolean binarySearch(int[] array, int startIndex, int endIndex, int value) {
+	if(startIndex > endIndex) {
+		return false;
+	}
+
+	int middle = (startIndex + endIndex)/2;
+	if (array[middle] == value) {
+		return true;
+	} else if (array[middle] > value) {
+  		return binarySearch(array, startIndex, middle - 1, value);
+	} else if (array[middle] < value) {
+		return binarySearch(array, middle + 1, endIndex, value);
+	}
+}
+```
+#### Summary
+Given a sorted array, a binary search can be used to look for a value.
+#### Example (not found) 
+binarySearch(array = [1 6 15 22 90 112], value = 7)
+start = 0
+end = 5
+middle = 2
+arr[2] =15. 15 >7 so we go lower
+binarySearch(array, 0, 1, 7);
+start = 0
+end = 1
+middle = 0
+arr[0] =  1 < 7 so we go higher
+binarySearch(array, 1, 1, 7)
+start = 1
+end = 1
+middle = 1
+arr[1] = 6 < 7 so we go higher
+binarySearch(array,2, 1, 7)
+start = 2
+end = 1
+start > end return false
+
+#### Example (going lower)
+binarySearch(array = [1 6 15 22 90 112], value = 6)
+startIndex = 0
+endIndex = 5
+middle =  2
+array[middle] = a[2] = 15. 15 > 6 so we go lower
+binarysearch(array, 0, 1, 6);
+start = 0
+end = 1
+middle = 0
+array[0] = 1 < 6 so we go higher
+binarySearch(array, 1, 1, 6)
+start = 1
+end = 1
+middle = 1
+array[1] = 6 return true
+
+#### Example (going higher)
+binarySearch(array = [1 6 15 22 90 112], value = 90)
+startIndex = 0
+endIndex = 5
+middle =  2
+array[middle] = a[2] = 15. 15 < 90 so we go higher
+binarySearch(array, 2+1, 5, 90)
+middle = 3 + 5 all over 2 = 4
+array[4] = 90 return true; 
+
+#### Algorithmic analysis
+Time: O(logn)
+Memory: O(1)
+#### Advantages
+Much faster than Linear Search
+#### Disadvantages
+Only works in situations where the input array is sorted.
+#### Example usages that work uniquely well with this algorithm
+- When you're searching and you know the input collection is sorted
+- In a BST
+
 # Bit Manipulation
 ## Tricks
 In Java, | is OR, & is AND, ^ is XOR, ~ is NOT, << is left shift
