@@ -614,7 +614,7 @@ The infix expression shows the sorted values of a Binary Search Tree. **This is 
 
 ### Breadth-first Traversal and Depth First Traversal for Trees (iterative)
 Can be easily modified to Breadth First Search (BFS) by having the visit(node) part check if the passed in node you're looking for is equivalent to the node passed in to the visit method.
-#### Pseudocode
+#### Pseudocode (iterative)
 ```java
 // Passed in node is typically the root
 public static void bft(Node node) {
@@ -633,8 +633,12 @@ public static void bft(Node node) {
     }
 }
 ```
+
+#### Pseudocode (recursive)
+See RecursiveTreeSearches.java for several options. Another option that isn't in that file is the option of using BFS with an underlying array. As in http://stackoverflow.com/a/2549744, if you use an array to back the binary tree, you can determine the next node algebraically. If i is the index of a node (starting at 0), then its children can be found at 2i + 1 (for the left node) and 2i + 2 (for the right node). A node's next neighbor is given by i + 1, unless i is a power of 2. If I recall correctly, this is how heaps are implemented.
+
 #### Summary
-Whenever a node is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make this an iterative Depth-first traversal by using a stack instead of a queue. Note that we can only do this stack/queue replace trick in Trees and not in Graphs.** This is probably due to the cycles in the graph resulting in the discovery procedure becoming incorrect
+Whenever a node is enqueued, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue. **We could make the iterative BFS this an iterative Depth-first traversal by using a stack instead of a queue. Note that we can only do this stack/queue replace trick in Trees and not in Graphs.** This is probably due to the cycles in the graph resulting in the discovery procedure becoming incorrect
 
 #### BFS Example
 Tree that isn't being rendered properly in markdown lol:
