@@ -915,8 +915,7 @@ public static void bft(Graph g) {
 }
 ```
 #### Summary
-BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **Note that the vertex distance parts of BFT algorithm are not needed**
-
+BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **Note that the vertex distance parts of BFT algorithm are not needed.** Take a look at RecursiveTreeSearches.java for examples of recursive BFT/DFT for trees. Using the same strategy (the check at the beginning of the algorithm, and the recursive call at the end of the algorithm), those algorithms in that file can be modified to work with Graphs.
 #### Algorithmic analysis
 Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
 Memory: O(|V|) from queue
