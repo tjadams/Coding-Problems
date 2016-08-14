@@ -2,7 +2,6 @@
 Notes and examples made from doing data structures and algorithms problems in Java. This readme contains some of the more tricky things about Java. My knowledge of the fundamentals of Java is pretty strong so I'm likely not going to be including things that I think are fundamentals. I have **bolded** what is especially important for me.
 
 ## Misc
-* Can't define a method inside a method in Java
 * Remember that void is a return type
 * Remember that static is for non-instance methods
 * Static initializaer a.k.a. class initializer is a Static{} block that is run before the constructor
@@ -45,6 +44,8 @@ Public                ==   X        X          X         X
 Protected             ==   X        X          X
 Default (no modifier) ==   X        X
 Private               ==   X
+
+Class meaning the class the variable is defined in.
 
 Why have access modifiers? 
 * Keeps implementation separate from interface
@@ -159,7 +160,7 @@ while(st.hasMoreTokens() {
 }
 
 ### java.lang.StringBuilder
-Using a StringBuilder is more efficient than doing String +=. This is because SB creates Strings in a mutable way. Strings which create more Strings by adding immutable Strings.There is another version called StringBuffer. One is threadsafe and the other is not. There are methods in StringBuilder that allow you to modify the String that is currently being built inside the StringBuilder.
+Using a StringBuilder is more efficient than doing String +=. This is because SB creates Strings in a mutable way (you can modify the string as you create it). When you do += with a String, a new immutable String will be created. There is another version called StringBuffer. One is threadsafe and the other is not. There are methods in StringBuilder that allow you to modify the String that is currently being built inside the StringBuilder.
 
 ```java
 StringBuilder sb = new StringBuilder("string");
@@ -202,9 +203,6 @@ Switch works on the following types: int, Integer, char, Character, short, Short
 		String x = "amigos";
         switch (x) {
             case "hola":
-                System.out.println(x);
-                break;
-            case "amigos":
                 System.out.println(x);
                 break;
             default:
@@ -265,7 +263,8 @@ Println prints to the current printcursor index and then puts a newline. A subse
 # Printing a newline
 Don't use `\n` because that is a specific newline character to only some hardware. Instead, use `System.out.format` and `%n` which gets the correct newline for your hardware.
 
-# Sorting by customizing the comparson between 2 elements of an array to be sorted
+# Using a Comparator in a Sort algorithm
+## Sorting by customizing the comparison between 2 elements of an array to be sorted
 ```java
 static Comparator<Integer[]> firstElementSubarrayComparator = new Comparator<Integer[]>() {
         @Override
@@ -273,8 +272,10 @@ static Comparator<Integer[]> firstElementSubarrayComparator = new Comparator<Int
             // Return the standard compareTo for integers but compare on the first element of the subarray
             // return o1[0].compareTo(o2[0]);
             // Could equivalently do the following:
+            // Returning 1 means putting the first paramater ahead of the second paramater
             if (o1[0] > o2[0]) {
                 return 1;
+	        // Returning -1 means putting the second paramater (o2) ahead of the first paramater (o1)
             } else if (o1[0] < o2[0]) {
                 return -1;
             } else {
@@ -282,7 +283,6 @@ static Comparator<Integer[]> firstElementSubarrayComparator = new Comparator<Int
             }
         }
     };
-
 
 Arrays.sort(array, firstElementSubarrayComparator);
 ```
@@ -374,3 +374,4 @@ A default value is the value of a variable before it is initialized. The followi
 ## TODO
 * Think about switching from Markdown to Latex
 * Implement common data structures and algorithms in Java (ex: Binary Tree, etc)
+
