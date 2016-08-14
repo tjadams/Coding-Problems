@@ -1117,15 +1117,87 @@ A machine that defines a maximum of one solution to a problem. Ex: if you see a 
 NP is the set of all decision problems for which problems with a "yes" answer can be verified to be correct in polynomial time O(n^k)
 #### NP-Hard characteristic
 NP-Hard problems are problems that are at least as hard/difficult (higher difficulty means takes longer to solve) to solve as the hardest/most difficult NP problems.
+##### Methods to computing a solution for a NP-hard problem
+- Create an exact algorithm (fast for small problem sizes)
+- Create a sub-optimal algorithm (provides decent solution but is not proven to be optimal)
+- Create an algorithm for a special case of the problem (subproblem) for which better or exact/optimal heuristics are possible
 #### NP-Complete problems
-An NP-Complete problem is a problem that has the NP-Hard characteristic and is the problem that every other problem in NP can be transformed to in polynomial time. This means that if any one NP complete problem can be solved "quickly" (polynomial time) then any NP problem can be solved "quickly" (in polynomial time)
+An NP-Complete problem is a problem that has the NP-Hard characteristic and is a problem that every other problem in NP can be transformed to in polynomial time. This means that if any one NP complete problem can be solved "quickly" (polynomial time) then any NP problem can be solved "quickly" (in polynomial time) because the transformation is also polynomial time and O(polynomial time + polynomial time) = O(polynomial time)
 #### Does P = NP?
 If P = NP then that means all NP-Complete problems can be solved in polynomial time and we can use solutions to NP-Complete problems to solve all NP problems using a polynomial time transformation 
 #### How to classify a problem as NP-Complete
 TODO in the future
 
-### Traveling Salesman Problem (NP COMPLETE I THINK)
-### Knapsack Problem (NP COMPLETE I THINK)
+### Traveling Salesman Problem a.k.a. TSP (NP-hard problem with an NP-complete version of the problem)
+The Traveling Salesman Problem is a problem with the NP-hard characteristic and can basically be described as a problem in which a person tries to find the shortest route that passes through each of a set of points once and only once.  The real description of the NP-hard TSP problem is "Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?" **(note that you don't have to start at any particular city)**. This problem is so famous because the decision version of this problem is an NP-complete problem. That version is described as "Given a length L, decide whether a graph G has any tour shorter than L" with answers "yes it has a tour shorter than L" and "no it doesn't have a tour shorter than L".
+
+In the symmetric TSP, the distance between two cities is the same in each opposite direction, forming an undirected graph. This symmetry halves the number of possible solutions. 
+
+In the asymmetric TSP, paths may not exist in both directions or the distances might be different, forming a directed graph.
+
+#### Applications of the TSP
+- Planning
+- Logistics
+- Manufacturing of microchips
+- DNA sequencing
+- If the NP-complete version of this problem is solvable in polynomial time, then there will be more applications of this problem due to the discussion on P=NP
+
+In these applications, the concept city (node in a graph) represents, for example, customers, soldering points, or DNA fragments, and the concept distance represents travelling times or cost, or a similarity measure between DNA fragments. The TSP also appears in astronomy, as astronomers observing many sources will want to minimise the time spent moving the telescope between the sources. In many applications, additional constraints such as limited resources or time windows may be imposed.
+
+#### Naive solution (solving the NP-hard problem exactly using brute force)
+To solve the NP-hard version of the TSP, we could run a linear walk along all the edges (O(n) where n is the number of cities) on all permutations (ordered combinations) of paths to find the cheapest path. The number of permutations of paths is the number of permutations of cities visited which is just the number of permutations of unique cities. The number of permutations of unique cities is ((n-1)!)/2 where n is the total number of unique cities. The time complexity of this naive solution would be O(linearWalkTime*numPermutationsOfUniqueCities) = O(n*((n-1)!)/2) = O(n*((n-1)!)) = O(n!). This naive solution stops being practical at around 20 cities (n = 20).
+
+### Knapsack Problem (NP-hard problem with an NP-complete version of the problem)
+Here's the NP-hard version of the knapsack problem: "Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible." The decision problem form of the knapsack problem (Can a value of at least V be achieved without exceeding the weight W?) is NP-complete. This is another famous NP-complete problem.
+
+0-1 Knapsack problem is the most common version of the knapsack problem. In this version, the number of copies of each item that can be put in the bag, can be only zero or one.
+
+There's also an bounded version where the number of items is bounded by a specific max non-negative integer. 
+
+Lastly there's the unbounded version where there's no upper bound on the number of copies of each kind of item.
+
+#### Applications of the Knapsack problem
+- Basically, lots of resource allocation problem can use a solution from the Knapsack problem
+- investments
+- cryptography
+- fantasy sports
+- If the NP-complete version of this problem is solvable in polynomial time, then there will be more applications of this problem due to the discussion on P=NP
+
+#### Naive solution
+The following is a Dynamic Programming solution to the 0-1 Knapsack Problem. It's kinda complicated and could be tough to come up with on the spot but it makes sense.
+
+Assume w_1, w_2, ..., w_n are all positive integers. Define m[i, w] to be the max value achieved with weight <= to w using the first i items. Define W to be the max weight that the knapsack can hold. The reason why we can go in order with the counting of the items ("the first i items") is because there is only 1 or 0 of each item (I think this is the reason...).
+
+It turns out that we can define m[i, w] recursively as follows:
+* m[0, w] = 0 which makes sense because you cant have value with no items
+* m[i, w] = m[i - 1, w] if w_i > w (the weight using the first i items surpasses the limit because of the ith item so we go back to the unsurpassed limit using all the items up to i - 1)
+* m[i, w] = max(m[i - 1, w], m[i - 1, w - w_i] + v_i) if w_i <= w. This means that if the weight using the first i items is less than the weight w, the max value achieved with weight <= w using the first i items is equal to whichever is bigger of the following two:
+1. the value achieved with weight <= w using the first i - 1 items
+2. the value achieved with taking all the weight except for the weight of everything up to the ith item, and using all the first i-1 items, in addition to the value achieved in taking all i items. **This is kinda confusing**
+
+Then the solution to this problem is m[n, W] which we can calculate using this information about recursion.
+
+The pseudocode looks like this:
+```
+// Input:
+// Values (stored in array v)
+// Weights (stored in array w)
+// Number of distinct items (n)
+// Knapsack capacity (W)
+
+for j from 0 to W do:
+     m[0, j] := 0
+
+for i from 1 to n do:
+   for j from 0 to W do:
+        if w[i-1] > j then:
+           m[i, j] := m[i-1, j]
+        else:
+            m[i, j] := max(m[i-1, j], m[i-1, j-w[i]] + v[i])
+```
+
+The time complexity of this approach is O(nW) which ends up being pseudo-polynomial time due to some weird property of W that I don't fully understand.
+The space complexity of this approach is O(nW) due to the 2d array called m. **TODO: understand the W part more**
 
 ## Object Oriented Programming (OOP)
 Objects: data structures that contain data (fields) and procedures (methods)
@@ -1164,10 +1236,10 @@ Has-a is when Class A has B as a field. A has-a B.
 
 ## Common algorithm performances
 Constant: O(1)
-Logorithmic: O(log base 2 n) = O(lgn)
+Logorithmic: O(log base 2 n) = O(logn)
 Linear: O(n)
-Polynomial: O(n^y) y>1 (n=2 means input doubles every time etc)
-Exponential: O(e^n)
+Polynomial: O(n^y) y > 1 
+Exponential: O(x^n) x > 1 (x=2 means input doubles every time etc)
 Factorial: O(n!)
 
 ### Directed graph vs Undirected graphs (a.k.a. bidirectional graphs)
