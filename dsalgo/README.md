@@ -147,7 +147,7 @@ ex:
 ### Arithmetic Shift vs Logical Shift vs Circular Shift
 Arithmetic Shift is `binaryNum << x` and `binaryNum >> x`. Arithmetic Shift shifts all the bits in a binary number left or right by x bit positions. When arithmetic shifting to the right, instead of being filled with all 0s as in the logical shift, the original leftmost bit (sometimes called the signbit if you're using signed integers) is maintained. When arithmetic shifting to the left, the MSB dissapears, all other bits are shifted left, and the LSB becomes 0.
 
-**Logical shift is often used when its operand (binary number) is being treated as a sequence of bits rather than as a number.** **<<< doesn't exist in Java because it's the same as <<.**Logical Shift is `binaryNum <<< x` and `binaryNum >>> x`. Logical Shift also shifts all the bits in a binary number left or right by x bit positions. When logical shifting to the right, 0s are filled in to the MSB and other bit positions following the MSB towards the right. When logical shifting to the left, 0s are filled in to the LSB and other bit positions following the LSB towards the left.
+**Logical shift (three arrows) is often used when its operand (binary number) is being treated as a sequence of bits rather than as a number.** **<<< doesn't exist in Java because it's the same as <<.**Logical Shift is `binaryNum <<< x` and `binaryNum >>> x`. Logical Shift also shifts all the bits in a binary number left or right by x bit positions. When logical shifting to the right, 0s are filled in to the MSB and other bit positions following the MSB towards the right. When logical shifting to the left, 0s are filled in to the LSB and other bit positions following the LSB towards the left.
 
 Circular shift a.k.a. bitwise rotation is exactly what it sounds like. If you shift past the left boundary, the bits that were shifted past the boundary reappear on the right boundary. Same with shifting past right but with the reappearance occurring at the left boundary. **Neither Arithmetic of Logical shifts are circular shifts.**
 
@@ -290,7 +290,7 @@ Ex in Java:
 ```java
 public class Restaurant {
 	private static Restaurant instance = null;
-	Restaurant() { ... }
+	private Restaurant() { ... }
 	public static Restaurant getInstance() {
 		if (instance == null) {
 			instance = new Restaurant();
@@ -339,6 +339,7 @@ DP problems are recursive problems where you store intermediate results. Some pe
 4. Construct an optimal solution from the computed information.
 
 ### Examples from ECE 250 - Data Structures and Algorithms 
+**TODO**
 
 ## Analyzing Space Complexity a.k.a Auxillary Memory
 Space Complexity/Auxillary Memory is the "extra space" used as a result of calling a function. This is mainly tricky to analyze in recursive problems. Here's a formula that helps with analyzing.
@@ -459,7 +460,7 @@ public static int[] mergesort(int [] array) {
 
 #### Algorithmic analysis
 Time: T(n) = T(n/2) + T(n/2) + O(n) use master theorem and you get O(n log n) time.
-Memory: You make n, n/2, n/4, n/8, n/16, ... additional memory per iteration. Since it's all the same values, the compiler may optimize this to be O(n) memory. Also, the merge algorithm won't use more than O(n) memory.
+Memory: O(n) due to the left and right arrays
 
 #### Advantages
 - Always nlogn time
@@ -496,7 +497,6 @@ Each node of a linked list is a pointer to memory. Pointers that point to other 
 
 #### Disadvantages
 - Accessing an element takes O(n) time because you have to loop through the head of the LL
-- Nodes must know about other nodes so they're not independant
 - Hard to traverse backwards in a singly LL
 
 #### Runner technique a.k.a Tortoise & Hare
@@ -780,7 +780,7 @@ Memory: O(n) due to queue
 #### Advantages over other traversals
 A BFS can be turned into a path finding algorithm between two nodes. Since we know that all paths in a tree are shortest paths (see path definition above and note that at least I know this for paths from root to leaves but not sure about all paths), then we know that BFS can be turned into a shortest-path finding algorithm. This is done by setting adjacent node's parents to the node extracted from the queue if the adjacent nodes have their parents set to null. Then to find the shortest path you just go from destination node's.parent recursively to the top until parent is null and return a list of null parent node to the destination node.
 #### Disadvantages over other traversals
-A balanced binary tree uses less memory storage in depth-first traversals than in breadth-first traversals. A depth-first traversal will only store a max of 3 nodes at a time (node, node.left, node.right, and not counting stack frames). A breadth-first traversal can store all the nodes at one level of a tree which can be very large. 
+A balanced binary tree uses less memory storage in DFS than in BFS. DFS only uses 3 nodes at a time (node, node.left, node.right). BFS can store all the nodes at one level of a tree which can be very large.
 #### Example usages that work uniquely well with this algorithm
 - Traversing a tree that has limited depth but lots of breadth (like a filesystem). Ex for filesystem: you would deal with the files in the current directory and forget about them before moving on to one of the child directories. **This is neat**
 
@@ -801,7 +801,7 @@ A Binary Search Tree is a tree with each node having the left node's value < par
 - Good when you need: Hierarchy, quick search if balanced O(h) = O(logn), quick insert/delete if balanced O(h) = O(logn)
 
 ### Balanced Trees (namely BTs and BSTs)
-- There are several ways to define balanced trees. The one I know best is the one for AVL balanced trees. That is, a balanced tree is a tree where every subtree in the tree (including the tree itself) follows this principle: the height of a node and the height of that node's children differ by at most 1.
+- There are several ways to define balanced trees. The one I know best is the one for AVL balanced trees. That is, a balanced tree is a tree where every subtree in the tree (including the tree itself) follows this principle: **the height of a node and the height of that node's children differ by at most 1.**
 - The overall goal is to keep the height of all nodes to be log(n) resulting in O(h) operations to be O(log(n))
 
 ### Heaps (Priority Queues)
@@ -886,13 +886,14 @@ c 1 0 0
 * In an undirected graph, you can look at all adjacent nodes to the current node you're on
 
 ### Breadth First Search for graphs
-Breadth First Traversal can be easily modified to BFS by having the visit(vertex) method check if the passed in vertex you're looking for is equivalent to the vertex passed in to the visit method. If any of the vertices still has a distance of infinity at the end of the traversal, then that vertex is not accessible from the graph. I think a vertex that isn't accessible from the graph would be undiscovered too **check this**. **These two properties can be useful in determining if a graph is connected.**
+BFT can become BFS by modifying the visit method. If after BFT, a vertice has a distance of infinity (the default distance) then that vertex is not accessible (disconnected) from the graph. I think a vertex that isn't accessible from the graph would be undiscovered too **check this**. **These two properties can be useful in determining if a graph is connected.**. **BFS for Graphs is the exact same as BFS for Trees except that the graph version uses Vertexes and adjacency lists**
 
 #### Pseudocode (iterative)
+**One big difference between BFS and DFS for graphs is that BFS sets the starting vertex to discovered while DFS does not.**
 ```java
 public static void bft(Graph g) {
 	g.setAllVertexDistancesTo(Math.INFINITY);
-	g.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
+	g.setAllVertecesToUndiscovered();
 	
 	Vertex v = g.startingVertex;
 	v.setDiscovered();
@@ -917,7 +918,7 @@ public static void bft(Graph g) {
 #### Summary
 BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **Note that the vertex distance parts of BFT algorithm are not needed.** Take a look at RecursiveTreeSearches.java for examples of recursive BFT for trees. Using the same strategy (the check at the beginning of the algorithm, and the recursive call at the end of the algorithm), that algorithm in that file can be modified to work with Graphs. Just change the node.left and node.right enqueueing to be an enqueue inside a for loop of an adjacency list. See a recursive implementation of DFS somewhere below.
 #### Algorithmic analysis
-Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
+Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. **Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is.** A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
 Memory: O(|V|) from queue
 
 #### Advantages (BFS > DFS)
@@ -958,22 +959,22 @@ Let's say A is the starting point of the graph and all edges are undirected.
 #### Pseudocode (iterative)
 ```java
 public static void dft(Graph g) {
-	g.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
-	
-	Vertex v = g.startingVertex;
-	v.setDiscovered();
-	
+	g.setAllVertecesToUndiscovered();
 	Stack s = new Stack();
-	s.push(v);
+	s.push(g.startingVertex);
 
 	while (!s.isEmpty()) {
 		Vertex vertex = s.pop();
 		visit(vertex);
-		if (!vertex.isDiscovered()) {
-			vertex.setDiscovered();
-			for (Vertex adjVertex : vertex.adjacencyList) {
-				if (!adjVertex.isDiscovered()) {					s.push(adjVertex);
-				}
+		graphDftVisit(s, vertex);
+	}
+}
+
+public static void graphDftVisit(Stack s, Vertex vertex) {
+	if (!vertex.isDiscovered()) {
+		vertex.setDiscovered();
+		for (Vertex adjVertex : vertex.adjacencyList) {
+			if (!adjVertex.isDiscovered()) {					s.push(adjVertex);
 			}
 		}
 	}
@@ -989,12 +990,13 @@ It's going to be hard to draw this graph in Markdown lol. I'll use arrows (→ �
  ↙↓  ↓ ↑
 D  F  G ↑
    ↘→→↗
-
+   
 Let's say A is the starting point of the graph. Also, we push content onto the stack from right to left i.e. adjacency lists start with the rightmost element.
  
 - order of visitation: A,B,D,F,E,C,G 
 
 #### Pseudocode (recursive)
+**This is very similar to above. The only difference basically is that I'm using recursion instead of a stack**
 ```java
 public static void dft(Vertex v) {
 	// If we already preformed dft on this node then don't repeat ourselves
@@ -1046,7 +1048,7 @@ Memory: O(|V|) from stack
 
 #### Example usages that work uniquely well with this algorithm
 - In general for both BFS, DFS: Compilers, graphics, maze-solving (**so potentially backtracking?**), mapping, networks (routing, searching, clustering, ...)
-- DFS is particularly used in game-simulations such as chess where you can choose one of several possible actions. When you are deciding what move to make, you can mentally imagine a move, then your opponent’s possible responses, then your responses, and so on. You can decide what to do by seeing which move leads to the best outcome. Only some paths in a game tree lead to your win, some lead to a win by your opponent. When you reach such an ending, you must back up, or backtrack, to a previous node and try a different path. In this way you explore the tree until you find a path with a successful conclusion. Then you make the first move along this path.
+- DFS is particularly used in game-simulations such as chess where you can choose one of several possible actions. When you are deciding what move to make, you can mentally imagine a move, then your opponent’s possible responses, then your responses, and so on. You can decide what to do by seeing which move leads to the best outcome. Only some paths in a game tree lead to your win, some lead to a win by your opponent. When you reach such an ending, you must back up, or backtrack, to a previous node and try a different path. In this way you explore the tree until you find a path with a successful conclusion. Then you make the first move along this path. **This is important**
 
 ### Directed Acyclic Graph (DAG)
 #### How they work
@@ -1058,31 +1060,35 @@ A directed graph (unidirectional graph: this means that when you traverse an edg
 Used in Topological Sort
 
 ### Topological Sort
-#### Pseudocode
+**Note that a big difference between Topological Sort and DFS is that instead of discovered/undiscovered, we're using discovery times and also setting finishing times for each node. Also topological sort doesnt do a visit(vertex) call, it just does it's own topologicalSortVisit(s, vertex)**
 ```java
-public static LinkedList<Map<Vertex, Integer>> topologicalSort(Vertex root) {
-	root.setAllVertexDiscoveryTimesTo(-1);
-	Vertex v = g.startingVertex;
+public static LinkedList<Map<Vertex, Integer>> topologicalSort(Graph g) {
+	g.setAllVertexDiscoveryTimesTo(-1);
 	Stack s = new Stack();
-	s.push(v);
+	s.push(g.startingVertex);
 	
 	LinkedList<Map<Vertex, Integer>> topsorted = new LinkedList<Map<Vertex, Integer>>();
 	int time = 0;
 	while (!s.isEmpty()) {
 		Vertex vertex = s.pop();
-		if (vertex.getDiscoveryTime() == -1) {
-			time += 1;
-			vertex.setDiscoveryTime(time);
-			for (Vertex adjVertex : vertex.adjacencyList) {
-				if (adjVertex.getDiscoveryTime() == -1) {				s.push(adjVertex);
-				}
-			}
-			time += 1;
-			vertex.setFinishedTime(time);
-			topsorted.prepend(new Map<Vertex, Integer>(vertex, time));
-		}
+		time = topologicalSortVisit(s, vertex, topsorted, time);
 	}
 	return topsorted;
+}
+
+public static void topologicalSortVisit(Stack s, Vertex vertex, LinkedList<Map<Vertex, Integer>> topsorted, int time) {
+	if (vertex.getDiscoveryTime() == -1) {
+		time += 1;
+		vertex.setDiscoveryTime(time);
+		for (Vertex adjVertex : vertex.adjacencyList) {
+			if (adjVertex.getDiscoveryTime() == -1) {				s.push(adjVertex);
+			}
+		}
+		time += 1;
+		vertex.setFinishedTime(time);
+		topsorted.prepend(new Map<Vertex, Integer>(vertex, time));
+	}
+	return time;
 }
 ```
 #### Summary
@@ -1093,7 +1099,7 @@ Topological Sort is basically Depth First Search that returns the finishing time
 Skipping this for now.
 #### Algorithmic analysis
 Time: O(DFS runtime) + O(1) = O(DFS runtime) = O(|V| + |E|)
-Memory: O(V + V) = O(V) where V is the number of vertices. This runtime is because of the stack and Linkedlist
+Memory: O(|V| + |V|) = O(|V|). This runtime is because of the stack and Linkedlist
 #### Example usages that work uniquely well with this algorithm
 Figuring out what is the correct order to do things. I.e., I need to do X before I do Y before I do Z etc.
 
@@ -1209,7 +1215,11 @@ Encapsulation is when you hide information by setting who can see that informati
 #### Inheritance
 Inheritance is the concept of extending or implementing functionality from another class. Ex: in Java, "implements" or "extends
 #### Polymorphism
-**Polymorphism is when Class A that extends Class B calls a method that exists in both Class A and Class B.** Basically, the class can be used as different classes.
+Polymorphism is when a single interface can be used by different types.
+
+A Polymorphic type displays the property of polymorphism when Class A that extends Class B calls a method that exists in both Class A and Class B.
+
+Subtype Polymorphishm (a.k.a. subtyping): A polymorphic class can be used as a different class.
 ex: 
 ```java
 public class PolymorphicClass extends OtherClass
