@@ -915,7 +915,7 @@ public static void bft(Graph g) {
 }
 ```
 #### Summary
-BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **Note that the vertex distance parts of BFT algorithm are not needed.** Take a look at RecursiveTreeSearches.java for examples of recursive BFT/DFT for trees. Using the same strategy (the check at the beginning of the algorithm, and the recursive call at the end of the algorithm), those algorithms in that file can be modified to work with Graphs.
+BFT/DFT are two different ways to traverse through a graph. In these algorithms, whenever a vertex is enqueued or pushed to the stack, that means it has been discovered and I want to visit it and then traverse through it's children. The order in which that traversal occurs is defined by the data structure used. For breadth first traversal, that's a queue and for DFT, a stack. **Note that the vertex distance parts of BFT algorithm are not needed.** Take a look at RecursiveTreeSearches.java for examples of recursive BFT for trees. Using the same strategy (the check at the beginning of the algorithm, and the recursive call at the end of the algorithm), that algorithm in that file can be modified to work with Graphs. Just change the node.left and node.right enqueueing to be an enqueue inside a for loop of an adjacency list. See a recursive implementation of DFS somewhere below.
 #### Algorithmic analysis
 Time: O(|V| * visit + |E|). The + |E| part comes from the enhanced for loop being run sum(degree(each vertice)) amount of times which equals |E|. Note that |E| can be as large as O(|V|^2) (all nodes have edges between each other) depending on how dense the graph is. A dense graph has lots of edges. A sparse graph has few edges. **This is pretty neat.**
 Memory: O(|V|) from queue
@@ -1051,57 +1051,49 @@ Memory: O(|V|) from stack
 ### Directed Acyclic Graph (DAG)
 #### How they work
 A directed graph (unidirectional graph: this means that when you traverse an edge, you can't traverse the same edge backwards to get back to where you were) that has no cycles. 
+
+**The following thing I'm about to say is quite tricky: some of the DAGs I have been looking at look like they have cycles. But in reality, they only have the shape of a cycle; a closed triangle with its vertices being nodes/vertexes. Upon taking a closer look, I can see that those closed triangle shapes are not cycles. This is because the directions that the arrows are pointing in do not allow for the closed triangle shape to be a cycle. Remember that DAGs are DIRECTIONAL graphs without cycles.**
+
 #### Example usages that work uniquely well with this data structure
 Used in Topological Sort
 
 ### Topological Sort
-#### Pseudocode (mostly correct lol)
+#### Pseudocode
 ```java
-public static LinkedList<Vertex> TopologicalSort(Vertex root) {
-	LinkedList<Vertex> topsorted = new LinkedList<Vertex>();
-
-	root.setAllVertexDistancesTo(Math.INFINITY);
-	root.setAllVertexDiscoveryStatesTo(Vertex.UNDISCOVERED);
-	
-	int time = 0;
-
+public static LinkedList<Map<Vertex, Integer>> topologicalSort(Vertex root) {
+	root.setAllVertexDiscoveryTimesTo(-1);
 	Vertex v = g.startingVertex;
-	v.setDiscovered();
-	v.setDistance(0); // Start of the graph is set to distance 0 because it's 0 distance from the start of the graph lol
-	
 	Stack s = new Stack();
 	s.push(v);
-
+	
+	LinkedList<Map<Vertex, Integer>> topsorted = new LinkedList<Map<Vertex, Integer>>();
+	int time = 0;
 	while (!s.isEmpty()) {
 		Vertex vertex = s.pop();
-		
-		time += 1;
-		// vertex.setDiscoveryTime(time); // Don't need this right here but it's interesting.
-
-		for (Vertex adjVertex : vertex.adjacencyList) {
-			if (!adjVertex.isDiscovered()) { // if it were discovered and you continued with the logic, the distance would start off correct but then it would become different if there are multiple paths from the root to a particular vertex
-				adjVertex.setDiscovered();
-				adjVertex.setDistance(vertex.getDistance() + 1); // Since adjVertex is right beside vertex
-				s.push(adjVertex);
+		if (vertex.getDiscoveryTime() == -1) {
+			time += 1;
+			vertex.setDiscoveryTime(time);
+			for (Vertex adjVertex : vertex.adjacencyList) {
+				if (adjVertex.getDiscoveryTime() == -1) {				s.push(adjVertex);
+				}
 			}
+			time += 1;
+			vertex.setFinishedTime(time);
+			topsorted.prepend(new Map<Vertex, Integer>(vertex, time));
 		}
-
-		time += 1;
-		// vertex.setFinishedTime(time);
-		topsorted.prepend(new Map<Vertex, Integer>(vertex, time));
 	}
 	return topsorted;
 }
 ```
 #### Summary
+Given a directed acyclic graph, you visit a node that does't have any incoming edges, remove that node from the graph, and then repeat that process. The order in which you do this is a topologically sorted version of that directed graph. We can view a topological sort of a graph as an ordering of its vertices along a horizontal line so that all directed edges go from left to right.
 
-**The following thing I'm about to say is quite tricky: some of the DAGs I have been looking at look like they have cycles. But in reality, they only have the shape of a cycle; a closed triangle with its vertices being nodes/vertexes. Upon taking a closer look, I can see that those closed triangle shapes are not cycles. This is because the directions that the arrows are pointing in do not allow for the closed triangle shape to be a cycle. Remember that DAGs are DIRECTIONAL graphs without cycles.**
-
-Depth First Search that returns the finishing times of vertexes in order of last finished to first finished. **(Shouldn't it be first to last? NO. Last finished to first finished is correct. The reasoning for this is that you set something to finished after you have explored all of it's adjacencies to maximum depth. This means that finished time is likely one of the very first vertexes discovered. Which makes sense because you have to visit that before the next nodes in the Topologically Sorted list)**
+Topological Sort is basically Depth First Search that returns the finishing times of vertexes in order of last finished to first finished. **(Shouldn't it be first to last? NO. Last finished to first finished is correct. The reasoning for this is that you set something to finished after you have explored all of it's adjacencies to maximum depth. This means that finished time is one of the very first vertexes discovered. Which makes sense because you have to visit that before the next nodes in the Topologically Sorted list).** See CLRS 3rd edition figure 22.7 to better understand this.
 #### Example
+Skipping this for now.
 #### Algorithmic analysis
 Time: O(DFS runtime) + O(1) = O(DFS runtime) = O(|V| + |E|)
-Memory: O(V) because of stack. Linkedlist is basically O(1) if I think of it as V pointers.
+Memory: O(V + V) = O(V) where V is the number of vertices. This runtime is because of the stack and Linkedlist
 #### Example usages that work uniquely well with this algorithm
 Figuring out what is the correct order to do things. I.e., I need to do X before I do Y before I do Z etc.
 
@@ -1112,7 +1104,7 @@ When running DFS, add a detection algorithm when you visit a node. That detectio
 Time: same as DFS
 Memory: same as DFS
 #### Example usages that work uniquely well with this algorithm
-When do you not want cycles?
+Whenever you don't want cycles
 
 ### NP-Complete problems
 #### Decision problems
@@ -1253,7 +1245,7 @@ Memory:
 #### Example usages that work uniquely well with this data structure
 
 #TODO
-* In Topological Sort, further understand the time parts of the algorithm
+* Lookup how to do a correctness proof
 * Organize into data structures, algorithms
 * Make this cleaner
 * Split up data structures and algorithms into separate files where appropriate
