@@ -1124,6 +1124,9 @@ If P = NP then that means all NP-Complete problems can be solved in polynomial t
 #### How to classify a problem as NP-Complete
 TODO in the future
 
+### Traveling Salesman Problem (NP COMPLETE I THINK)
+### Knapsack Problem (NP COMPLETE I THINK)
+
 ## Object Oriented Programming (OOP)
 Objects: data structures that contain data (fields) and procedures (methods)
 Classes: definitions of objects. They define how objects work.
@@ -1167,18 +1170,6 @@ Polynomial: O(n^y) y>1 (n=2 means input doubles every time etc)
 Exponential: O(e^n)
 Factorial: O(n!)
 
-### Tries a.k.a prefix tree
-#### How they work
-A Trie is a variant of an n-ary tree in which characters are stored at each node. Each path down the tree typically represents a word. You know the path you're on has completed into a word when the end of that path (depth-first) leads to a `*`. If we're only storing letters from the alphabet and that `*`, then the number of children nodes can be anywhere from 0 to ALPHABET_SIZE + 1. If you don't have a child, you have an unfinished word or some other thing.
-#### Advantages
-- Used very commonly when looking for something that has to do with a String
-- A trie can check if a String is a prefix of another String in O(n) time where n is the length of the string
-#### Disadvantages
-- A trie can check if a String is inside it in O(n) time where n is the length of the string. Hash Tables are probably better in this situation.
-#### Example usages that work uniquely well with this data structure
- - Quick prefix lookups by storing entire english language
- - A Trie can see if a word is a prefix of any other valid words really quickly. A Hash Table can only check if a String is in fact a word (i.e. a dictionary).
-
 ### Directed graph vs Undirected graphs (a.k.a. bidirectional graphs)
 * Directed graphs may have a route from nodes a to b but not nodes b to a (because node b can't go back to a). ex: a->b.
 * Undirected graphs have a route from nodes a to b and from nodes b to a. Ex: a-b.
@@ -1200,6 +1191,8 @@ public class Trie {
 }
 The root node of a Trie is an empty String. 
 
+A Trie is a variant of an n-ary tree in which characters are stored at each node. Each path down the tree typically represents a word. You know the path you're on has completed into a word when the end of that path (depth-first) leads to a `*`. If we're only storing letters from the alphabet and that `*`, then the number of children nodes can be anywhere from 0 to ALPHABET_SIZE + 1. If you don't have a child, you have an unfinished word or some other thing.
+
 ##### Inserting a String into a Trie
 (O(n) time where n is the length of the input String)
 1. Start off at the root node of the Trie
@@ -1208,16 +1201,18 @@ The root node of a Trie is an empty String.
 4. We repeat a similar process for the remaining character's in the input String
 
 #### Advantages
-Provides fast solutions to common String problems. These solutions are faster than most "naive" methods i.e. recursion.
+- Provides fast solutions to common String problems. These solutions are faster than most "naive" methods i.e. recursion.
+- A trie can check if a String is a prefix of another String in O(n) time where n is the length of the string. One might think to use a hash table but a hash table can (probably, im not 100% sure) only check if a String is in fact a word (i.e. a dictionary)
 
 #### Disadvantages
 - Space complexity can get large
 - Most of the speediness relies on having a fixed alphabet. If your alphabet is tens of thousands of symbols instead of just 26 letters then the performance will be less impressive
 
 #### Example usages that work uniquely well with this data structure
-- Searching for one String inside another
+- Searching for one String inside another. This is also called a "prefix lookup"
 - counting the number of Strings with a common prefix given an array of Strings
 - lexicographical sort can be performed by a preorder traversal (i think) if the values are stored in a particular ordering... I'll have to investigate this further
+
 
 # Contributing
 ## Algorithm documentation skeleton
