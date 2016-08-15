@@ -342,6 +342,8 @@ DP problems are recursive problems where you store intermediate results. Some pe
 **TODO**
 
 ## Analyzing Space Complexity a.k.a Auxillary Memory
+**I think I should ignore everything else in this section and consider the following: Space complexity is the amount of space used in intermediate steps of your algorithm. Ex: if a recursive algorithm is called multiple times, the space complexity is simply the amount of storage required when reading the code from top to bottom. I think I'm supposed to ignore stack frames but it could be good to bring that up. I can also probably just trace the calls and the amount of memory used but I think the amount of memory used at each stack frame is independent. Like if you go into one call of the recursive function, all the memory used in that call is independent of a different call to that same recursive function.**
+
 Space Complexity/Auxillary Memory is the "extra space" used as a result of calling a function. This is mainly tricky to analyze in recursive problems. Here's a formula that helps with analyzing.
 **Space Complexity of a recursive problem = (space per stack frame)*(# of stack frames which in most cases is the amount of times the function is recursively called)**
 
