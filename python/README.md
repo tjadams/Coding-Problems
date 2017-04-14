@@ -57,7 +57,8 @@ class ClassName:
 * Operators with mixed type operands (int and lfoat) will convert the integer operand to a floating point (ex: 3 * 3.75 / 1.5 = 7.5, the 3 is treated as 3.0)
 
 ## TODO
-* current position: 3.1.4 lists https://docs.python.org/2/tutorial/introduction.html#lists
+* current position: 9.3.2 Classes https://docs.python.org/2/tutorial/classes.html
+* I read topics 4 and 5 from the tutorial but I still need to make notes on them
 * I think local variables in a function exist in their own namespace and get deleted after the function call. So I'm pretty sure you can't edit global variables in a function. Test this
 * https://docs.python.org/2/library/stdtypes.html#typesseq
 * https://docs.python.org/2/library/stdtypes.html#string-methods
