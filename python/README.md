@@ -3,8 +3,15 @@ This readme contains notes made from learning Python. Some if it is focused on b
 
 ## Misc
 * **Tabs matter in Python. If you tab in, you're within the function that's above and to the left of your tabbed code**
+* **boolean logic isn't && and || or, it's just "and", "or"**
+* **boolean true is called True, boolean false is called False**
 
-## classes
+## selection statements
+* **if statement must end with ":"**
+
+## array
+
+## objects and classes
 * Namespace = mapping from names to objects. Examples of those are the global names in a module, the local names in a function, each recursive call of a function. A Namespace is basically a set of variables you have access to given a specific scope
 * **In Python, there's no real main function. You just execute code that's not in a function**
 * **Note that in order to call a function, it has to be declared above the calling code**
@@ -24,10 +31,15 @@ class ClassName:
 	def get_test()
 		return str(test)
 ```
+* **self works like the this keyword from Java. self.class_param is how you access and or manipulate an object's field. For non-"static" functions in a class, you need to pass in self**
+* **constructor is def __init__(self, param1, param2...)**
+* **calling a function from inside another function is done by calling it like self.function(). Also make sure that self is a param in the function**
+* **instantiation is done with x = Class(). There is no "new" keyword**
 
 
 ## function
 * This is the same concept as a method in java
+* 
 
 ## Modules
 * To call a function from a different module, do Module.function()
@@ -47,6 +59,8 @@ class ClassName:
 * strings are immutable so you can't do string[i] = 'y'. To get a different string, create a new one
 * length of string = len(string)
 * Can't directly concat a string with a number. You have to cast the number to a string using str()
+* string.format(param1, param2,...) is called on a string that has "{}" in it. The "{}" are replaced with the params
+* **use == for equality**
 
 ## float and int
 * x // y is float division (with either x or y being floats) that discards the remainder
@@ -56,10 +70,20 @@ class ClassName:
 * If you try to reference a variable that was never assigned, it's undefined
 * Operators with mixed type operands (int and lfoat) will convert the integer operand to a floating point (ex: 3 * 3.75 / 1.5 = 7.5, the 3 is treated as 3.0)
 
+## Mistakes I made
+* list = [a, b, c] instead of list = ['a','b','c']
+*  http://stackoverflow.com/a/17557249
+*  can't instantiate a class inside it's definition. To have the equivalent of a main method, I need the if main = main thing outside the class def. See http://stackoverflow.com/q/22294192 for details
+*  having lowercase boolean names (true instead of True)
+*  can't concatenate 'str' and 'list' objects without wrapping list in str()
+
 ## TODO
-* current position: 9.3.2 Classes https://docs.python.org/2/tutorial/classes.html
+* Make notes from the python tutorial that i read while on the bus / working out :)
+* investigate if python has "static functions" from Java
+* investigate if python has "final" from Java
 * I read topics 4 and 5 from the tutorial but I still need to make notes on them
 * I think local variables in a function exist in their own namespace and get deleted after the function call. So I'm pretty sure you can't edit global variables in a function. Test this
+* Look into "super()" stuff and other OOP things
 * https://docs.python.org/2/library/stdtypes.html#typesseq
 * https://docs.python.org/2/library/stdtypes.html#string-methods
 * https://docs.python.org/2/library/string.html#formatstrings
