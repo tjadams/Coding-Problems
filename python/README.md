@@ -5,6 +5,9 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * **Tabs matter in Python. If you tab in, you're within the function that's above and to the left of your tabbed code**
 * **boolean logic isn't && and || or, it's just "and", "or"**
 * **boolean true is called True, boolean false is called False**
+* **null is actually called None in python**
+* **a recursive call requires calling self.recursiveMethod**
+* **in a recursive problem, if you receive a None value as an input param when you're trying to perform changes on an input param, you can simply return and nothing bad will happen**
 
 ## selection statements
 * **if statement must end with ":"**
@@ -76,6 +79,11 @@ class ClassName:
 *  can't instantiate a class inside it's definition. To have the equivalent of a main method, I need the if main = main thing outside the class def. See http://stackoverflow.com/q/22294192 for details
 *  having lowercase boolean names (true instead of True)
 *  can't concatenate 'str' and 'list' objects without wrapping list in str()
+*  putting brackets around an if
+*  forgetting to put a colon at the end of an if or elif
+*  calling something null instead of None
+*  a recursive call requires calling self.recursiveMethod
+*  forgot to return the value im editing in a recursive call
 
 ## TODO
 * Make notes from the python tutorial that i read while on the bus / working out :)
