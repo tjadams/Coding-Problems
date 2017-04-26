@@ -8,6 +8,8 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * **null is actually called None in python**
 * **a recursive call requires calling self.recursiveMethod**
 * **in a recursive problem, if you receive a None value as an input param when you're trying to perform changes on an input param, you can simply return and nothing bad will happen**
+* **in a for loop, to do a loop over the size of a list you need to do
+ `for i = 0 in range(len(nums) + anyNumberYouWant):`**
 
 ## selection statements
 * **if statement must end with ":"**
@@ -39,10 +41,15 @@ class ClassName:
 * **calling a function from inside another function is done by calling it like self.function(). Also make sure that self is a param in the function**
 * **instantiation is done with x = Class(). There is no "new" keyword**
 
+## dictionary
+* This is the same concept as a Map in Java
+* `dict = {}`
+* `dict = {key1: value1, key2: value2}`
+* `dict[key1] returns value1
+* set using `dict[key1] = value1`
 
 ## function
 * This is the same concept as a method in java
-* 
 
 ## Modules
 * To call a function from a different module, do Module.function()
@@ -84,6 +91,8 @@ class ClassName:
 *  calling something null instead of None
 *  a recursive call requires calling self.recursiveMethod
 *  forgot to return the value im editing in a recursive call
+*  not putting range() in `for i in range(len(list)):`
+*  can't say `for i = 1 in ...`. Instead have to modify the loop to `for i in range(1, ...):`
 
 ## TODO
 * Make notes from the python tutorial that i read while on the bus / working out :)
