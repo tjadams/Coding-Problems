@@ -93,6 +93,7 @@ class ClassName:
 *  forgot to return the value im editing in a recursive call
 *  not putting range() in `for i in range(len(list)):`
 *  can't say `for i = 1 in ...`. Instead have to modify the loop to `for i in range(1, ...):`
+*  can't say `== None` or `!= None`. Have to say `is` or `is not`
 
 ## TODO
 * Make notes from the python tutorial that i read while on the bus / working out :)
