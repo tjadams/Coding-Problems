@@ -16,6 +16,7 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * The `break` statement breaks out of the smallest enclosing `for` or `while` loop
 * **The 'pythonic' way of having static functions is not to have a class that has its own static methods, but to just make them free functions in a utility class or module**
 * Python doesn't have a final variable so you just have to know not to edit variables you say are constants. I can do this by typing `CONSTANT_VARIABLE_NAME` and following that style
+* Local variables in a function exist in their own namespace and get deleted after the function call. So you can't edit global variables in a function. See an example of this in namespace.py
 
 ## selection statements
 * **if, for, elif, else statement must end with ":"**
@@ -23,13 +24,36 @@ This readme contains notes made from learning Python. Some if it is focused on b
 
 ## list
 * `list = []`
-* `list.append(x)`
+* **`list.append(x)`**
 * `list.extend(list2)` appends all items in list2 to list
-* `list.insert(i, x)`
-* `list.pop(i)` and `list.pop()` remove and return elements
+* **`list.insert(i, x)`**
+* **`list.pop(i)` and `list.pop()` remove and return elements**
+* **`list.sort(cmp, key)` cmp is comparison function, key is key to sort on**. See sort.py in this repo for details
 * `list.count(x)` returns # of times x appears in the list
 * `list.remove(x)` removes first instance of element
 * `list.index(x)` gives index of first instance of element
+
+## dict
+* unordered set of key-value pairs with unique keys
+* `dict = {}`
+* `dict = {key1: value1, key2: value2}`
+* `dict[key] = value`
+* `dict.keys()`
+
+## stack
+* you can use a list as a stack with `list.append(x)` and `list.pop()`
+
+## queue
+* List isn't designed to be used as a queue in Python so they reccomend you to use collectioncs.deque
+* Even though list is not designed to be used like that, it's easy to do so. You can use a list as a queue with `list.append(x)` and `list.pop(0)`
+
+## set
+* A set is an unordered collection with no duplicate elements. Technically you could sort the set and then loop through it if you wanted to do so
+* To create a set, you can call `set(param)` with param as a list or as a string and then it will take the characters
+* `set1 - set2` represents elements in set1 but not set2
+* `set1 | set2` represents elements in either set1 or set2
+* `set1 & set2` represents elements in both set1 and set2
+* `set1 ^ set2` represents XOR so elements in set1 or set2 but not both
 
 ## tuples
 * A tuple is an immutable data structure that you can access
@@ -124,10 +148,11 @@ class ClassName:
 
 ## TODO
 * Make notes from the python tutorial that i read while on the bus / working out :)
-* I read topic 5 from the tutorial but I still need to make notes on them
-* I think local variables in a function exist in their own namespace and get deleted after the function call. So I'm pretty sure you can't edit global variables in a function. Test this
 * Look into "super()" stuff and other OOP things
 * https://docs.python.org/2/library/stdtypes.html#typesseq
 * https://docs.python.org/2/library/stdtypes.html#string-methods
 * https://docs.python.org/2/library/string.html#formatstrings
 * https://docs.python.org/2/library/stdtypes.html#string-formatting
+* Python tutorial 5.1.3 - Functional Programming Tools (filter, map, reduce)
+* Python tutorial 5.1.4 - List Comprehensions
+* Pytohn tutorial 5.5 - Dict comprehensions
