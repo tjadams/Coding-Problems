@@ -9,12 +9,32 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * **a recursive call requires calling self.recursiveMethod**
 * **in a recursive problem, if you receive a None value as an input param when you're trying to perform changes on an input param, you can simply return and nothing bad will happen**
 * **in a for loop, to do a loop over the size of a list you need to do
- `for i = 0 in range(len(nums) + anyNumberYouWant):`**
+ `for i in range(len(nums) + anyNumberYouWant):`**
+* Can do an enhanced for loop on a data structure by saying `for x in datastructure:` 
+* **To get the size of a data structure: `len(datastructure)`**
+* To get a list of integers, use the `range(n)` function to get [0, 1, ... n - 1]. You can also do `range(start, end)` and `range(start, end, step_value)` 
+* The `break` statement breaks out of the smallest enclosing `for` or `while` loop
+* **The 'pythonic' way of having static functions is not to have a class that has its own static methods, but to just make them free functions in a utility class or module**
+* Python doesn't have a final variable so you just have to know not to edit variables you say are constants. I can do this by typing `CONSTANT_VARIABLE_NAME` and following that style
 
 ## selection statements
-* **if statement must end with ":"**
+* **if, for, elif, else statement must end with ":"**
+* else if is called `elif`
 
-## array
+## list
+* `list = []`
+* `list.append(x)`
+* `list.extend(list2)` appends all items in list2 to list
+* `list.insert(i, x)`
+* `list.pop(i)` and `list.pop()` remove and return elements
+* `list.count(x)` returns # of times x appears in the list
+* `list.remove(x)` removes first instance of element
+* `list.index(x)` gives index of first instance of element
+
+## tuples
+* A tuple is an immutable data structure that you can access
+* `tuple = (1, 2, 3)`
+* `tuple[0]` would return 1
 
 ## objects and classes
 * Namespace = mapping from names to objects. Examples of those are the global names in a module, the local names in a function, each recursive call of a function. A Namespace is basically a set of variables you have access to given a specific scope
@@ -50,6 +70,12 @@ class ClassName:
 
 ## function
 * This is the same concept as a method in java
+* You can put default argument values in the method signature but don't do this on a mutable arg value because the default arg values are only constructed once
+* You can put variable_name = value in a function call if you want
+
+## lambda expressions
+* `lambda x, y: x + y` is an anonymous function
+* **This is useful for sorting on a key. Ex: `pairs = [(1, 'one'), (2, 'two')]` and then doing `pairs.sort(key=lambda pair: pair[1])`**
 
 ## Modules
 * To call a function from a different module, do Module.function()
@@ -70,7 +96,7 @@ class ClassName:
 * length of string = len(string)
 * Can't directly concat a string with a number. You have to cast the number to a string using str()
 * string.format(param1, param2,...) is called on a string that has "{}" in it. The "{}" are replaced with the params
-* **use == for equality**
+* **use == for equality except with True and False. Use is or is not for those.**
 
 ## float and int
 * x // y is float division (with either x or y being floats) that discards the remainder
@@ -93,13 +119,12 @@ class ClassName:
 *  forgot to return the value im editing in a recursive call
 *  not putting range() in `for i in range(len(list)):`
 *  can't say `for i = 1 in ...`. Instead have to modify the loop to `for i in range(1, ...):`
-*  can't say `== None` or `!= None`. Have to say `is` or `is not`
+*  can't say `== None` or `!= None`. Have to say `is` or `is not`. Same goes for  `True` and `False`
+*  Forgetting to put a colon after a function definition
 
 ## TODO
 * Make notes from the python tutorial that i read while on the bus / working out :)
-* investigate if python has "static functions" from Java
-* investigate if python has "final" from Java
-* I read topics 4 and 5 from the tutorial but I still need to make notes on them
+* I read topic 5 from the tutorial but I still need to make notes on them
 * I think local variables in a function exist in their own namespace and get deleted after the function call. So I'm pretty sure you can't edit global variables in a function. Test this
 * Look into "super()" stuff and other OOP things
 * https://docs.python.org/2/library/stdtypes.html#typesseq
