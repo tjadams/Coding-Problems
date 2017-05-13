@@ -1,20 +1,17 @@
 class Classes:
-    test = 1
-    def class_method():
-        test = 2
-        print "test inside: " + str(test)
+    def __init__(self):
+        self.list = []
 
-    def get_test(self):
-        return str(test)
+    def add_to_list(self, element):
+        self.list.append(element)
 
-    def set_test():
-        test = 4
+if __name__=="__main__":
+    x = Classes()
+    print x.list
+    x.add_to_list(1)
+    print x.list
 
-    class_method()
-    print "test #1 outside: " + str(test)
-    test = 3
-    print "test #2 outside: " + str(test)
-    print "test #3: " + get_test()
-
-    set_test()
-    print "test #4: " + get_test()
+    y = Classes()
+    y.add_to_list(2)
+    print x.list
+    print y.list

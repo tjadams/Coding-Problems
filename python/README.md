@@ -17,6 +17,7 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * **The 'pythonic' way of having static functions is not to have a class that has its own static methods, but to just make them free functions in a utility class or module**
 * Python doesn't have a final variable so you just have to know not to edit variables you say are constants. I can do this by typing `CONSTANT_VARIABLE_NAME` and following that style
 * Local variables in a function exist in their own namespace and get deleted after the function call. So you can't edit global variables in a function. See an example of this in namespace.py
+* convention for private variables is to use `_variable_name` instead of `variable_name`
 
 ## selection statements
 * **if, for, elif, else statement must end with ":"**
@@ -84,6 +85,7 @@ class ClassName:
 * **constructor is def __init__(self, param1, param2...)**
 * **calling a function from inside another function is done by calling it like self.function(). Also make sure that self is a param in the function**
 * **instantiation is done with x = Class(). There is no "new" keyword**
+* there's a difference between new-style and old-style classes. New-style inherits from the class called `object` whereas old-style dont. New-style classes just unify the concepts of `class` and `type(object)`. Furthermore, new-style classes
 
 ## dictionary
 * This is the same concept as a Map in Java
@@ -103,6 +105,10 @@ class ClassName:
 
 ## Modules
 * To call a function from a different module, do Module.function()
+
+## try and except
+* instead of try and catch, Python has try and except
+* `try: ... except ExceptionName: ...`
 
 ## strings
 * Can be enclosed in single quotes or double quotes
@@ -129,6 +135,7 @@ class ClassName:
 * x ** y is x to the power of y
 * If you try to reference a variable that was never assigned, it's undefined
 * Operators with mixed type operands (int and lfoat) will convert the integer operand to a floating point (ex: 3 * 3.75 / 1.5 = 7.5, the 3 is treated as 3.0)
+* Note that it could be hard to work with floating poitn numbers due to the imprecision. The Decimal type solves this
 
 ## Mistakes I made
 * list = [a, b, c] instead of list = ['a','b','c']
@@ -145,14 +152,15 @@ class ClassName:
 *  can't say `for i = 1 in ...`. Instead have to modify the loop to `for i in range(1, ...):`
 *  can't say `== None` or `!= None`. Have to say `is` or `is not`. Same goes for  `True` and `False`
 *  Forgetting to put a colon after a function definition
+*  Forgetting to put `self` in __init__
 
 ## TODO
-* Make notes from the python tutorial that i read while on the bus / working out :)
-* Look into "super()" stuff and other OOP things
 * https://docs.python.org/2/library/stdtypes.html#typesseq
 * https://docs.python.org/2/library/stdtypes.html#string-methods
 * https://docs.python.org/2/library/string.html#formatstrings
 * https://docs.python.org/2/library/stdtypes.html#string-formatting
-* Python tutorial 5.1.3 - Functional Programming Tools (filter, map, reduce)
-* Python tutorial 5.1.4 - List Comprehensions
-* Pytohn tutorial 5.5 - Dict comprehensions
+* Python 2.7 tutorial 
+	* 5.1.3 - Functional Programming Tools (filter, map, reduce)
+	* 5.1.4 - List Comprehensions
+	* 5.5 - Dict comprehensions
+	* 9.9, 9.10, 9.11 - iterators and generators
