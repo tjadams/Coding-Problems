@@ -18,6 +18,15 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * Python doesn't have a final variable so you just have to know not to edit variables you say are constants. I can do this by typing `CONSTANT_VARIABLE_NAME` and following that style
 * Local variables in a function exist in their own namespace and get deleted after the function call. So you can't edit global variables in a function. See an example of this in namespace.py
 * convention for private variables is to use `_variable_name` instead of `variable_name`
+* Built-in functions (without imports):
+	* `min(data_struct)`
+	* `max(data_struct)`
+	* `abs(x)`
+	* `pow(x, y)` is x to the power of y
+	* `round(x, n)` is rounding of x to n decimal places. Note that even 0 decimal places is a floating number of `y.0 where y is the number before the decimal in x`
+* Nested for loops example:
+`for row in range(len(board)):
+	for col in range(len(board[row])):`
 
 ## selection statements
 * **if, for, elif, else statement must end with ":"**
@@ -93,6 +102,7 @@ class ClassName:
 * `dict = {key1: value1, key2: value2}`
 * `dict[key1] returns value1
 * set using `dict[key1] = value1`
+* To check if a key is in a dict, say `if key in dict` or `if key not in dict`. Do not check for `if dict[key] is not None` as that will give you an error
 
 ## function
 * This is the same concept as a method in java
@@ -126,9 +136,9 @@ class ClassName:
 * length of string = len(string)
 * Can't directly concat a string with a number. You have to cast the number to a string using str()
 * string.format(param1, param2,...) is called on a string that has "{}" in it. The "{}" are replaced with the params
-* **use == for equality except with True and False. Use is or is not for those.**
+* **Use == for value equality. Use `is` etc for reference equality. Use `is` or `is not` for `True`, `False`, and `None`.**
 
-## float and int
+## numbers (int, float, long, complex)
 * x // y is float division (with either x or y being floats) that discards the remainder
 * x / y does floor divison if x and y are ints and returns int. If one of them are float, its float division and float is returned
 * x % y returns the remainder of x / y
@@ -136,6 +146,7 @@ class ClassName:
 * If you try to reference a variable that was never assigned, it's undefined
 * Operators with mixed type operands (int and lfoat) will convert the integer operand to a floating point (ex: 3 * 3.75 / 1.5 = 7.5, the 3 is treated as 3.0)
 * Note that it could be hard to work with floating poitn numbers due to the imprecision. The Decimal type solves this
+* bitwise operations only work on `int` types. Those operations are the same as in Java
 
 ## Mistakes I made
 * list = [a, b, c] instead of list = ['a','b','c']
@@ -153,9 +164,10 @@ class ClassName:
 *  can't say `== None` or `!= None`. Have to say `is` or `is not`. Same goes for  `True` and `False`
 *  Forgetting to put a colon after a function definition
 *  Forgetting to put `self` in __init__
+*  Do not check for `if dict[key] is not None` as that will give you an error. See dictionary notes
 
 ## TODO
-* https://docs.python.org/2/library/stdtypes.html#typesseq
+* investigate method overloading. Can't overload a constructor for some reason... what about normal methods?
 * https://docs.python.org/2/library/stdtypes.html#string-methods
 * https://docs.python.org/2/library/string.html#formatstrings
 * https://docs.python.org/2/library/stdtypes.html#string-formatting
