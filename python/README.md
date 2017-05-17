@@ -27,6 +27,16 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * Nested for loops example:
 `for row in range(len(board)):
 	for col in range(len(board[row])):`
+* Python makes 2-d lists in a weird way:
+`def initVisited(row, col):
+    # python makes 2d lists in a weird way
+    visited = []
+    for i in range(row):
+        visitedNest = []
+        for j in range(col):
+            visitedNest.append(False)
+        visited.append(visitedNest)
+    return visited`	
 
 ## selection statements
 * **if, for, elif, else statement must end with ":"**
@@ -152,19 +162,22 @@ class ClassName:
 * list = [a, b, c] instead of list = ['a','b','c']
 *  http://stackoverflow.com/a/17557249
 *  can't instantiate a class inside it's definition. To have the equivalent of a main method, I need the if main = main thing outside the class def. See http://stackoverflow.com/q/22294192 for details
-*  having lowercase boolean names (true instead of True)
+*  **having lowercase boolean names (true instead of True)**
 *  can't concatenate 'str' and 'list' objects without wrapping list in str()
 *  putting brackets around an if
 *  forgetting to put a colon at the end of an if or elif
 *  calling something null instead of None
 *  a recursive call requires calling self.recursiveMethod
 *  forgot to return the value im editing in a recursive call
-*  not putting range() in `for i in range(len(list)):`
+*  **not putting range() in `for i in range(len(list)):`**
 *  can't say `for i = 1 in ...`. Instead have to modify the loop to `for i in range(1, ...):`
 *  can't say `== None` or `!= None`. Have to say `is` or `is not`. Same goes for  `True` and `False`
 *  Forgetting to put a colon after a function definition
 *  Forgetting to put `self` in __init__
 *  Do not check for `if dict[key] is not None` as that will give you an error. See dictionary notes
+*  Putting `!boolean` instead of `not boolean`
+*  Putting `ctr++` instead of `ctr += 1`
+*  Putting `list[i][j] = value` instead of `list[i][j].append(value)`
 
 ## TODO
 * investigate method overloading. Can't overload a constructor for some reason... what about normal methods?

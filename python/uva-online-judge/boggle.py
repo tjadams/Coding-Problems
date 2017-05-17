@@ -1,4 +1,5 @@
 #https://uva.onlinejudge.org/contests/177-222ee69b/p5.html
+#Could get help from http://www.geeksforgeeks.org/boggle-set-2-using-trie/
 def solve_boggle(board, dictionary):
     '''
     board: a 2-D list
