@@ -161,6 +161,15 @@ class ClassName:
 * Can't directly concat a string with a number. You have to cast the number to a string using str()
 * string.format(param1, param2,...) is called on a string that has "{}" in it. The "{}" are replaced with the params
 * **Use == for value equality. Use `is` etc for reference equality. Use `is` or `is not` for `True`, `False`, and `None`.**
+* string.isalpha() returns true if the string contains only alphabetical letters
+* swapping characters in a string:
+`def swap(string = "abc"):
+	list_ = list(string)
+	temp = list_[0]
+	list_[0] = list_[2]
+	list_[2] = temp
+	return ''.join(list_)
+`
 
 ## numbers (int, float, long, complex)
 * x // y is float division (with either x or y being floats) that discards the remainder
@@ -192,7 +201,7 @@ class ClassName:
 *  Putting `!boolean` instead of `not boolean`
 *  Putting `ctr++` instead of `ctr += 1`
 *  Putting `list[i][j] = value` instead of `list[i][j].append(value)`
-*  `str` and `dict` are keywords so I shouldn't use them as variable names
+*  `str` and `dict` and `list` are cast keywords so I probably shouldn't use them as variable names
 
 ## TODO
 * investigate method overloading. Can't overload a constructor for some reason... what about normal methods?
