@@ -192,6 +192,7 @@ class ClassName:
 *  Putting `!boolean` instead of `not boolean`
 *  Putting `ctr++` instead of `ctr += 1`
 *  Putting `list[i][j] = value` instead of `list[i][j].append(value)`
+*  `str` and `dict` are keywords so I shouldn't use them as variable names
 
 ## TODO
 * investigate method overloading. Can't overload a constructor for some reason... what about normal methods?
