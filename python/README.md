@@ -52,6 +52,20 @@ This readme contains notes made from learning Python. Some if it is focused on b
 * `list.count(x)` returns # of times x appears in the list
 * `list.remove(x)` removes first instance of element
 * `list.index(x)` gives index of first instance of element
+* List comprehension 1-D:
+`squares = [x**2 for x in range(10)]` instead of 
+`squares = []
+ for x in range(10):
+ 	squares.append(x**2)`
+* List comprehension 2-D:
+`visited = [[False for col in range(2)] for row in range(4)]`
+instead of 
+`visited = []
+    for i in range(row):
+        visitedNest = []
+        for j in range(col):
+            visitedNest.append(False)
+        visited.append(visitedNest)`
 
 ## dict
 * unordered set of key-value pairs with unique keys

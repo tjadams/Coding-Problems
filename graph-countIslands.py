@@ -1,20 +1,12 @@
-def initVisited(row, col):
-    # python makes 2d lists in a weird way
-    visited = []
-    for i in range(row):
-        visitedNest = []
-        for j in range(col):
-            visitedNest.append(False)
-        visited.append(visitedNest)
-    return visited
+def canDfs(graph, currentRow, currentCol, visited, maxRow, maxCol):
+    canDfs = currentRow >= 0 and currentRow < maxRow and currentCol >= 0 and currentCol < maxCol and not visited[currentRow][currentCol] and graph[currentRow][currentCol] == 1
+    return canDfs
 
 def islandDfs(graph, row, col, visited, maxRow, maxCol):
     # look at all 8 adjacent indeces I
     # I I I
     # I X I
     # I I I
-
-    # TODO: does order matter? I'm going clockwise starting at top left
     rowIndeces = [-1,-1, -1, 0, 1, 1,  1,  0]
     colIndeces = [-1, 0,  1, 1, 1, 0, -1, -1]
 
@@ -24,14 +16,12 @@ def islandDfs(graph, row, col, visited, maxRow, maxCol):
     for indeceIndex in range(numIndeces):
         currentRow = row + rowIndeces[indeceIndex]
         currentCol = col + colIndeces[indeceIndex]
-        if currentRow >= 0 and currentRow < maxRow and currentCol >= 0 and currentCol < maxCol and not visited[currentRow][currentCol] and graph[currentRow][currentCol] == 1:
+        if canDfs(graph, currentRow, currentCol, visited, maxRow, maxCol):
             visited[currentRow][currentCol] = True
             islandDfs(graph, currentRow, currentCol, visited, maxRow, maxCol)
 
 def countIslands(graph, row, col):
-    # init visited[row][col] to false
-    visited = initVisited(row, col)
-    # TODO figure out how they init visited, probably list comprehension
+    visited = [[False for j in range(col)] for i in range(row)]
 
     islandCount = 0
     for i in range(row):
@@ -50,5 +40,6 @@ graph = [[1, 1, 0, 0, 0],
 row = len(graph)
 col = len(graph[0])
 
-print "Expect 5. Number of islands is: "
+print "Expect 5."
+print "Number of islands is: "
 print countIslands(graph, row, col)
