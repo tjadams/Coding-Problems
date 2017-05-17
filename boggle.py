@@ -1,7 +1,4 @@
-#9:40pm
-
 def boggleDfs(boggle, word, row, col, visited, string):
-    # TODO: come back to the visited part
     if string == word:
         print word
         return
@@ -16,13 +13,15 @@ def boggleDfs(boggle, word, row, col, visited, string):
         currentRow = row + rowIndeces[k]
         currentCol = col + colIndeces[k]
         # Tricky thing: had to check len(string) < len(word) to do my neat little word string check thing
-        if currentRow >= 0 and currentRow < maxRow and currentCol >= 0 and currentCol < maxCol and len(string) < len(word) and boggle[currentRow][currentCol] == word[len(string)]:
+        if currentRow >= 0 and currentRow < maxRow and currentCol >= 0 and currentCol < maxCol and len(string) < len(word) and boggle[currentRow][currentCol] == word[len(string)] and not visited[currentRow][currentCol]:
             string += boggle[currentRow][currentCol]
+            visited[currentRow][currentCol] = True
             boggleDfs(boggle, word, currentRow, currentCol, visited, string)
 
 def solveBoggle(boggle, dictionary):
-    visited = [[False for col in range(len(boggle[0])) for row in range(len(boggle))]]
     for word in dictionary:
+        # Only want to print once per word so refresh this visited 2-d
+        visited = [[False for col in range(len(boggle[0]))] for row in range(len(boggle))]
         for row in range(len(boggle)):
             for col in range(len(boggle[0])):
                 boggleDfs(boggle, word, row, col, visited, '')
