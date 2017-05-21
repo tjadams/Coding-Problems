@@ -2,16 +2,16 @@
 This readme contains notes made from learning Python. Some if it is focused on being able to do all the syntax things I can do with Java in Python. Lots of this was taken from the Python 2.7.13 tutorial. I have **bolded** what is especially important for me.
 
 ## Misc
-* **Tabs matter in Python. If you tab in, you're within the function that's above and to the left of your tabbed code**
-* **boolean logic isn't && and || or, it's just "and", "or"**
-* **boolean true is called True, boolean false is called False**
-* **null is actually called None in python**
-* **a recursive call requires calling self.recursiveMethod**
+* Tabs matter in Python. If you tab in, you're within the function that's above and to the left of your tabbed code
+* boolean logic isn't && and || or, it's just "and", "or"
+* boolean true is called True, boolean false is called False
+* null is actually called None in python
+* a recursive call in an instance method requires calling self.recursiveMethod
 * **in a recursive problem, if you receive a None value as an input param when you're trying to perform changes on an input param, you can simply return and nothing bad will happen**
-* **in a for loop, to do a loop over the size of a list you need to do
- `for i in range(len(nums) + anyNumberYouWant):`**
+* in a for loop, to do a loop over the size of a list you need to do
+ `for i in range(len(nums) + anyNumberYouWant):`
 * Can do an enhanced for loop on a data structure by saying `for x in datastructure:` 
-* **To get the size of a data structure: `len(datastructure)`**
+* To get the size of a data structure: `len(datastructure)`
 * To get a list of integers, use the `range(n)` function to get [0, 1, ... n - 1]. You can also do `range(start, end)` and `range(start, end, step_value)` 
 * The `break` statement breaks out of the smallest enclosing `for` or `while` loop
 * **The 'pythonic' way of having static functions is not to have a class that has its own static methods, but to just make them free functions in a utility class or module**
@@ -96,9 +96,9 @@ instead of
 
 ## objects and classes
 * Namespace = mapping from names to objects. Examples of those are the global names in a module, the local names in a function, each recursive call of a function. A Namespace is basically a set of variables you have access to given a specific scope
-* **In Python, there's no real main function. You just execute code that's not in a function**
+* In Python, there's no real main function. You just execute code that's not in a function
 * **Note that in order to call a function, it has to be declared above the calling code**
-* **Classes are defined like this:**
+* Classes are defined like this:
 
 ```
 class ClassName:
@@ -107,14 +107,14 @@ class ClassName:
 	
 	function_name()
 ```
-* Here's an **incorrect** way to do global variables. It's incorrect because test is not a global variable. Calling get_test
+* Here's an incorrect way to do global variables. It's incorrect because test is not a global variable. Calling get_test
 ```
 class ClassName:
 	test = 1
 	def get_test()
 		return str(test)
 ```
-* **self works like the this keyword from Java. self.class_param is how you access and or manipulate an object's field. For non-"static" functions in a class, you need to pass in self**
+* `self` works like the `this` keyword from Java. self.class_param is how you access and or manipulate an object's field. For non-"static" functions in a class, you need to pass in self
 * **constructor is def __init__(self, param1, param2...)**
 * **calling a function from inside another function is done by calling it like self.function(). Also make sure that self is a param in the function**
 * **instantiation is done with x = Class(). There is no "new" keyword**
