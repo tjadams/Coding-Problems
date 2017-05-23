@@ -10,9 +10,8 @@ def top_down_fib(n):
 def bottom_up_fib(n):
     running_solns = [1, 1]
     while len(running_solns) < n:
-        print len(running_solns)
         running_solns.append(running_solns[-1] + running_solns[-2])
     return running_solns[n-1]
 
-# print top_down_fib(7)
-bottom_up_fib(7)
+print "top-down soln:", top_down_fib(7)
+print "bottom-up soln:", bottom_up_fib(7)
