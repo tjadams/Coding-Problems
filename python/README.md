@@ -73,6 +73,7 @@ instead of
 * `dict = {key1: value1, key2: value2}`
 * `dict[key] = value`
 * `dict.keys()`
+* To see if a key has a value in a dictionary, say `if key in dictionary:`
 
 ## stack
 * you can use a list as a stack with `list.append(x)` and `list.pop()`
