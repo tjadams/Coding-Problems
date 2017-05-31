@@ -9,8 +9,8 @@ Notes and examples made from doing data structures and algorithms problems in Ja
 
 ## Constructors
 ```java
-class Constructa {
-	Constructa() {
+public class Constructa {
+	public Constructa() {
 		System.out.println("Constructed");
 	}
 }
